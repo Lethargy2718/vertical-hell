@@ -11,9 +11,6 @@
         },
         {
             "m_Id": "90165691496841e69ebe3de60004bbed"
-        },
-        {
-            "m_Id": "72f42b64c19341a6860ba13761707810"
         }
     ],
     "m_Keywords": [],
@@ -65,9 +62,6 @@
         },
         {
             "m_Id": "ca2175b2b0ce47e8ac379d1cf57eb530"
-        },
-        {
-            "m_Id": "dd7f7a365f2046f8a7db6ae1cbb24924"
         }
     ],
     "m_GroupDatas": [],
@@ -518,9 +512,6 @@
         },
         {
             "m_Id": "90165691496841e69ebe3de60004bbed"
-        },
-        {
-            "m_Id": "72f42b64c19341a6860ba13761707810"
         }
     ]
 }
@@ -699,31 +690,6 @@
 
 {
     "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
-    "m_ObjectId": "49e36cfbe43a4eb19e091ee3254ec564",
-    "m_Id": 1,
-    "m_DisplayName": "Out",
-    "m_SlotType": 1,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "Out",
-    "m_StageCapability": 3,
-    "m_Value": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "w": 0.0
-    },
-    "m_DefaultValue": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "w": 0.0
-    },
-    "m_LiteralMode": false
-}
-
-{
-    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.BlockNode",
     "m_ObjectId": "580de5b0394c48c68ace924cbe508322",
     "m_Group": {
@@ -840,50 +806,6 @@
         "m_Guid": ""
     },
     "m_DefaultType": 0
-}
-
-{
-    "m_SGVersion": 1,
-    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
-    "m_ObjectId": "72f42b64c19341a6860ba13761707810",
-    "m_Guid": {
-        "m_GuidSerialized": "eed53910-132c-4af7-9222-e4076a5c7716"
-    },
-    "promotedFromAssetID": "",
-    "promotedFromCategoryName": "",
-    "promotedOrdering": -1,
-    "m_Name": "_FlipX",
-    "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "_FlipX",
-    "m_DefaultReferenceName": "_FlipX",
-    "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": true,
-    "m_UseCustomSlotLabel": false,
-    "m_CustomSlotLabel": "",
-    "m_DismissedVersion": 0,
-    "m_Precision": 0,
-    "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
-    "m_Hidden": false,
-    "m_PerRendererData": false,
-    "m_customAttributes": [],
-    "m_Value": 0.0,
-    "m_FloatType": 0,
-    "m_LiteralFloatMode": false,
-    "m_RangeValues": {
-        "x": 0.0,
-        "y": 1.0
-    },
-    "m_SliderType": 0,
-    "m_SliderPower": 3.0,
-    "m_EnumType": 0,
-    "m_CSharpEnumString": "",
-    "m_EnumNames": [
-        "Default"
-    ],
-    "m_EnumValues": [
-        0
-    ]
 }
 
 {
@@ -1031,31 +953,6 @@
     "useTexelSize": true,
     "m_Modifiable": true,
     "m_DefaultType": 0
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
-    "m_ObjectId": "84ff5096a766416182633010c0e6961b",
-    "m_Id": 0,
-    "m_DisplayName": "In",
-    "m_SlotType": 0,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "In",
-    "m_StageCapability": 3,
-    "m_Value": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "w": 0.0
-    },
-    "m_DefaultValue": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "w": 0.0
-    },
-    "m_LiteralMode": false
 }
 
 {
@@ -1609,46 +1506,6 @@
         "e32": 0.0,
         "e33": 1.0
     }
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.FlipNode",
-    "m_ObjectId": "dd7f7a365f2046f8a7db6ae1cbb24924",
-    "m_Group": {
-        "m_Id": ""
-    },
-    "m_Name": "Flip",
-    "m_DrawState": {
-        "m_Expanded": true,
-        "m_Position": {
-            "serializedVersion": "2",
-            "x": 41.142845153808597,
-            "y": -263.4285888671875,
-            "width": 209.14285278320313,
-            "height": 392.5714111328125
-        }
-    },
-    "m_Slots": [
-        {
-            "m_Id": "84ff5096a766416182633010c0e6961b"
-        },
-        {
-            "m_Id": "49e36cfbe43a4eb19e091ee3254ec564"
-        }
-    ],
-    "synonyms": [],
-    "m_Precision": 0,
-    "m_PreviewExpanded": true,
-    "m_DismissedVersion": 0,
-    "m_PreviewMode": 0,
-    "m_CustomColors": {
-        "m_SerializableColors": []
-    },
-    "m_RedChannel": false,
-    "m_GreenChannel": false,
-    "m_BlueChannel": false,
-    "m_AlphaChannel": false
 }
 
 {

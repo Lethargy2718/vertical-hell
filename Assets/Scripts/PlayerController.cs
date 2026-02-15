@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
@@ -19,7 +20,8 @@ public class PlayerController : MonoBehaviour
     //[SerializeField] private float horizontalDeadZoneThreshold = 0.1f;
     private bool _jumpDown;
     private bool _jumpHeld;
-    private float _horizontalDirection;
+    private bool _dashDown;
+    private float _horizontalMoveDirection;
 
     // Collision
     [Header("Collision Settings")]
@@ -30,7 +32,7 @@ public class PlayerController : MonoBehaviour
     private bool _globalQueryStartInColliders;
 
 
-    // Jumps
+    // Jump
     [Header("Jump Settings")]
     [SerializeField] private float jumpBuffer = 1.0f;
     [SerializeField] private float coyoteTime = 1.0f;
@@ -43,12 +45,28 @@ public class PlayerController : MonoBehaviour
     private bool HasBufferedJump => _bufferedJumpUsable && _time < _timeJumpWasPressed + jumpBuffer;
     private bool CanUseCoyote => _coyoteUsable && !_grounded && _time < _lastGroundedTime + coyoteTime;
 
+    // Dash
+    [Header("Dash")]
+    [SerializeField] private float dashBuffer;
+    [SerializeField] private float dashSpeed = 12f;
+    [SerializeField] private float dashDuration = 0.7f;
+    [SerializeField] private float dashCooldown = 1.0f;
+    private bool _dashToConsume;
+    private bool _bufferedDashUsable;
+    private float _timeDashWasPressed;
+    private bool HasBufferedDash => _bufferedDashUsable && _time < _timeDashWasPressed + dashBuffer;
+    private bool _isDashing = false;
+    private bool _dashCooldownEnded = true;
+    private bool _touchedGroundAfterDash = false;
+    private bool CanDash => _dashCooldownEnded && _touchedGroundAfterDash && !_isDashing;
+
     // Horizontal Movement
     [Header("Horizontal Movement")]
     [SerializeField] private float groundDeceleration = 22.0f;
     [SerializeField] private float airDeceleration = 1.0f;
     [SerializeField] private float maxHorizontalSpeed = 1.0f;
     [SerializeField] private float acceleration = 100.0f;
+    private float _currentDirection;
 
     // Gravity
     [Header("Gravity")]
@@ -56,11 +74,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float fallAcceleration = -10.0f;
     [SerializeField] private float jumpEndEarlyGravityModifier = -2.0f;
     [SerializeField] private float maxFallSpeed = 30.0f;
-
-    // Shaders
-    [Header("Shaders")]
-    [SerializeField] private Material _spriteMaterial;
-    private const string FLIP_X = "_FlipX";
 
     private float _time;
     private Vector2 _frameVelocity;
@@ -74,6 +87,14 @@ public class PlayerController : MonoBehaviour
         _globalQueryStartInColliders = Physics2D.queriesStartInColliders;
     }
 
+    private void Start()
+    {
+        if (_currentDirection == 0f)
+        {
+            _currentDirection = _sr.flipX ? -1f : 1f;
+        }   
+    }
+
     private void Update()
     {
         _time += Time.deltaTime;
@@ -83,9 +104,32 @@ public class PlayerController : MonoBehaviour
 
     private void GatherInput()
     {
+        #region jump
 
         _jumpDown = Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Space);
         _jumpHeld = Input.GetButton("Jump") || Input.GetKey(KeyCode.Space);
+
+        if (_jumpDown)
+        {
+            _jumpToConsume = true;
+            _timeJumpWasPressed = _time;
+        }
+
+        #endregion
+
+        #region dash
+
+        _dashDown = Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Mouse3);
+
+        if (_dashDown)
+        {
+            _dashToConsume = true;
+            _timeDashWasPressed = _time;
+        }
+
+        #endregion
+
+        #region horizontal movement
 
         bool leftPressed = Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow);
         bool rightPressed = Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow);
@@ -95,15 +139,15 @@ public class PlayerController : MonoBehaviour
 
         if (leftPressed && rightPressed)
         {
-            _horizontalDirection = 1.0f;
+            _horizontalMoveDirection = 1.0f;
         }
         else if (leftPressed)
         {
-            _horizontalDirection = -1.0f;
+            _horizontalMoveDirection = -1.0f;
         }
         else if (rightPressed)
         {
-            _horizontalDirection = 1.0f;
+            _horizontalMoveDirection = 1.0f;
         }
         else if (leftHeld && rightHeld)
         {
@@ -111,32 +155,35 @@ public class PlayerController : MonoBehaviour
         }
         else if (leftHeld)
         {
-            _horizontalDirection = -1.0f;
+            _horizontalMoveDirection = -1.0f;
         }
         else if (rightHeld)
         {
-            _horizontalDirection = 1.0f;
+            _horizontalMoveDirection = 1.0f;
         }
         else
         {
             // Nothing held
-            _horizontalDirection = 0.0f;
+            _horizontalMoveDirection = 0.0f;
         }
 
-        if (_jumpDown)
-        {
-            _jumpToConsume = true;
-            _timeJumpWasPressed = _time;
-        }
+        if (_horizontalMoveDirection != 0.0f) _currentDirection = _horizontalMoveDirection;
+
+        #endregion
     }
 
     private void FixedUpdate()
     {
         CheckCollisions();
 
-        HandleJump();
-        HandleDirection();
-        HandleGravity();
+        if (!_isDashing)
+        {
+            // TODO: enable dash interruption with jump later
+            HandleJump();
+            HandleDirection();
+            HandleGravity();
+            HandleDash();
+        }
         ApplyMovement();
     }
 
@@ -168,6 +215,8 @@ public class PlayerController : MonoBehaviour
             GroundedChanged?.Invoke(false, 0);
         }
 
+        if (_grounded) _touchedGroundAfterDash = true;
+
         Physics2D.queriesStartInColliders = _globalQueryStartInColliders;
     }
 
@@ -196,14 +245,14 @@ public class PlayerController : MonoBehaviour
 
     private void HandleDirection()
     {
-        if (_horizontalDirection == 0)
+        if (_horizontalMoveDirection == 0)
         {
             float deceleration = _grounded ? groundDeceleration : airDeceleration;
             _frameVelocity.x = Mathf.MoveTowards(_frameVelocity.x, 0, deceleration * Time.fixedDeltaTime);
         }
         else
         {
-            float targetVelocity = _horizontalDirection * maxHorizontalSpeed;
+            float targetVelocity = _horizontalMoveDirection * maxHorizontalSpeed;
             _frameVelocity.x = Mathf.MoveTowards(_frameVelocity.x, targetVelocity, acceleration * Time.fixedDeltaTime);
         }
     }
@@ -224,20 +273,55 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void ApplyMovement()
+    private void HandleDash()
+    {
+        if (!_dashToConsume && !HasBufferedDash) return;
+        _dashToConsume = false;
+        if (!CanDash) return;
+
+        ExecuteDash();
+    }
+
+    private void ExecuteDash()
+    {
+        _frameVelocity = Mathf.Sign(_currentDirection) * dashSpeed * Vector2.right;
+
+        _isDashing = true;
+        _touchedGroundAfterDash = false;
+        _dashCooldownEnded = false;
+
+        StartCoroutine(DashRoutine());
+
+        IEnumerator DashRoutine()
+        {
+            yield return new WaitForSeconds(dashDuration);
+
+            _isDashing = false;
+            _frameVelocity = Vector2.zero;
+            StartCoroutine(DashCooldownRoutine());
+        }
+
+        IEnumerator DashCooldownRoutine()
+        {
+            yield return new WaitForSeconds(dashCooldown);
+            _dashCooldownEnded = true;
+        }
+    }
+
+private void ApplyMovement()
     {
         _rb.linearVelocity = _frameVelocity;
     }
 
     private void HandleSpriteFlip()
     {
-        if (_horizontalDirection > 0f)
+        if (_horizontalMoveDirection > 0f)
         {
-            _spriteMaterial.SetFloat("_FlipX", 0);
+            _sr.flipX = false;
         }
-        else if (_horizontalDirection < 0f)
+        else if (_horizontalMoveDirection < 0f)
         {
-            _spriteMaterial.SetFloat("_FlipX", 1);
+            _sr.flipX = true;
         }
     }
 }
