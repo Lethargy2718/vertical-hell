@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour
     private bool _dashCooldownEnded = true;
     private bool _touchedGroundAfterDash = false;
     private bool CanDash => _dashCooldownEnded && _touchedGroundAfterDash && !_isDashing;
+    private Coroutine dashCoroutine;
 
     // Horizontal Movement
     [Header("Horizontal Movement")]
@@ -175,11 +176,10 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         CheckCollisions();
+        HandleJump();
 
         if (!_isDashing)
         {
-            // TODO: enable dash interruption with jump later
-            HandleJump();
             HandleDirection();
             HandleGravity();
             HandleDash();
@@ -228,7 +228,15 @@ public class PlayerController : MonoBehaviour
         // If no jumps to execute
         if (!_jumpToConsume && !HasBufferedJump) return;
 
-        if (_grounded || CanUseCoyote) ExecuteJump();
+        if (_grounded || CanUseCoyote)
+        {
+            if (_isDashing)
+            {
+                StopCoroutine(dashCoroutine);
+                EndDash();
+            }
+            ExecuteJump();
+        }
 
         _jumpToConsume = false;
     }
@@ -290,16 +298,20 @@ public class PlayerController : MonoBehaviour
         _touchedGroundAfterDash = false;
         _dashCooldownEnded = false;
 
-        StartCoroutine(DashRoutine());
+        dashCoroutine = StartCoroutine(DashRoutine());
 
         IEnumerator DashRoutine()
         {
             yield return new WaitForSeconds(dashDuration);
-
-            _isDashing = false;
-            _frameVelocity = Vector2.zero;
-            StartCoroutine(DashCooldownRoutine());
+            EndDash();
         }
+    }
+
+    private void EndDash()
+    {
+        _isDashing = false;
+        _frameVelocity = Vector2.zero;
+        StartCoroutine(DashCooldownRoutine());
 
         IEnumerator DashCooldownRoutine()
         {
