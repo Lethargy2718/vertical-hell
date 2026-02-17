@@ -1082,7 +1082,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   wallPrefab: {fileID: 8609112689419610459, guid: a8df09b70e1b89349b1790ca5662b4b4, type: 3}
   wallWidth: 50
-  wallHeight: 100
+  wallHeight: 200
   wallColor: {r: 0.03, g: 0.012791879, b: 0.025736043, a: 1}
   platformPrefab: {fileID: 3970942876045467863, guid: 1fac8c1eda0544f40b033f4e4c730e8f, type: 3}
   platformWidth: 0.22
@@ -1091,6 +1091,10 @@ MonoBehaviour:
   platformCount: 50
   firstPlatformY: 2.5
   distanceBetweenPlatforms: 2.3
+  fallingSpikePrefab: {fileID: 3359322381305885662, guid: e19004a9182c48f4281d5fc9bea645de, type: 3}
+  fallingSpikeSpacing: 2.5
+  fallingSpikeSpeed: 5
+  skippedPreGeneratedSpikes: 3
 --- !u!4 &747635541
 Transform:
   m_ObjectHideFlags: 0
@@ -1234,8 +1238,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.062478006}
-  m_Size: {x: 0.5, y: 0.87522995}
+  m_Offset: {x: 0, y: -0.060038358}
+  m_Size: {x: 0.5, y: 0.87035066}
   m_Direction: 0
 --- !u!1 &934735982
 GameObject:
@@ -2688,7 +2692,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2095192631
 Transform:
   m_ObjectHideFlags: 0
@@ -2717,7 +2721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f2b08ba419c2164893897911f9b6b7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraMove
-  speed: 2
+  speed: 1
 --- !u!1 &2100308446
 GameObject:
   m_ObjectHideFlags: 0
@@ -2906,7 +2910,7 @@ MonoBehaviour:
   m_LookaheadSmoothing: 0
   m_LookaheadIgnoreY: 0
   m_XDamping: 0
-  m_YDamping: 0.5
+  m_YDamping: 0
   m_ZDamping: 0
   m_TargetMovementOnly: 1
   m_ScreenX: 0.5

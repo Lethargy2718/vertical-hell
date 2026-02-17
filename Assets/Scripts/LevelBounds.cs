@@ -11,7 +11,9 @@ public class LevelBounds : MonoBehaviour
     private const float _WALL_OFFSET = 0.3125f;
 
     // Camera
-    public float CameraTopY { get; private set; }
+    private Camera cam;
+    public float CameraTopY => cam.ScreenToWorldPoint(new Vector3(0, Screen.height, 0)).y;
+    public float CameraBottomY => cam.ScreenToWorldPoint(Vector3.zero).y;
     public float CameraLeftX => -(_BASE_WIDTH / 2) / _PPU;
     public float CameraRightX => -CameraLeftX;
 
@@ -19,7 +21,6 @@ public class LevelBounds : MonoBehaviour
     public float LeftWallX => CameraLeftX + _WALL_OFFSET;
     public float RightWallX => CameraRightX - _WALL_OFFSET;
 
-    private Camera cam;
 
     private void Awake()
     {
@@ -32,12 +33,6 @@ public class LevelBounds : MonoBehaviour
         cam = Camera.main;
     }
 
-    private void LateUpdate()
-    {
-        float visibleHeight = cam.orthographicSize * 2;
-        CameraTopY = cam.transform.position.y + visibleHeight / 2;
-    }
-
     public float GetLeftWallCenterX(float wallWidth)
     {
         return CameraLeftX - wallWidth / 2 + _WALL_OFFSET;
@@ -46,5 +41,34 @@ public class LevelBounds : MonoBehaviour
     public float GetRightWallCenterX(float wallWidth)
     {
         return -GetLeftWallCenterX(wallWidth);
+    }
+
+    public float GetPartitionIndexX(int partitionCount, int partitionIndex)
+    {
+        float usableWidth = RightWallX - LeftWallX;
+        float partitionWidth = usableWidth / partitionCount;
+        return LeftWallX + partitionWidth * (partitionIndex + 0.5f);
+    }
+
+    public float[] GetPartitionIndicesX(int partitionCount)
+    {
+        float[] indices = new float[partitionCount];
+
+        for (int i = 0; i < partitionCount; i++)
+        {
+            indices[i] = GetPartitionIndexX(partitionCount, i);
+        }
+
+        return indices;
+    }
+
+    public float MidX => (LeftWallX + RightWallX) / 2f; // Always 0 anyways but it's better off dynamic
+
+    public float GetRandomX(float objectWidth = 0f)
+    {
+        float minX = LeftWallX + objectWidth;
+        float maxX = RightWallX - objectWidth;
+
+        return Random.Range(minX, maxX);
     }
 }

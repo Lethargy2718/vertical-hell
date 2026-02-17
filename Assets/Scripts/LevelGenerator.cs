@@ -1,4 +1,5 @@
-using Unity.VisualScripting;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
@@ -18,6 +19,15 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private float firstPlatformY = 2.5f;
     [SerializeField] private float distanceBetweenPlatforms = 2f;
 
+    [Header("Spikes")]
+    [SerializeField] private FallingSpike fallingSpikePrefab;
+    [SerializeField] private float fallingSpikeSpacing = 1.0f;
+    [SerializeField] private float fallingSpikeSpeed = 1.0f;
+    [SerializeField] private int skippedPreGeneratedSpikes = 3;
+    private float FallingSpikeSpawnInterval => (fallingSpikePrefab.transform.localScale.y + fallingSpikeSpacing) / fallingSpikeSpeed;
+    private Coroutine fallingSpikeSpawnRoutine;
+    private GameObject fallingSpikeContainer;
+
     private enum Direction { Left, Right };
 
     private LevelBounds LB => LevelBounds.Instance;
@@ -25,8 +35,27 @@ public class LevelGenerator : MonoBehaviour
     private void Start()
     {
         SpawnWalls();
+
         SpawnPlatforms();
+
+        fallingSpikeContainer = new GameObject("Spikes");
+        StartGeneratingFallingSpikes();
     }
+
+    private void Update()
+    {
+        // debug
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            StopGeneratingFallingSpikes();
+        }
+        else if (Input.GetKeyDown(KeyCode.G))
+        {
+            StartGeneratingFallingSpikes();
+        }
+    }
+
+    #region Walls & Platforms
 
     private void SpawnWalls()
     {
@@ -81,4 +110,71 @@ public class LevelGenerator : MonoBehaviour
         instance.transform.position = new Vector3(x, y, 0f);
         return instance;
     }
+
+    #endregion
+
+    #region Falling Spikes
+
+    private FallingSpike SpawnSpike(float x, float y)
+    {
+        FallingSpike fallingSpike = Instantiate(fallingSpikePrefab, fallingSpikeContainer.transform);
+
+        if (fallingSpike.TryGetComponent<MoveDown>(out var moveDown))
+        {
+            moveDown.Speed = fallingSpikeSpeed;
+        }
+
+        Vector3 spikePos = new Vector3(x, y, 0f);
+        fallingSpike.transform.position = spikePos;
+        return fallingSpike;
+    }
+
+    private IEnumerator SpawnFallingSpikesCoroutine()
+    {
+        while (true)
+        {
+            SpawnSpike(LB.MidX, wallHeight);
+            yield return new WaitForSeconds(FallingSpikeSpawnInterval);
+        }
+    }
+
+    private void SpawnPreGeneratedFallingSpikes()
+    {
+        float spikeHeight = fallingSpikePrefab.transform.localScale.y;
+        float step = spikeHeight + fallingSpikeSpacing;
+        float bottomLimit = Camera.main.ScreenToWorldPoint(Vector3.zero).y + step * skippedPreGeneratedSpikes;
+
+        for (float y = wallHeight - step; y >= bottomLimit; y -= step)
+        {
+            FallingSpike spike = SpawnSpike(LB.MidX, y);
+        }
+    }
+
+    private void DestroyFallingSpikesOutOfCamera()
+    {
+        foreach (Transform child in fallingSpikeContainer.transform)
+        {
+            float childTop = child.transform.position.y + child.transform.localScale.y / 2;
+            float childBottom = child.transform.position.y - child.transform.localScale.y / 2;
+
+            if (childTop < LB.CameraBottomY || childBottom > LB.CameraTopY)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+    }
+
+    private void StartGeneratingFallingSpikes()
+    {
+        SpawnPreGeneratedFallingSpikes();
+        fallingSpikeSpawnRoutine = StartCoroutine(SpawnFallingSpikesCoroutine());
+    }
+
+    private void StopGeneratingFallingSpikes()
+    {
+        StopCoroutine(fallingSpikeSpawnRoutine);
+        DestroyFallingSpikesOutOfCamera();
+    }
+
+    #endregion
 }
