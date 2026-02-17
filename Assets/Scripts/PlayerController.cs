@@ -36,14 +36,19 @@ public class PlayerController : MonoBehaviour
     [Header("Jump Settings")]
     [SerializeField] private float jumpBuffer = 1.0f;
     [SerializeField] private float coyoteTime = 1.0f;
-    [SerializeField] private float jumpPower = 1.0f;
+
+    [SerializeField]
+    [Tooltip("In world units")]
+    private float jumpHeight = 2.0f;
+
     private bool _jumpToConsume;
     private bool _bufferedJumpUsable;
     private bool _endedJumpEarly;
     private bool _coyoteUsable;
-    private float _timeJumpWasPressed;
+    private float _timeJumpWasPressed = float.MinValue;
     private bool HasBufferedJump => _bufferedJumpUsable && _time < _timeJumpWasPressed + jumpBuffer;
     private bool CanUseCoyote => _coyoteUsable && !_grounded && _time < _lastGroundedTime + coyoteTime;
+    private float JumpForce => Mathf.Sqrt(2f * fallAcceleration * jumpHeight) + (fallAcceleration * Time.fixedDeltaTime / 2f);
 
     // Dash
     [Header("Dash")]
@@ -72,8 +77,8 @@ public class PlayerController : MonoBehaviour
     // Gravity
     [Header("Gravity")]
     [SerializeField] private float groundingForce = -1.0f;
-    [SerializeField] private float fallAcceleration = -10.0f;
-    [SerializeField] private float jumpEndEarlyGravityModifier = -2.0f;
+    [SerializeField] private float fallAcceleration = 35.0f;
+    [SerializeField] private float jumpEndEarlyGravityModifier = 4.0f;
     [SerializeField] private float maxFallSpeed = 30.0f;
 
     private float _time;
@@ -85,6 +90,7 @@ public class PlayerController : MonoBehaviour
         _col = GetComponent<CapsuleCollider2D>();
 
         _rb.freezeRotation = true;
+        _rb.gravityScale = 0;
         _globalQueryStartInColliders = Physics2D.queriesStartInColliders;
     }
 
@@ -226,8 +232,7 @@ public class PlayerController : MonoBehaviour
         if (!_endedJumpEarly && !_grounded && !_jumpHeld && _rb.linearVelocity.y > 0) _endedJumpEarly = true;
 
         // If no jumps to execute
-        if (!_jumpToConsume && !HasBufferedJump) return;
-
+        if (!(_jumpToConsume || HasBufferedJump)) return;
         if (_grounded || CanUseCoyote)
         {
             if (_isDashing)
@@ -247,7 +252,7 @@ public class PlayerController : MonoBehaviour
         _timeJumpWasPressed = 0;
         _bufferedJumpUsable = false;
         _coyoteUsable = false;
-        _frameVelocity.y = jumpPower;
+        _frameVelocity.y = JumpForce;
         Jumped?.Invoke();
     }
 
@@ -270,15 +275,18 @@ public class PlayerController : MonoBehaviour
         if (_grounded && _frameVelocity.y <= 0f)
         {
             _frameVelocity.y = groundingForce;
+            return;
         }
-        else
-        {
-            float inAirGravity = fallAcceleration;
-            bool shouldFall = _endedJumpEarly && _frameVelocity.y > 0;
-            if (shouldFall) inAirGravity *= jumpEndEarlyGravityModifier;
 
-            _frameVelocity.y = Mathf.MoveTowards(_frameVelocity.y, -maxFallSpeed, inAirGravity * Time.fixedDeltaTime);
+        float gravityThisFrame = fallAcceleration * Time.fixedDeltaTime;
+
+        if (_endedJumpEarly && _frameVelocity.y > 0)
+        {
+            gravityThisFrame *= jumpEndEarlyGravityModifier;
         }
+
+        _frameVelocity.y += -gravityThisFrame;
+        _frameVelocity.y = Mathf.Max(_frameVelocity.y, -maxFallSpeed);
     }
 
     private void HandleDash()
@@ -320,7 +328,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-private void ApplyMovement()
+    private void ApplyMovement()
     {
         _rb.linearVelocity = _frameVelocity;
     }
