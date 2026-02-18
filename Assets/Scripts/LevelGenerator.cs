@@ -95,7 +95,6 @@ public class LevelGenerator : MonoBehaviour
 
             SpawnPlatform(x, y);
         }
-        Debug.Log(LB.LeftWallX);
     }
 
     private Platform SpawnPlatform(float x, float y)
