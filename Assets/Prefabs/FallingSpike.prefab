@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7505785067443485748}
   - component: {fileID: 3145927292205609011}
   - component: {fileID: 3359322381305885662}
-  - component: {fileID: -1129267397454420202}
+  - component: {fileID: -8979000478038380105}
   m_Layer: 0
   m_Name: FallingSpike
   m_TagString: Untagged
@@ -119,11 +119,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ad562553f4af064d970afa05124db27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  _dmg: 20
+  _dmg: 15
   targetLayer:
     serializedVersion: 2
     m_Bits: 8
---- !u!60 &-1129267397454420202
+--- !u!60 &-8979000478038380105
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

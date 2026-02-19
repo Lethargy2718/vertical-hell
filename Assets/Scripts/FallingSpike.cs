@@ -12,11 +12,19 @@ public class FallingSpike : MonoBehaviour
     // Just player for now
     [SerializeField] private LayerMask targetLayer;
 
+    private SpriteRenderer _sr;
+
+    private void Awake()
+    {
+        _sr = GetComponent<SpriteRenderer>();
+    }
+
     private void Update()
     {
-        if (transform.position.y < -transform.localScale.y)
+        if (_sr.Top() <= 0)
         {
             Destroy(gameObject);
+            return;
         }
     }
 
@@ -26,11 +34,10 @@ public class FallingSpike : MonoBehaviour
         {
             if (collision.TryGetComponent<HealthComponent>(out var healthComponent))
             {
-                healthComponent.Health -= Dmg;
+                healthComponent.TakeDamage(Dmg);
             }
 
             Destroy(gameObject);
         }
     }
-
 }

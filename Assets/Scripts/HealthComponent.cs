@@ -1,9 +1,11 @@
 using System;
+using Cinemachine;
 using UnityEngine;
 
 public class HealthComponent : MonoBehaviour
 {
     public Action<float> OnHealthChanged;
+    public Action<float> OnDamageTaken;
     public Action OnHealthDepleted;
 
     [SerializeField] private float _health = 100f;
@@ -31,5 +33,11 @@ public class HealthComponent : MonoBehaviour
     private void Start()
     {
         Health = MaxHealth;
+    }
+
+    public void TakeDamage(float dmg)
+    {
+        Health -= dmg;
+        OnDamageTaken?.Invoke(Health);
     }
 }
