@@ -604,7 +604,7 @@ MonoBehaviour:
   fallingSpikePrefab: {fileID: 3359322381305885662, guid: e19004a9182c48f4281d5fc9bea645de, type: 3}
   fallingSpikeFollowPrefab: {fileID: 2938582557743037705, guid: 006f349be688bb44f865770dde67cd6f, type: 3}
   fallingSpikeSpacing: 15
-  fallingSpikeSpeed: 15
+  fallingSpikeSpeed: 20
   skippedPreGeneratedSpikes: 1
   warningPrefab: {fileID: 3401736334866572788, guid: d268b8d05dd7263458c0e37e7c8233e7, type: 3}
 --- !u!4 &747635541
@@ -1801,6 +1801,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LowHealthEffects
   healthComponent: {fileID: 839998501}
+  healthText: {fileID: 2072760534}
+  maxCharShakeAmount: 1
   vignetteColor: {r: 0.342, g: 0, b: 0, a: 1}
   maxVignetteBoost: 0.3
   maxChromaticBoost: 0.5
