@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class HealthComponent : MonoBehaviour
 {
-    public Action<float> OnHealthChanged;
-    public Action<float> OnDamageTaken;
-    public Action OnHealthDepleted;
+    public Action<float> HealthChanged;
+    public Action<float> DamageTaken;
+    public Action HealthDepleted;
 
     [SerializeField] private float _health = 100f;
     public float Health {
@@ -14,11 +14,11 @@ public class HealthComponent : MonoBehaviour
         set
         {
             _health = Mathf.Clamp(value, 0, MaxHealth);
-            OnHealthChanged?.Invoke(_health);
+            HealthChanged?.Invoke(_health);
 
             if (_health == 0)
             {
-                OnHealthDepleted?.Invoke();
+                HealthDepleted?.Invoke();
             }
         }
     }
@@ -38,6 +38,6 @@ public class HealthComponent : MonoBehaviour
     public void TakeDamage(float dmg)
     {
         Health -= dmg;
-        OnDamageTaken?.Invoke(Health);
+        DamageTaken?.Invoke(Health);
     }
 }

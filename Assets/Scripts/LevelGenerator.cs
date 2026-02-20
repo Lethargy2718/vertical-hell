@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
@@ -11,18 +10,21 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private Wall wallPrefab;
     [SerializeField] private float wallWidth;
     [SerializeField] private float wallHeight;
+    [SerializeField] private float wallExtraPart;
     [SerializeField] private Color wallColor;
 
     [Header("Platforms")]
     [SerializeField] private Platform platformPrefab;
-    [SerializeField] private float platformWidth;
+    [SerializeField] private float minPlatformWidth;
+    [SerializeField] private float maxPlatformWidth;
     [SerializeField] private float platformHeight;
     [SerializeField] private Color platformColor;
     [SerializeField] private int platformCount = 10;
     [SerializeField] private float firstPlatformY = 2.5f;
-    [SerializeField] private float distanceBetweenPlatforms = 2f;
-    //[SerializeField] private float minDistanceBetweenPlatforms = 1f;
-    //[SerializeField] private float maxDistanceBetweenPlatforms = 2.5f;
+    [SerializeField] private float minDistanceBetweenPlatforms = 1.5f;
+    [SerializeField] private float maxDistanceBetweenPlatforms = 2.3f;
+    private float DistanceBetweenPlatforms => Random.Range(minDistanceBetweenPlatforms, maxDistanceBetweenPlatforms);
+    private float PlatformWidth => Random.Range(minPlatformWidth, maxPlatformWidth);
 
     [Header("Spikes")]
     [SerializeField] private FallingSpike fallingSpikePrefab;
@@ -85,7 +87,10 @@ public class LevelGenerator : MonoBehaviour
 
     private Wall SpawnWall(float centerX)
     {
-        return Spawn<Wall>(wallPrefab, centerX, wallHeight / 2, wallWidth, wallHeight, wallColor);
+        float heightWithExtra = wallHeight + wallExtraPart;
+        float centerY = heightWithExtra / 2 - wallExtraPart;
+
+        return Spawn<Wall>(wallPrefab, centerX, centerY, wallWidth, heightWithExtra, wallColor);
     }
 
     private void SpawnPlatforms()
@@ -95,9 +100,12 @@ public class LevelGenerator : MonoBehaviour
 
     private void SpawnPlatformsOnSides()
     {
+        float currentPos = 0;
+
         for (int i = 0; i < platformCount; i++)
         {
             float x;
+            float platformWidth = PlatformWidth;
 
             if (i % 2 == 0) // Left
             {
@@ -108,13 +116,18 @@ public class LevelGenerator : MonoBehaviour
                 x = LB.RightWallX - platformWidth / 2;
             }
 
-            float y = firstPlatformY + i * distanceBetweenPlatforms;
+            float dist;
+            if (i == 0) dist = firstPlatformY;
+            else dist = DistanceBetweenPlatforms;
 
-            SpawnPlatform(x, y);
+            float y = currentPos + dist;
+            currentPos += dist;
+
+            SpawnPlatform(x, y, platformWidth);
         }
     }
 
-    private Platform SpawnPlatform(float x, float y)
+    private Platform SpawnPlatform(float x, float y, float platformWidth)
     {
         return Spawn<Platform>(platformPrefab, x, y, platformWidth, platformHeight, platformColor);
     }
@@ -235,7 +248,7 @@ public class LevelGenerator : MonoBehaviour
 
         while (true)
         {
-            float phaseDuration = FallingSpikeSpawnInterval * 1f / 4f;
+            float phaseDuration = FallingSpikeSpawnInterval * 1f / 2f;
 
             // Show warning 
             float randomX = LB.GetRandomX(spikeWidth);

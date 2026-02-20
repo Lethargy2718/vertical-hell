@@ -33,9 +33,17 @@ public class HitEffects : MonoBehaviour
 
     [Header("Post Processing")]
     [SerializeField] private Volume postProcessVolume;
+    [SerializeField] private Color vignetteColor = Color.red;
     [SerializeField] private float vignetteIntensityBoost = 0.3f;
     [SerializeField] private float chromaticAberrationAmount = 1f;
-    private PostProcessModifier _postProcessModifier = new PostProcessModifier();
+    private readonly PostProcessModifier _postProcessModifier = new PostProcessModifier();
+
+    private SoundComponent _sc;
+
+    private void Awake()
+    {
+        _sc = GetComponent<SoundComponent>();
+    }
 
     private void Start()
     {
@@ -43,14 +51,16 @@ public class HitEffects : MonoBehaviour
         _noise.m_AmplitudeGain = 0f;
         _noise.m_FrequencyGain = shakeFrequency;
 
+        _postProcessModifier.vignetteColor = vignetteColor;
         PostProcessController.Instance.AddModifier(_postProcessModifier);
     }
 
-    private void OnEnable() => healthComponent.OnDamageTaken += HandleHit;
-    private void OnDisable() => healthComponent.OnDamageTaken -= HandleHit;
+    private void OnEnable() => healthComponent.DamageTaken += HandleHit;
+    private void OnDisable() => healthComponent.DamageTaken -= HandleHit;
 
     private void HandleHit(float damage)
     {
+        _sc.Play();
         if (_effectRoutine != null)
             StopCoroutine(_effectRoutine);
         _effectRoutine = StartCoroutine(HitRoutine());

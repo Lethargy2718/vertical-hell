@@ -4,12 +4,14 @@ using System.Collections;
 
 public class UIManager : MonoBehaviour
 {
+    [Header("Health")]
     [SerializeField] private HealthComponent playerHealth;
     [SerializeField] private TextMeshProUGUI healthText;
 
     [Header("Health Roll")]
     [SerializeField] private float duration = 1.5f;
     [SerializeField] private float minDuration = 0.3f;
+
     [SerializeField]
     private AnimationCurve rollCurve = new AnimationCurve(
         new Keyframe(0, 0, 0, 3),
@@ -17,12 +19,27 @@ public class UIManager : MonoBehaviour
         new Keyframe(1, 1, 0, 0)
     );
 
+    private Coroutine _rollRoutine;
     private float _displayedHealth;
     private float _targetHealth;
-    private Coroutine _rollRoutine;
 
-    private void OnEnable() => playerHealth.OnHealthChanged += UpdateHealthUI;
-    private void OnDisable() => playerHealth.OnHealthChanged -= UpdateHealthUI;
+    [Header("Death Dim")]
+    [SerializeField] private float dimDuration = 1.2f;
+    [SerializeField]
+    private AnimationCurve dimCurve = new AnimationCurve(
+        new Keyframe(0, 1, 0, 0),
+        new Keyframe(1, 0, -2, 0)
+    );
+    private const string _FACE_COLOR = "_FaceColor";
+
+    private Color FaceColor
+    {
+        get => healthText.fontMaterial.GetColor(_FACE_COLOR);
+        set => healthText.fontMaterial.SetColor(_FACE_COLOR, value);
+    }
+
+    private void OnEnable() => playerHealth.HealthChanged += UpdateHealthUI;
+    private void OnDisable() => playerHealth.HealthChanged -= UpdateHealthUI;
 
     private void Start()
     {
@@ -34,6 +51,12 @@ public class UIManager : MonoBehaviour
     private void UpdateHealthUI(float currentHealth)
     {
         _targetHealth = currentHealth;
+
+        if (currentHealth <= 0)
+        {
+            StartCoroutine(DimCoroutine());
+        }
+
         _rollRoutine ??= StartCoroutine(RollCoroutine());
     }
 
@@ -43,17 +66,14 @@ public class UIManager : MonoBehaviour
         {
             float startHealth = _displayedHealth;
             float lockedTarget = _targetHealth;
-
             float change = Mathf.Abs(lockedTarget - startHealth);
             float scaledDuration = Mathf.Max(duration * (change / playerHealth.MaxHealth), minDuration);
-
             float t = 0f;
 
             while (t < 1f)
             {
                 t += Time.deltaTime / scaledDuration;
                 t = Mathf.Clamp01(t);
-
                 _displayedHealth = Mathf.Lerp(startHealth, lockedTarget, rollCurve.Evaluate(t));
                 UpdateText(_displayedHealth);
 
@@ -71,8 +91,31 @@ public class UIManager : MonoBehaviour
         _rollRoutine = null;
     }
 
+    private IEnumerator DimCoroutine()
+    {
+        var (startColor, startIntensity) = FaceColor.Decompose();
+
+        float t = 0f;
+
+        while (t < 1f)
+        {
+            t += Time.deltaTime / dimDuration;
+            t = Mathf.Clamp01(t);
+
+            float intensity = dimCurve.Evaluate(t) * startIntensity;
+            FaceColor = startColor.WithIntensity(intensity);
+
+            yield return null;
+        }
+
+        // Make sure it's reset if the curve was erroneous
+        FaceColor = startColor.WithIntensity(0f);
+    }
+
     private void UpdateText(float value)
     {
         healthText.text = $"{Mathf.Ceil(value)} / {playerHealth.MaxHealth}";
     }
+
 }
+

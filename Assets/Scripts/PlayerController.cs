@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     // Events
     public event Action<bool, float> GroundedChanged;
     public event Action Jumped;
+    public event Action Dashed;
+    public event Action DashEnded;
 
     // Components
     [Header("Components")]
@@ -305,7 +307,7 @@ public class PlayerController : MonoBehaviour
         _isDashing = true;
         _touchedGroundAfterDash = false;
         _dashCooldownEnded = false;
-
+        Dashed?.Invoke();
         dashCoroutine = StartCoroutine(DashRoutine());
 
         IEnumerator DashRoutine()
@@ -319,6 +321,7 @@ public class PlayerController : MonoBehaviour
     {
         _isDashing = false;
         _frameVelocity = Vector2.zero;
+        DashEnded?.Invoke();
         StartCoroutine(DashCooldownRoutine());
 
         IEnumerator DashCooldownRoutine()

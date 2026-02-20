@@ -6,15 +6,21 @@ public class LowHealthEffects : MonoBehaviour
     [SerializeField] private HealthComponent healthComponent;
 
     [Header("Post Processing")]
+    [SerializeField] private Color vignetteColor = Color.red;
     [SerializeField] private float maxVignetteBoost = 0.4f;
     [SerializeField] private float maxChromaticBoost = 0.6f;
     [SerializeField] private float threshold = 0.5f;
 
-    private readonly PostProcessModifier _modifier = new();
+    private readonly PostProcessModifier _modifier = new PostProcessModifier();
 
-    private void Start() => PostProcessController.Instance.AddModifier(_modifier);
-    private void OnEnable() => healthComponent.OnHealthChanged += HandleHealthChanged;
-    private void OnDisable() => healthComponent.OnHealthChanged -= HandleHealthChanged;
+    private void Start()
+    {
+        _modifier.vignetteColor = vignetteColor;
+        PostProcessController.Instance.AddModifier(_modifier);
+    }
+
+    private void OnEnable() => healthComponent.HealthChanged += HandleHealthChanged;
+    private void OnDisable() => healthComponent.HealthChanged -= HandleHealthChanged;
 
     private void HandleHealthChanged(float current)
     {
