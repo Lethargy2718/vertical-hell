@@ -40,4 +40,6 @@ public class HealthComponent : MonoBehaviour
         Health -= dmg;
         DamageTaken?.Invoke(Health);
     }
+
+    // TODO: add invincibility
 }

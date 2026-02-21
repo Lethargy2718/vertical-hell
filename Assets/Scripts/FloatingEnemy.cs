@@ -1,11 +1,13 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class FloatingEnemy : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Transform player;
     private HealthComponent _healthComponent;
+    private IAttacker _attacker;
 
     [Header("Positioning")]
     [SerializeField] private float cameraOffsetY = 1f;
@@ -26,6 +28,11 @@ public class FloatingEnemy : MonoBehaviour
     private float Speed => _isCatchingUp ? catchUpMaxSpeed : maxSpeed;
     private float _startedCatchingUpTime = float.MinValue;
 
+    [Header("Glow")]
+    [SerializeField] private Light2D glowLight;
+    [SerializeField] private float maxGlowIntensity = 3f;
+    private Coroutine _glowRoutine;
+
     // Other
     private LevelBounds LB => LevelBounds.Instance;
     private float _time = 0f;
@@ -33,16 +40,21 @@ public class FloatingEnemy : MonoBehaviour
     private void Awake()
     {
         _healthComponent = GetComponent<HealthComponent>();
+        _attacker = GetComponent<IAttacker>();
     }
 
     private void OnEnable()
     {
         _healthComponent.HealthDepleted += Die;
+        _attacker.ChargeUpStarted += GlowUp;
+        _attacker.ChargeDownStarted += GlowDown;
     }
 
     private void OnDisable()
     {
         _healthComponent.HealthDepleted -= Die;
+        _attacker.ChargeUpStarted -= GlowUp;
+        _attacker.ChargeDownStarted -= GlowDown;
     }
 
     private void Start()
@@ -102,6 +114,7 @@ public class FloatingEnemy : MonoBehaviour
         _startedCatchingUpTime = _time;
         _isCatchingUp = true;
         StopAttacking();
+        StopGlowInstantly();
     }
 
     private void StopCatchingUp()
@@ -112,18 +125,12 @@ public class FloatingEnemy : MonoBehaviour
 
     private void StartAttacking()
     {
-        foreach (var attacker in GetComponents<IAttacker>())
-        {
-            attacker.StartAttacking();
-        }
+        _attacker.StartAttacking();
     }
 
     private void StopAttacking()
     {
-        foreach (var attacker in GetComponents<IAttacker>())
-        {
-            attacker.StopAttacking();
-        }
+        _attacker.StopAttacking();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -139,5 +146,46 @@ public class FloatingEnemy : MonoBehaviour
     private void Die()
     {
         Destroy(gameObject);
+    }
+
+    private void GlowUp(float duration)
+    {
+        if (_glowRoutine != null)
+            StopCoroutine(_glowRoutine);
+
+        _glowRoutine = StartCoroutine(AnimateGlow(glowLight.intensity, maxGlowIntensity, duration));
+    }
+
+    private void GlowDown(float duration)
+    {
+        if (_glowRoutine != null)
+            StopCoroutine(_glowRoutine);
+
+        _glowRoutine = StartCoroutine(AnimateGlow(glowLight.intensity, 0f, duration));
+    }
+
+    private IEnumerator AnimateGlow(float startIntensity, float endIntensity, float duration)
+    {
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            glowLight.intensity = Mathf.Lerp(startIntensity, endIntensity, t);
+            yield return null;
+        }
+
+        glowLight.intensity = endIntensity;
+        _glowRoutine = null;
+    }
+
+    private void StopGlowInstantly()
+    {
+        if (_glowRoutine != null)
+            StopCoroutine(_glowRoutine);
+
+        // Fade down super fast
+        _glowRoutine = StartCoroutine(AnimateGlow(glowLight.intensity, 0f, 0.05f));
     }
 }
