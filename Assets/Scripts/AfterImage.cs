@@ -5,6 +5,7 @@ public class Afterimage : MonoBehaviour
 {
     [SerializeField] private float spawnInterval = 0.05f;
     [SerializeField] private float fadeDuration = 0.2f;
+    [SerializeField] private float afterDashTrailDuration = 0.2f;
     [SerializeField] private Color afterimageColor = new Color(1f, 1f, 1f, 0.5f);
     [SerializeField] private Material afterimageMaterial = null;
 
@@ -21,17 +22,27 @@ public class Afterimage : MonoBehaviour
     private void OnEnable()
     {
         _playerController.Dashed += StartAfterimages;
-        _playerController.DashEnded += StopAfterimages;
+        _playerController.DashEnded += WaitThenStopAfterImages;
     }
 
     private void OnDisable()
     {
         _playerController.Dashed -= StartAfterimages;
-        _playerController.DashEnded -= StopAfterimages;
+        _playerController.DashEnded -= WaitThenStopAfterImages;
     }
+
     public void StartAfterimages() => _spawnRoutine = StartCoroutine(SpawnCoroutine());
     public void StopAfterimages() => StopCoroutine(_spawnRoutine);
 
+    private void WaitThenStopAfterImages()
+    {
+        StartCoroutine(WaitCoroutine());
+        IEnumerator WaitCoroutine()
+        {
+            yield return new WaitForSeconds(afterDashTrailDuration);
+            StopAfterimages();
+        }
+    }
 
     private IEnumerator SpawnCoroutine()
     {
@@ -68,7 +79,7 @@ public class Afterimage : MonoBehaviour
         while (elapsed < fadeDuration)
         {
             elapsed += Time.deltaTime;
-            float t = elapsed / fadeDuration;
+            float t = Mathf.Clamp01(elapsed / fadeDuration);
             sr.color = new Color(startColor.r, startColor.g, startColor.b, Mathf.Lerp(startColor.a, 0f, t));
             yield return null;
         }
