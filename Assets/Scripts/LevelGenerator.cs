@@ -62,14 +62,17 @@ public class LevelGenerator : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.G))
         {
+            StopGeneratingFallingSpikes();
             StartGeneratingMiddleFallingSpikes();
         }
         else if (Input.GetKeyDown(KeyCode.H))
         {
+            StopGeneratingFallingSpikes();
             StartGeneratingFollowFallingSpikes();
         }
         else if (Input.GetKeyDown(KeyCode.J))
         {
+            StopGeneratingFallingSpikes();
             StartGeneratingRandomFallingSpikes();
         }
     }
