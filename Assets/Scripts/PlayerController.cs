@@ -44,11 +44,11 @@ public class PlayerController : MonoBehaviour
     private float jumpHeight = 2.0f;
 
     private bool _jumpToConsume;
-    private bool _bufferedJumpUsable;
+    private bool _hasBufferedJump;
     private bool _endedJumpEarly;
     private bool _coyoteUsable;
     private float _timeJumpWasPressed = float.MinValue;
-    private bool HasBufferedJump => _bufferedJumpUsable && _time < _timeJumpWasPressed + jumpBuffer;
+    private bool CanUseBufferedJump => _hasBufferedJump && _time < _timeJumpWasPressed + jumpBuffer;
     private bool CanUseCoyote => _coyoteUsable && !_grounded && _time < _lastGroundedTime + coyoteTime;
     private float JumpForce => Mathf.Sqrt(2f * fallAcceleration * jumpHeight) + (fallAcceleration * Time.fixedDeltaTime / 2f);
 
@@ -59,9 +59,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashDuration = 0.7f;
     [SerializeField] private float dashCooldown = 1.0f;
     private bool _dashToConsume;
-    private bool _bufferedDashUsable;
-    private float _timeDashWasPressed;
-    private bool HasBufferedDash => _bufferedDashUsable && _time < _timeDashWasPressed + dashBuffer;
+    private bool _hasBufferedDash;
+    private float _timeDashWasPressed = float.MinValue;
+    private bool CanUseBufferedDash => _hasBufferedDash && _time < _timeDashWasPressed + dashBuffer;
     private bool _isDashing = false;
     private bool _dashCooldownEnded = true;
     private bool _touchedGroundAfterDash = false;
@@ -122,6 +122,7 @@ public class PlayerController : MonoBehaviour
         {
             _jumpToConsume = true;
             _timeJumpWasPressed = _time;
+            _hasBufferedJump = true;
         }
 
         #endregion
@@ -132,6 +133,7 @@ public class PlayerController : MonoBehaviour
 
         if (_dashDown)
         {
+            _hasBufferedDash = true;
             _dashToConsume = true;
             _timeDashWasPressed = _time;
         }
@@ -211,7 +213,7 @@ public class PlayerController : MonoBehaviour
         {
             _grounded = true;
             _coyoteUsable = true;
-            _bufferedJumpUsable = true;
+            //_bufferedJumpUsable = true;
             _endedJumpEarly = false;
             GroundedChanged?.Invoke(true, Mathf.Abs(_frameVelocity.y));
         }
@@ -234,7 +236,7 @@ public class PlayerController : MonoBehaviour
         if (!_endedJumpEarly && !_grounded && !_jumpHeld && _rb.linearVelocity.y > 0) _endedJumpEarly = true;
 
         // If no jumps to execute
-        if (!(_jumpToConsume || HasBufferedJump)) return;
+        if (!(_jumpToConsume || CanUseBufferedJump)) return;
         if (_grounded || CanUseCoyote)
         {
             if (_isDashing)
@@ -252,7 +254,7 @@ public class PlayerController : MonoBehaviour
     {
         _endedJumpEarly = false;
         _timeJumpWasPressed = 0;
-        _bufferedJumpUsable = false;
+        _hasBufferedJump = false;
         _coyoteUsable = false;
         _frameVelocity.y = JumpForce;
         Jumped?.Invoke();
@@ -293,7 +295,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandleDash()
     {
-        if (!_dashToConsume && !HasBufferedDash) return;
+        if (!_dashToConsume && !CanUseBufferedDash) return;
         _dashToConsume = false;
         if (!CanDash) return;
 
@@ -307,6 +309,7 @@ public class PlayerController : MonoBehaviour
         _isDashing = true;
         _touchedGroundAfterDash = false;
         _dashCooldownEnded = false;
+        _hasBufferedDash = false;
         Dashed?.Invoke();
         dashCoroutine = StartCoroutine(DashRoutine());
 
