@@ -13,7 +13,7 @@ public class SoundComponent : MonoBehaviour
     [SerializeField] private float minVolume = 1f;
     [SerializeField] private float maxVolume = 1f;
 
-    public void Play(bool stopFirst = true)
+    public void Play(bool stopFirst = false)
     {
         if (stopFirst) audioSource.Stop();
 
