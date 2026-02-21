@@ -64,10 +64,10 @@ public class LevelBounds : MonoBehaviour
 
     public float MidX => (LeftWallX + RightWallX) / 2f; // Always 0 anyways but it's better off dynamic
 
-    public float GetRandomX(float objectWidth = 0f)
+    public float GetRandomX(float objectWidth = 0f, float offset = 0f)
     {
-        float minX = LeftWallX + objectWidth;
-        float maxX = RightWallX - objectWidth;
+        float minX = LeftWallX + objectWidth + offset;
+        float maxX = RightWallX - objectWidth - offset;
 
         return Random.Range(minX, maxX);
     }

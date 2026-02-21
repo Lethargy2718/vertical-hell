@@ -110,14 +110,16 @@ public class LevelGenerator : MonoBehaviour
             float x;
             float platformWidth = PlatformWidth;
 
-            if (i % 2 == 0) // Left
-            {
-                x = LB.LeftWallX + platformWidth / 2;
-            }
-            else
-            {
-                x = LB.RightWallX - platformWidth / 2;
-            }
+            //if (i % 2 == 0) // Left
+            //{
+            //    x = LB.LeftWallX + platformWidth / 2;
+            //}
+            //else
+            //{
+            //    x = LB.RightWallX - platformWidth / 2;
+            //}
+
+            x = LB.GetRandomX(platformWidth, 0.7f);
 
             float dist;
             if (i == 0) dist = firstPlatformY;

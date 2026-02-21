@@ -26,12 +26,6 @@ public class FloatingEnemy : MonoBehaviour
     private float Speed => _isCatchingUp ? catchUpMaxSpeed : maxSpeed;
     private float _startedCatchingUpTime = float.MinValue;
 
-    [Header("Projectiles")]
-    [SerializeField] private Projectile projectilePrefab;
-    [SerializeField] private float shootProjectilesInterval = 5.0f;
-    private Coroutine _shootProjectilesRoutine;
-    private bool _isAttacking = false;
-
     // Other
     private LevelBounds LB => LevelBounds.Instance;
     private float _time = 0f;
@@ -118,32 +112,18 @@ public class FloatingEnemy : MonoBehaviour
 
     private void StartAttacking()
     {
-        if (_isAttacking) return;
-        _isAttacking = true;
-        _shootProjectilesRoutine = StartCoroutine(ShootProjectilesCoroutine());
+        foreach (var attacker in GetComponents<IAttacker>())
+        {
+            attacker.StartAttacking();
+        }
     }
 
     private void StopAttacking()
     {
-        if (!_isAttacking) return;
-        _isAttacking = false;
-        StopCoroutine(_shootProjectilesRoutine);
-        _shootProjectilesRoutine = null;
-    }
-
-    private IEnumerator ShootProjectilesCoroutine()
-    {
-        while (true)
+        foreach (var attacker in GetComponents<IAttacker>())
         {
-            ShootProjectile();
-            yield return new WaitForSeconds(shootProjectilesInterval);
+            attacker.StopAttacking();
         }
-    }
-
-    private void ShootProjectile()
-    {
-        Projectile projectile = Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
-        projectile.Initialize(player.position);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
