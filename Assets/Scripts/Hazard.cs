@@ -9,7 +9,7 @@ public class Hazard : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent<HealthComponent>(out var healthComponent))
         {
-            healthComponent.Health -= dps * Time.fixedDeltaTime;
+            healthComponent.TakeDamage(dps * Time.fixedDeltaTime, Vector3.up, HealthComponent.DamageType.Effect);
         }
     }
 }
