@@ -23,9 +23,11 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private float firstPlatformY = 2.5f;
     [SerializeField] private float minDistanceBetweenPlatforms = 1.5f;
     [SerializeField] private float maxDistanceBetweenPlatforms = 2.3f;
+    [SerializeField] private PlatformsType platformsType = PlatformsType.Random;
     private float DistanceBetweenPlatforms => Random.Range(minDistanceBetweenPlatforms, maxDistanceBetweenPlatforms);
     private float PlatformWidth => Random.Range(minPlatformWidth, maxPlatformWidth);
     private GameObject _platformContainer;
+    private enum PlatformsType { Sides, Random };
 
     [Header("Platform Overlap")]
     [SerializeField] private int maxPlacementAttempts = 10;
@@ -33,6 +35,19 @@ public class LevelGenerator : MonoBehaviour
     private PlacedPlatform? _lastPlacedPlatform;
 
     private LevelBounds LB => LevelBounds.Instance;
+
+    public void GenerateLevel()
+    {
+        if (_wallContainer != null) DestroyImmediate(_wallContainer);
+        if (_platformContainer != null) DestroyImmediate(_platformContainer);
+
+        _wallContainer = new GameObject("Walls");
+        _platformContainer = new GameObject("Platforms");
+
+        SpawnWalls();
+        SpawnPlatforms();
+    }
+
 
     private void Start()
     {
@@ -62,8 +77,15 @@ public class LevelGenerator : MonoBehaviour
 
     private void SpawnPlatforms()
     {
-        //SpawnPlatformsOnSides();
-        SpawnPlatformsRandomly();
+        switch (platformsType)
+        {
+            case PlatformsType.Sides:
+                SpawnPlatformsOnSides();
+                break;
+            case PlatformsType.Random:
+                SpawnPlatformsRandomly();
+                break;
+        }
     }
 
     private void SpawnPlatformsOnSides()
@@ -137,7 +159,6 @@ public class LevelGenerator : MonoBehaviour
                 return x;
             }
         }
-
         return LB.GetRandomX(width);
     }
 
