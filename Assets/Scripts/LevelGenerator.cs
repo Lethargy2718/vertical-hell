@@ -12,6 +12,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private float wallHeight;
     [SerializeField] private float wallExtraPart;
     [SerializeField] private Color wallColor;
+    private GameObject _wallContainer;
 
     [Header("Platforms")]
     [SerializeField] private Platform platformPrefab;
@@ -25,6 +26,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private float maxDistanceBetweenPlatforms = 2.3f;
     private float DistanceBetweenPlatforms => Random.Range(minDistanceBetweenPlatforms, maxDistanceBetweenPlatforms);
     private float PlatformWidth => Random.Range(minPlatformWidth, maxPlatformWidth);
+    private GameObject _platformContainer;
 
     [Header("Spikes")]
     [SerializeField] private FallingSpike fallingSpikePrefab;
@@ -45,11 +47,14 @@ public class LevelGenerator : MonoBehaviour
 
     private void Start()
     {
+        _wallContainer = new GameObject("Walls");
+        _platformContainer = new GameObject("Platforms");
+        fallingSpikeContainer = new GameObject("Spikes");
+
         SpawnWalls();
 
         SpawnPlatforms();
 
-        fallingSpikeContainer = new GameObject("Spikes");
         StartGeneratingMiddleFallingSpikes();
     }
 
@@ -93,7 +98,7 @@ public class LevelGenerator : MonoBehaviour
         float heightWithExtra = wallHeight + wallExtraPart;
         float centerY = heightWithExtra / 2 - wallExtraPart;
 
-        return Spawn<Wall>(wallPrefab, centerX, centerY, wallWidth, heightWithExtra, wallColor);
+        return Spawn<Wall>(wallPrefab, centerX, centerY, wallWidth, heightWithExtra, wallColor, _wallContainer.transform);
     }
 
     private void SpawnPlatforms()
@@ -134,12 +139,12 @@ public class LevelGenerator : MonoBehaviour
 
     private Platform SpawnPlatform(float x, float y, float platformWidth)
     {
-        return Spawn<Platform>(platformPrefab, x, y, platformWidth, platformHeight, platformColor);
+        return Spawn<Platform>(platformPrefab, x, y, platformWidth, platformHeight, platformColor, _platformContainer.transform);
     }
 
-    public T Spawn<T>(T prefab, float x, float y, float width, float height, Color color) where T : RectElement
+    public T Spawn<T>(T prefab, float x, float y, float width, float height, Color color, Transform parent = null) where T : RectElement
     {
-        T instance = Instantiate(prefab);
+        T instance = Instantiate(prefab, parent);
         instance.Initialize(width, height, color);
         instance.transform.position = new Vector3(x, y, 0f);
         return instance;

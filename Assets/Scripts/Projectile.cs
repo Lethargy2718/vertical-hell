@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AdaptivePerformance;
 
 public class Projectile : MonoBehaviour
 {
@@ -27,7 +28,8 @@ public class Projectile : MonoBehaviour
     {
         if (other.TryGetComponent<HealthComponent>(out var healthComponent))
         {
-            healthComponent.TakeDamage(damage);
+            Vector2 direction = (other.transform.position - transform.position).normalized;
+            healthComponent.TakeDamage(damage, direction);
         }
         Destroy(gameObject);
     }

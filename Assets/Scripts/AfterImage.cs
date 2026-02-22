@@ -1,45 +1,47 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Afterimage : MonoBehaviour
 {
     [SerializeField] private float spawnInterval = 0.05f;
     [SerializeField] private float fadeDuration = 0.2f;
-    [SerializeField] private float afterDashTrailDuration = 0.2f;
+    [SerializeField] private float afterStopDuration = 0.2f;
     [SerializeField] private Color afterimageColor = new Color(1f, 1f, 1f, 0.5f);
     [SerializeField] private Material afterimageMaterial = null;
+    [SerializeField] private bool startOnSpawn = true;
 
     private SpriteRenderer _sr;
-    private PlayerController _playerController;
     private Coroutine _spawnRoutine;
+    private GameObject _afterimageContainer;
+
+    private List<GameObject> _activeAfterimages = new List<GameObject>();
 
     private void Awake()
     {
         _sr = GetComponentInChildren<SpriteRenderer>();
-        _playerController = GetComponent<PlayerController>();
     }
 
-    private void OnEnable()
+    private void Start()
     {
-        _playerController.Dashed += StartAfterimages;
-        _playerController.DashEnded += WaitThenStopAfterImages;
-    }
+        _afterimageContainer = new GameObject("Afterimages");
+        _afterimageContainer.transform.parent = transform.parent;
 
-    private void OnDisable()
-    {
-        _playerController.Dashed -= StartAfterimages;
-        _playerController.DashEnded -= WaitThenStopAfterImages;
+        if (startOnSpawn)
+        {
+            StartAfterimages();
+        }
     }
 
     public void StartAfterimages() => _spawnRoutine = StartCoroutine(SpawnCoroutine());
     public void StopAfterimages() => StopCoroutine(_spawnRoutine);
 
-    private void WaitThenStopAfterImages()
+    public void WaitThenStopAfterImages()
     {
         StartCoroutine(WaitCoroutine());
         IEnumerator WaitCoroutine()
         {
-            yield return new WaitForSeconds(afterDashTrailDuration);
+            yield return new WaitForSeconds(afterStopDuration);
             StopAfterimages();
         }
     }
@@ -55,10 +57,13 @@ public class Afterimage : MonoBehaviour
 
     private void SpawnImage()
     {
-        GameObject afterImage = new GameObject();
+        GameObject afterImage = new GameObject("Afterimage");
+        afterImage.transform.parent = _afterimageContainer.transform;
         afterImage.transform.position = transform.position;
         afterImage.transform.rotation = transform.rotation;
         afterImage.transform.localScale = transform.localScale;
+
+        _activeAfterimages.Add(afterImage);
 
         SpriteRenderer sr = afterImage.AddComponent<SpriteRenderer>();
         sr.sprite = _sr.sprite;
@@ -84,6 +89,14 @@ public class Afterimage : MonoBehaviour
             yield return null;
         }
 
+        _activeAfterimages.Remove(_sr.gameObject);
         Destroy(sr.gameObject);
+    }
+    private void OnDestroy()
+    {
+        foreach (var image in _activeAfterimages)
+        {
+            if (image != null) Destroy(image);
+        }
     }
 }

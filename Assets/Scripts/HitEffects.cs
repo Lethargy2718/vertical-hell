@@ -58,7 +58,7 @@ public class HitEffects : MonoBehaviour
     private void OnEnable() => healthComponent.DamageTaken += HandleHit;
     private void OnDisable() => healthComponent.DamageTaken -= HandleHit;
 
-    private void HandleHit(float damage)
+    private void HandleHit(float damage, Vector2 _)
     {
         _sc.Play();
         if (_effectRoutine != null)

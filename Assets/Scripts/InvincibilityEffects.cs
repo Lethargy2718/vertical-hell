@@ -49,7 +49,6 @@ public class InvincibilityEffects : MonoBehaviour
 
     private void OnInvincibilityEnded()
     {
-        Debug.Log("Ended" + gameObject);
         if (_invincibleEffect != null)
         {
             StopCoroutine(_invincibleEffect);

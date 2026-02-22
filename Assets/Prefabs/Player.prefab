@@ -10,6 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 9195900649586646249}
   - component: {fileID: 3618778088776402157}
+  - component: {fileID: 7896976167003205734}
+  - component: {fileID: 4176417665231926259}
+  - component: {fileID: 8972674846948218193}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -82,7 +85,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: c80fe60223a81a64daac79540f6f7116, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.99999994, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -91,6 +94,51 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &7896976167003205734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5379584858980567420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52b4d13e260bb7d42917ba858c959d97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HurtAnimator
+  _health: {fileID: 1730961329049799657}
+  _invincibleColor: {r: 0, g: 0, b: 0, a: 0}
+  _flashSpeed: 10
+--- !u!114 &4176417665231926259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5379584858980567420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02976572040d54848a98002dbd6896e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  spawnInterval: 0.004
+  fadeDuration: 0.1
+  afterFadeDuration: 0.2
+  afterimageColor: {r: 0.474, g: 0.474, b: 0.474, a: 0.23921569}
+  afterimageMaterial: {fileID: 2100000, guid: 041d5194bb48cd5449ffbe5276e3fdf6, type: 2}
+  startOnSpawn: 0
+--- !u!114 &8972674846948218193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5379584858980567420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c63f41b71263eb40a7b81467260fde0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &6025537084884123241
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,7 +152,6 @@ GameObject:
   - component: {fileID: 4101939361758923610}
   - component: {fileID: 3812741773816018122}
   - component: {fileID: 1730961329049799657}
-  - component: {fileID: 1855995120737978540}
   - component: {fileID: 2351480259535395304}
   m_Layer: 3
   m_Name: Player
@@ -121,7 +168,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6025537084884123241}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -239,23 +286,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   _health: 0
   _maxHealth: 100
---- !u!114 &1855995120737978540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6025537084884123241}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02976572040d54848a98002dbd6896e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  spawnInterval: 0.004
-  fadeDuration: 0.1
-  afterDashTrailDuration: 0.2
-  afterimageColor: {r: 0.474, g: 0.474, b: 0.474, a: 0.23921569}
-  afterimageMaterial: {fileID: 2100000, guid: 041d5194bb48cd5449ffbe5276e3fdf6, type: 2}
+  invincibilityDuration: 1
 --- !u!82 &2351480259535395304
 AudioSource:
   m_ObjectHideFlags: 0

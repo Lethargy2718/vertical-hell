@@ -6,7 +6,7 @@ public class HealthComponent : MonoBehaviour
 {
     public enum DamageType { Normal, Effect, Absolute };
     public Action<float> HealthChanged;
-    public Action<float> DamageTaken;
+    public Action<float, Vector2> DamageTaken;
     public Action HealthDepleted;
     public Action InvincibilityStarted;
     public Action InvincibilityEnded;
@@ -14,8 +14,6 @@ public class HealthComponent : MonoBehaviour
     private int _invincibleEffects = 0;
     public void AddInvincibleEffect()
     {
-        Debug.Log(_invincibleEffects + " is getting increased");
-
         _invincibleEffects++;
         if (_invincibleEffects == 1)
         {
@@ -25,8 +23,6 @@ public class HealthComponent : MonoBehaviour
 
     public void RemoveInvincibleEffect()
     {
-        Debug.Log(_invincibleEffects + " is getting reduced");
-
         if (_invincibleEffects == 1)
         {
             InvincibilityEnded?.Invoke();
@@ -66,7 +62,7 @@ public class HealthComponent : MonoBehaviour
         Health = MaxHealth;
     }
 
-    public void TakeDamage(float dmg, DamageType damageType = DamageType.Normal)
+    public void TakeDamage(float dmg, Vector2 attackDirection, DamageType damageType = DamageType.Normal)
     {
         if (IsInvincible && damageType == DamageType.Normal) return;
 
@@ -74,7 +70,7 @@ public class HealthComponent : MonoBehaviour
 
         if (damageType == DamageType.Normal)
         {
-            DamageTaken?.Invoke(Health);
+            DamageTaken?.Invoke(Health, attackDirection);
             StartCoroutine(InvincibilityCoroutine());
         }
     }

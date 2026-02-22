@@ -109,6 +109,7 @@ public class FloatingEnemy : MonoBehaviour
 
     private void StartCatchingUp()
     {
+        if (_isCatchingUp) return;
         _startedCatchingUpTime = _time;
         _isCatchingUp = true;
         StopAttacking();
@@ -118,6 +119,7 @@ public class FloatingEnemy : MonoBehaviour
 
     private void StopCatchingUp()
     {
+        if (!_isCatchingUp) return;
         _isCatchingUp = false;
         StartAttacking();
         _healthComponent.RemoveInvincibleEffect();
@@ -138,7 +140,8 @@ public class FloatingEnemy : MonoBehaviour
         // Placeholder. Later, check collision with attack hitbox
         if (collision.gameObject.GetComponent<PlayerController>() != null)
         {
-            _healthComponent.TakeDamage(25f);
+            Vector2 direction = (collision.transform.position - transform.position).normalized;
+            _healthComponent.TakeDamage(25f, direction);
             StartCatchingUp();
         }
     }

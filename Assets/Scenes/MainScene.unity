@@ -631,14 +631,14 @@ MonoBehaviour:
   wallExtraPart: 75.6
   wallColor: {r: 0.03, g: 0.012791879, b: 0.025736043, a: 1}
   platformPrefab: {fileID: 3970942876045467863, guid: 1fac8c1eda0544f40b033f4e4c730e8f, type: 3}
-  minPlatformWidth: 0.54
-  maxPlatformWidth: 1
+  minPlatformWidth: 0.5
+  maxPlatformWidth: 1.1
   platformHeight: 0.15
   platformColor: {r: 0.011764706, g: 0.003921569, b: 0.011764706, a: 1}
   platformCount: 50
   firstPlatformY: 1.25
   minDistanceBetweenPlatforms: 2
-  maxDistanceBetweenPlatforms: 2.5
+  maxDistanceBetweenPlatforms: 2.25
   fallingSpikePrefab: {fileID: 3359322381305885662, guid: e19004a9182c48f4281d5fc9bea645de, type: 3}
   fallingSpikeFollowPrefab: {fileID: 2938582557743037705, guid: 006f349be688bb44f865770dde67cd6f, type: 3}
   fallingSpikeSpacing: 10
@@ -775,6 +775,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1704568288}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &839998494 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6025537084884123241, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
+  m_PrefabInstance: {fileID: 2803841691420810596}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &839998496 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4182299899390170049, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
@@ -785,7 +790,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1730961329049799657, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
   m_PrefabInstance: {fileID: 2803841691420810596}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 839998494}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5dedffe9a8c47d247969460aa3617f86, type: 3}
@@ -796,6 +801,24 @@ AudioSource:
   m_CorrespondingSourceObject: {fileID: 2351480259535395304, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
   m_PrefabInstance: {fileID: 2803841691420810596}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &839998509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 839998494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f61ba496a8f15de4c9cf0d50d234bda4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageParticles
+  particleColor: {r: 0.462, g: 0.018236829, b: 0.018236829, a: 1}
+  particleCount: 20
+  spreadSpeed: 3
+  lifetime: 1
+  particleSize: 1.33
+  gravity: -10
 --- !u!1 &886987924
 GameObject:
   m_ObjectHideFlags: 0
@@ -1973,26 +1996,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 105617451}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1817163063 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5379584858980567420, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
-  m_PrefabInstance: {fileID: 2803841691420810596}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1817163067
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1817163063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52b4d13e260bb7d42917ba858c959d97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HurtAnimator
-  _health: {fileID: 839998501}
-  _invincibleColor: {r: 1, g: 1, b: 1, a: 0}
-  _flashSpeed: 10
 --- !u!1 &1853138647
 GameObject:
   m_ObjectHideFlags: 0
@@ -2270,7 +2273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f2b08ba419c2164893897911f9b6b7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraMove
-  speed: 1.2
+  speed: 2
 --- !u!1 &2105021315
 GameObject:
   m_ObjectHideFlags: 0
@@ -2431,18 +2434,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 380607055}
     m_Modifications:
-    - target: {fileID: 3618778088776402157, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3618778088776402157, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3618778088776402157, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4182299899390170049, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2491,9 +2482,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5379584858980567420, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 6025537084884123241, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1817163067}
+      addedObject: {fileID: 839998509}
   m_SourcePrefab: {fileID: 100100000, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
 --- !u!1001 &3087648517557650513
 PrefabInstance:
@@ -2508,12 +2499,60 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 839998496}
     - target: {fileID: 4116431312481696745, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: _flashSpeed
-      value: 15
+      propertyPath: _invincibleColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4116431312481696745, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
+      propertyPath: _invincibleColor.b
+      value: 0.138
+      objectReference: {fileID: 0}
+    - target: {fileID: 4116431312481696745, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
+      propertyPath: _invincibleColor.g
+      value: 0.138
+      objectReference: {fileID: 0}
+    - target: {fileID: 4116431312481696745, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
+      propertyPath: _invincibleColor.r
+      value: 0.138
+      objectReference: {fileID: 0}
+    - target: {fileID: 4997840643680288729, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
+      propertyPath: gravity
+      value: -7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4997840643680288729, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
+      propertyPath: lifetime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4997840643680288729, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
+      propertyPath: spreadSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4997840643680288729, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
+      propertyPath: particleSize
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4997840643680288729, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
+      propertyPath: particleCount
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4997840643680288729, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
+      propertyPath: particleColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4997840643680288729, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
+      propertyPath: particleColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4997840643680288729, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
+      propertyPath: particleColor.r
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5285945736117505294, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7230577398638438691, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
+      propertyPath: duration
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7621943446745219019, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2559,10 +2598,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 839998496}
-    - target: {fileID: 7721535141972668100, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: maxSpeed
-      value: 24
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

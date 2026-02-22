@@ -34,7 +34,8 @@ public class FallingSpike : MonoBehaviour
         {
             if (collision.TryGetComponent<HealthComponent>(out var healthComponent))
             {
-                healthComponent.TakeDamage(Dmg);
+                Vector2 direction = (collision.transform.position - transform.position).normalized;
+                healthComponent.TakeDamage(Dmg, direction);
             }
 
             Destroy(gameObject);
