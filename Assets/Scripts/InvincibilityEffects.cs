@@ -8,11 +8,10 @@ public class InvincibilityEffects : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
 
     [Header("Invincible Settings")]
-    [SerializeField] private Color _invincibleColor = new Color(0.5f, 0.5f, 1f, 0.8f);
+    [SerializeField] private Color _invincibleColor = new Color(0f, 0f, 0f, 0f);
     [SerializeField] private float _flashSpeed = 10f;
     private Coroutine _invincibleEffect;
     private Color _originalColor;
-
 
     private void Awake()
     {
@@ -50,6 +49,7 @@ public class InvincibilityEffects : MonoBehaviour
 
     private void OnInvincibilityEnded()
     {
+        Debug.Log("Ended" + gameObject);
         if (_invincibleEffect != null)
         {
             StopCoroutine(_invincibleEffect);

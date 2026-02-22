@@ -113,12 +113,14 @@ public class FloatingEnemy : MonoBehaviour
         _isCatchingUp = true;
         StopAttacking();
         StopGlowInstantly();
+        _healthComponent.AddInvincibleEffect();
     }
 
     private void StopCatchingUp()
     {
         _isCatchingUp = false;
         StartAttacking();
+        _healthComponent.RemoveInvincibleEffect();
     }
 
     private void StartAttacking()

@@ -10,7 +10,32 @@ public class HealthComponent : MonoBehaviour
     public Action HealthDepleted;
     public Action InvincibilityStarted;
     public Action InvincibilityEnded;
-    public bool IsInvincible { get; private set; } = false;
+
+    private int _invincibleEffects = 0;
+    public void AddInvincibleEffect()
+    {
+        Debug.Log(_invincibleEffects + " is getting increased");
+
+        _invincibleEffects++;
+        if (_invincibleEffects == 1)
+        {
+            InvincibilityStarted?.Invoke();
+        }
+    }
+
+    public void RemoveInvincibleEffect()
+    {
+        Debug.Log(_invincibleEffects + " is getting reduced");
+
+        if (_invincibleEffects == 1)
+        {
+            InvincibilityEnded?.Invoke();
+        }
+
+        _invincibleEffects = Mathf.Max(0, _invincibleEffects - 1);
+    }
+
+    public bool IsInvincible => _invincibleEffects > 0;
 
     [SerializeField] private float _health = 100f;
     public float Health {
@@ -49,7 +74,6 @@ public class HealthComponent : MonoBehaviour
 
         if (damageType == DamageType.Normal)
         {
-            IsInvincible = true;
             DamageTaken?.Invoke(Health);
             StartCoroutine(InvincibilityCoroutine());
         }
@@ -57,13 +81,8 @@ public class HealthComponent : MonoBehaviour
 
     private IEnumerator InvincibilityCoroutine()
     {
-        IsInvincible = true;
-        InvincibilityStarted?.Invoke();
-        Debug.Log("Invoked");
-
+        AddInvincibleEffect();
         yield return new WaitForSeconds(invincibilityDuration);
-
-        IsInvincible = false;
-        InvincibilityEnded?.Invoke();
+        RemoveInvincibleEffect();
     }
 }
