@@ -573,6 +573,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 728887664}
+  - component: {fileID: 728887665}
   m_Layer: 0
   m_Name: FallingSpikesSpawner
   m_TagString: Untagged
@@ -595,6 +596,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1704568288}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &728887665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728887663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d85e36680bc20c4981f8a860ea2a844, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  levelGenerator: {fileID: 747635540}
+  player: {fileID: 839998496}
+  fallingSpikePrefab: {fileID: 3359322381305885662, guid: e19004a9182c48f4281d5fc9bea645de, type: 3}
+  fallingSpikeSpacing: 10
+  fallingSpikeSpeed: 3
+  skippedPreGeneratedSpikes: 1
+  warningPrefab: {fileID: 3401736334866572788, guid: d268b8d05dd7263458c0e37e7c8233e7, type: 3}
 --- !u!1 &747635539
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,10 +646,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   player: {fileID: 839998496}
   wallPrefab: {fileID: 8609112689419610459, guid: a8df09b70e1b89349b1790ca5662b4b4, type: 3}
+  wallColor: {r: 0.03, g: 0.012791879, b: 0.025736043, a: 1}
+  wallExtraPart: 75.6
   wallWidth: 50
   wallHeight: 200
-  wallExtraPart: 75.6
-  wallColor: {r: 0.03, g: 0.012791879, b: 0.025736043, a: 1}
   platformPrefab: {fileID: 3970942876045467863, guid: 1fac8c1eda0544f40b033f4e4c730e8f, type: 3}
   minPlatformWidth: 0.5
   maxPlatformWidth: 1.1
@@ -639,12 +659,6 @@ MonoBehaviour:
   firstPlatformY: 1.25
   minDistanceBetweenPlatforms: 2
   maxDistanceBetweenPlatforms: 2.25
-  fallingSpikePrefab: {fileID: 3359322381305885662, guid: e19004a9182c48f4281d5fc9bea645de, type: 3}
-  fallingSpikeFollowPrefab: {fileID: 2938582557743037705, guid: 006f349be688bb44f865770dde67cd6f, type: 3}
-  fallingSpikeSpacing: 10
-  fallingSpikeSpeed: 5
-  skippedPreGeneratedSpikes: 1
-  warningPrefab: {fileID: 3401736334866572788, guid: d268b8d05dd7263458c0e37e7c8233e7, type: 3}
 --- !u!4 &747635541
 Transform:
   m_ObjectHideFlags: 0
@@ -1897,12 +1911,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 758735545}
   - {fileID: 1187355051}
   - {fileID: 747635541}
+  - {fileID: 728887664}
   - {fileID: 886987925}
   - {fileID: 1448697498}
-  - {fileID: 728887664}
+  - {fileID: 758735545}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1807548963
@@ -2516,7 +2530,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4997840643680288729, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
       propertyPath: gravity
-      value: -7
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 4997840643680288729, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
       propertyPath: lifetime
@@ -2536,15 +2550,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4997840643680288729, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
       propertyPath: particleColor.b
-      value: 0
+      value: 0.0036289988
       objectReference: {fileID: 0}
     - target: {fileID: 4997840643680288729, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
       propertyPath: particleColor.g
-      value: 0
+      value: 0.0036289988
       objectReference: {fileID: 0}
     - target: {fileID: 4997840643680288729, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
       propertyPath: particleColor.r
-      value: 0
+      value: 0.024258733
       objectReference: {fileID: 0}
     - target: {fileID: 5285945736117505294, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
       propertyPath: m_Name
