@@ -27,7 +27,7 @@ public class FloatingEnemy : MonoBehaviour
     private bool _isCatchingUp;
     private bool _isMovingFast;
     private float Acceleration => _isMovingFast ? fastAcceleration : acceleration;
-    private float Speed => _isCatchingUp ? fastMaxSpeed : maxSpeed;
+    private float MaxSpeed => _isCatchingUp ? fastMaxSpeed : maxSpeed;
     private float _startedCatchingUpTime = float.MinValue;
 
     [Header("Glow")]
@@ -118,8 +118,7 @@ public class FloatingEnemy : MonoBehaviour
             _velocity += Acceleration * Time.deltaTime * direction;
 
         _velocity *= drag;
-        _velocity = Vector2.ClampMagnitude(_velocity, Speed);
-        Debug.Log(_velocity.magnitude);
+        _velocity = Vector2.ClampMagnitude(_velocity, MaxSpeed);
         transform.position += (Vector3)_velocity * Time.deltaTime;
     }
 
@@ -165,6 +164,8 @@ public class FloatingEnemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (_healthComponent.IsInvincible) return;
+
         if (collision.gameObject.GetComponent<PlayerController>() != null)
         {
             Vector2 direction = (collision.transform.position - transform.position).normalized;
@@ -180,8 +181,6 @@ public class FloatingEnemy : MonoBehaviour
         _isRetaliating = true;
         _startedRetaliatingTime = _time;
 
-        _healthComponent.AddInvincibleEffect();
-
         StopAttacking();
         _attacker.SetAttackSpeedMultiplier(retaliationAttackSpeedMultiplier);
         StartAttacking();
@@ -193,7 +192,6 @@ public class FloatingEnemy : MonoBehaviour
     {
         _isRetaliating = false;
         _attacker.SetAttackSpeedMultiplier(1f);
-        _healthComponent.RemoveInvincibleEffect();
         StopMovingFast();
         StartAttacking();
     }
