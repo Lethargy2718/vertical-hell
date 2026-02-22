@@ -26,8 +26,8 @@ public class HitEffects : MonoBehaviour
     private Coroutine _effectRoutine;
 
     [Header("Screen Shake Parameters")]
-    [SerializeField] private float shakeAmplitude = 2f;
-    [SerializeField] private float shakeFrequency = 2f;
+    [SerializeField] private float shakeAmplitude = 0.14f; // When not using slowmo
+    [SerializeField] private float shakeFrequency = 25f;
     private CinemachineBasicMultiChannelPerlin _noise;
 
 

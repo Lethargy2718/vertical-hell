@@ -7,6 +7,7 @@ public class FloatingEnemy : MonoBehaviour
     [Header("References")]
     [SerializeField] private Transform player;
     private HealthComponent _healthComponent;
+    private SpriteRenderer _sr;
     private IAttacker _attacker;
 
     [Header("Positioning")]
@@ -49,6 +50,7 @@ public class FloatingEnemy : MonoBehaviour
     {
         _healthComponent = GetComponent<HealthComponent>();
         _attacker = GetComponent<IAttacker>();
+        _sr = GetComponentInChildren<SpriteRenderer>();
     }
 
     private void Start()
@@ -80,6 +82,8 @@ public class FloatingEnemy : MonoBehaviour
         {
             StopRetaliation();
         }
+
+        FlipX();
     }
 
     private void HandleMovement()
@@ -240,5 +244,10 @@ public class FloatingEnemy : MonoBehaviour
 
         // Fade down super fast
         _glowRoutine = StartCoroutine(AnimateGlow(glowLight.intensity, 0f, 0.05f));
+    }
+
+    private void FlipX()
+    {
+        _sr.flipX = player.transform.position.x < transform.position.x;
     }
 }
