@@ -190,17 +190,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7621943446745219019, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
   m_PrefabInstance: {fileID: 3087648517557650513}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &246436145 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5146979379318059535, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-  m_PrefabInstance: {fileID: 3087648517557650513}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.2D.Runtime::UnityEngine.Rendering.Universal.Light2D
 --- !u!1 &260977546
 GameObject:
   m_ObjectHideFlags: 0
@@ -1984,6 +1973,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 105617451}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1817163063 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5379584858980567420, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
+  m_PrefabInstance: {fileID: 2803841691420810596}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1817163067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817163063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52b4d13e260bb7d42917ba858c959d97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HurtAnimator
+  _health: {fileID: 839998501}
+  _invincibleColor: {r: 1, g: 1, b: 1, a: 0}
+  _flashSpeed: 10
 --- !u!1 &1853138647
 GameObject:
   m_ObjectHideFlags: 0
@@ -2422,6 +2431,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 380607055}
     m_Modifications:
+    - target: {fileID: 3618778088776402157, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3618778088776402157, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3618778088776402157, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4182299899390170049, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2469,7 +2490,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5379584858980567420, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1817163067}
   m_SourcePrefab: {fileID: 100100000, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
 --- !u!1001 &3087648517557650513
 PrefabInstance:
@@ -2479,77 +2503,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 380607055}
     m_Modifications:
-    - target: {fileID: 1919787288247976840, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: m_Type
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1919787288247976840, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: m_Color.b
-      value: 0.69900304
-      objectReference: {fileID: 0}
-    - target: {fileID: 1919787288247976840, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: m_Color.g
-      value: 0.69900304
-      objectReference: {fileID: 0}
-    - target: {fileID: 1919787288247976840, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: m_Color.r
-      value: 0.96226406
-      objectReference: {fileID: 0}
-    - target: {fileID: 1919787288247976840, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: m_Intensity
-      value: 33.98
-      objectReference: {fileID: 0}
-    - target: {fileID: 1919787288247976840, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: m_SpotAngle
-      value: 34.18106
-      objectReference: {fileID: 0}
-    - target: {fileID: 1919787288247976840, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: m_Lightmapping
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 2358642074890276525, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 839998496}
-    - target: {fileID: 2358642074890276525, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: cooldownDuration
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2358642074890276525, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: projectilePrefab
-      value: 
-      objectReference: {fileID: 6590986962884944413, guid: b9388da98c08ae04dbac80ee96c6fbdf, type: 3}
-    - target: {fileID: 2358642074890276525, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: chargeDownDuration
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2358642074890276525, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: shootProjectilesInterval
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5146979379318059535, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5146979379318059535, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5146979379318059535, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5146979379318059535, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: m_LocalBounds.m_Center.y
-      value: -0.00000011920929
-      objectReference: {fileID: 0}
-    - target: {fileID: 5146979379318059535, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: m_LocalBounds.m_Extent.x
-      value: 0.9985302
-      objectReference: {fileID: 0}
-    - target: {fileID: 5146979379318059535, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: m_LocalBounds.m_Extent.y
-      value: 0.99853027
+    - target: {fileID: 4116431312481696745, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
+      propertyPath: _flashSpeed
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5285945736117505294, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
       propertyPath: m_Name
@@ -2595,29 +2555,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7690406589503698139, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7690406589503698139, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7721535141972668100, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 839998496}
     - target: {fileID: 7721535141972668100, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: glowLight
-      value: 
-      objectReference: {fileID: 246436145}
-    - target: {fileID: 7721535141972668100, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: catchUpThreshold
-      value: 3.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7721535141972668100, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: maxGlowIntensity
-      value: 10
+      propertyPath: maxSpeed
+      value: 24
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

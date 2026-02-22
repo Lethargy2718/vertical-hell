@@ -88,7 +88,6 @@ public class FloatingEnemy : MonoBehaviour
 
         if (!_isCatchingUp && (belowPlayer || aboveTargetY))
         {
-            Debug.Log("Started catching up. Displacement from player: " + displacementFromPlayer);
             StartCatchingUp();
         }
 
@@ -97,7 +96,6 @@ public class FloatingEnemy : MonoBehaviour
 
         if (_isCatchingUp && (caughtUp || catchUpDurationOver))
         {
-            Debug.Log($"Finished catching up. Caught up: {caughtUp}. Duration over: {catchUpDurationOver}");
             StopCatchingUp();
         }
 

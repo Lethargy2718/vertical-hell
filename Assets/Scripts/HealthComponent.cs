@@ -1,12 +1,16 @@
 using System;
-using Cinemachine;
+using System.Collections;
 using UnityEngine;
 
 public class HealthComponent : MonoBehaviour
 {
+    public enum DamageType { Normal, Effect, Absolute };
     public Action<float> HealthChanged;
     public Action<float> DamageTaken;
     public Action HealthDepleted;
+    public Action InvincibilityStarted;
+    public Action InvincibilityEnded;
+    public bool IsInvincible { get; private set; } = false;
 
     [SerializeField] private float _health = 100f;
     public float Health {
@@ -30,16 +34,36 @@ public class HealthComponent : MonoBehaviour
         set => _maxHealth = Mathf.Max(0, value);
     }
 
+    [SerializeField] private float invincibilityDuration = 1.0f;
+
     private void Start()
     {
         Health = MaxHealth;
     }
 
-    public void TakeDamage(float dmg)
+    public void TakeDamage(float dmg, DamageType damageType = DamageType.Normal)
     {
+        if (IsInvincible && damageType == DamageType.Normal) return;
+
         Health -= dmg;
-        DamageTaken?.Invoke(Health);
+
+        if (damageType == DamageType.Normal)
+        {
+            IsInvincible = true;
+            DamageTaken?.Invoke(Health);
+            StartCoroutine(InvincibilityCoroutine());
+        }
     }
 
-    // TODO: add invincibility
+    private IEnumerator InvincibilityCoroutine()
+    {
+        IsInvincible = true;
+        InvincibilityStarted?.Invoke();
+        Debug.Log("Invoked");
+
+        yield return new WaitForSeconds(invincibilityDuration);
+
+        IsInvincible = false;
+        InvincibilityEnded?.Invoke();
+    }
 }

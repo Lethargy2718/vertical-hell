@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
 public class ClampX : MonoBehaviour
 {
     [SerializeField] private float offset = 0f;
@@ -10,7 +9,7 @@ public class ClampX : MonoBehaviour
 
     private void Awake()
     {
-        _sr = GetComponent<SpriteRenderer>();
+        _sr = GetComponentInChildren<SpriteRenderer>();
     }
 
     private void Update()
