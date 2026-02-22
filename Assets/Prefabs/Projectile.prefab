@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
   speed: 5
-  damage: 5
+  damage: 10
   lifetime: 5
 --- !u!61 &3676862868227703216
 BoxCollider2D:

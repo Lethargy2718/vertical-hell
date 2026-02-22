@@ -154,7 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DamageParticles
   particleColor: {r: 0.462, g: 0.018236829, b: 0.018236829, a: 1}
   particleCount: 20
-  spreadSpeed: 3
+  spreadSpeed: 5
   lifetime: 1
   particleSize: 1.33
   gravity: -10

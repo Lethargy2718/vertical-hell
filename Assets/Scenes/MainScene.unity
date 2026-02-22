@@ -612,8 +612,8 @@ MonoBehaviour:
   player: {fileID: 839998496}
   fallingSpikePrefab: {fileID: 3359322381305885662, guid: e19004a9182c48f4281d5fc9bea645de, type: 3}
   fallingSpikeSpacing: 10
-  fallingSpikeSpeed: 3
-  skippedPreGeneratedSpikes: 1
+  fallingSpikeSpeed: 5
+  skippedPreGeneratedSpikes: 2
   warningPrefab: {fileID: 3401736334866572788, guid: d268b8d05dd7263458c0e37e7c8233e7, type: 3}
 --- !u!1 &747635539
 GameObject:
@@ -646,21 +646,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   player: {fileID: 839998496}
   wallPrefab: {fileID: 8609112689419610459, guid: a8df09b70e1b89349b1790ca5662b4b4, type: 3}
-  wallColor: {r: 0.03, g: 0.012791879, b: 0.025736043, a: 1}
+  wallColor: {r: 0.03137255, g: 0.011764704, b: 0.013392795, a: 1}
   wallExtraPart: 75.6
   wallWidth: 50
   wallHeight: 200
   platformPrefab: {fileID: 3970942876045467863, guid: 1fac8c1eda0544f40b033f4e4c730e8f, type: 3}
-  minPlatformWidth: 1
-  maxPlatformWidth: 1
+  minPlatformWidth: 0.8
+  maxPlatformWidth: 1.2
   platformHeight: 0.125
   platformColor: {r: 0.011764706, g: 0.003921569, b: 0.011764706, a: 1}
   platformCount: 50
   firstPlatformY: 1.25
   minDistanceBetweenPlatforms: 2
   maxDistanceBetweenPlatforms: 2.25
-  maxPlacementAttempts: 10
-  maxAllowedOverlap: 0.3
+  platformsType: 1
+  maxPlacementAttempts: 20
+  maxAllowedOverlap: 0
 --- !u!4 &747635541
 Transform:
   m_ObjectHideFlags: 0
@@ -707,7 +708,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UIManager
   playerHealth: {fileID: 839998501}
   healthText: {fileID: 2072760534}
-  duration: 1.5
+  duration: 3
   minDuration: 0.3
   rollCurve:
     serializedVersion: 2
@@ -751,7 +752,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  dimDuration: 1.2
+  dimDuration: 2
   dimCurve:
     serializedVersion: 2
     m_Curve:
@@ -860,7 +861,7 @@ MonoBehaviour:
   effectDuration: 0.5
   healthComponent: {fileID: 839998501}
   enableSlowMo: 1
-  slowMoTimeScale: 0.1
+  slowMoTimeScale: 0.2
   virtualCamera: {fileID: 959431872}
   pulseAmount: 0.3
   pulseCurve:
@@ -1446,6 +1447,37 @@ Transform:
   - {fileID: 943442696}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1120320396
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1120320397}
+  m_Layer: 0
+  m_Name: Walls
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1120320397
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120320396}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1187355049
 GameObject:
   m_ObjectHideFlags: 0
@@ -1861,6 +1893,37 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1647675630
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1647675631}
+  m_Layer: 0
+  m_Name: Platforms
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1647675631
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1647675630}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1704568287
 GameObject:
   m_ObjectHideFlags: 0
@@ -2427,10 +2490,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 380607055}
     m_Modifications:
-    - target: {fileID: 3181760953372911286, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
-      propertyPath: spreadSpeed
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 4182299899390170049, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2492,13 +2551,29 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 839998496}
-    - target: {fileID: 3636041091923254227, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: _health
-      value: 100
+    - target: {fileID: 4997840643680288729, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
+      propertyPath: gravity
+      value: -20
       objectReference: {fileID: 0}
-    - target: {fileID: 3636041091923254227, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: _maxHealth
-      value: 100
+    - target: {fileID: 4997840643680288729, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
+      propertyPath: spreadSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4997840643680288729, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
+      propertyPath: particleCount
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4997840643680288729, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
+      propertyPath: particleColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4997840643680288729, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
+      propertyPath: particleColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4997840643680288729, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
+      propertyPath: particleColor.r
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5285945736117505294, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
       propertyPath: m_Name
@@ -2548,42 +2623,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 839998496}
-    - target: {fileID: 7721535141972668100, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: maxSpeed
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 7721535141972668100, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: acceleration
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 7721535141972668100, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: fastMaxSpeed
-      value: 250
-      objectReference: {fileID: 0}
-    - target: {fileID: 7721535141972668100, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: catchUpDuration
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7721535141972668100, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: catchUpMaxSpeed
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 7721535141972668100, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: fastAcceleration
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 7721535141972668100, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: catchUpAcceleration
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 7721535141972668100, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: retaliationDuration
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 7721535141972668100, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: retaliationAttackSpeedMultiplier
-      value: 3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2599,3 +2638,5 @@ SceneRoots:
   - {fileID: 105617451}
   - {fileID: 380607055}
   - {fileID: 1853138648}
+  - {fileID: 1120320397}
+  - {fileID: 1647675631}

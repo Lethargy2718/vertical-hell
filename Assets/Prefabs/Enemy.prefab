@@ -183,17 +183,18 @@ MonoBehaviour:
   player: {fileID: 0}
   cameraOffsetY: 1
   playerOffsetX: 2
-  acceleration: 20
-  maxSpeed: 18
+  acceleration: 50
+  maxSpeed: 50
   caughtUpSpeed: 3
   drag: 0.95
-  catchUpAcceleration: 100
-  catchUpMaxSpeed: 80
+  fastAcceleration: 500
+  fastMaxSpeed: 250
   catchUpThreshold: 3.2
   catchUpResolvedThreshold: 0.5
   catchUpDuration: 3
   glowLight: {fileID: 5146979379318059535}
   maxGlowIntensity: 30
+  retaliationAttackSpeedMultiplier: 3
 --- !u!114 &2358642074890276525
 MonoBehaviour:
   m_ObjectHideFlags: 0
