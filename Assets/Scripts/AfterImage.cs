@@ -24,8 +24,7 @@ public class Afterimage : MonoBehaviour
 
     private void Start()
     {
-        _afterimageContainer = new GameObject("Afterimages");
-        _afterimageContainer.transform.parent = transform.parent;
+        _afterimageContainer = new GameObject(transform.parent.name + "-Afterimages");
 
         if (startOnSpawn)
         {
@@ -59,8 +58,7 @@ public class Afterimage : MonoBehaviour
     {
         GameObject afterImage = new GameObject("Afterimage");
         afterImage.transform.parent = _afterimageContainer.transform;
-        afterImage.transform.position = transform.position;
-        afterImage.transform.rotation = transform.rotation;
+        afterImage.transform.SetPositionAndRotation(transform.position, transform.rotation);
         afterImage.transform.localScale = transform.localScale;
 
         _activeAfterimages.Add(afterImage);
