@@ -72,7 +72,7 @@ public class UIManager : MonoBehaviour
 
             while (t < 1f)
             {
-                t += Time.deltaTime / scaledDuration;
+                t += Time.unscaledDeltaTime / scaledDuration;
                 t = Mathf.Clamp01(t);
                 _displayedHealth = Mathf.Lerp(startHealth, lockedTarget, rollCurve.Evaluate(t));
                 UpdateText(_displayedHealth);
