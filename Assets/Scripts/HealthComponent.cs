@@ -56,6 +56,7 @@ public class HealthComponent : MonoBehaviour
     }
 
     [SerializeField] private float invincibilityDuration = 1.0f;
+    public float InvincibilityDuration => invincibilityDuration;
 
     private void Start()
     {
@@ -78,7 +79,7 @@ public class HealthComponent : MonoBehaviour
     private IEnumerator InvincibilityCoroutine()
     {
         AddInvincibleEffect();
-        yield return new WaitForSeconds(invincibilityDuration);
+        yield return new WaitForSeconds(InvincibilityDuration);
         RemoveInvincibleEffect();
     }
 }

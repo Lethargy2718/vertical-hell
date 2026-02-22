@@ -17,22 +17,29 @@ public class FloatingEnemy : MonoBehaviour
     [SerializeField] private float acceleration = 2f;
     [SerializeField] private float maxSpeed = 3f;
     [SerializeField] private float caughtUpSpeed = 10f;
-    [SerializeField] private float drag = 0.95f;
-    [SerializeField] private float catchUpAcceleration = 6f;
-    [SerializeField] private float catchUpMaxSpeed = 7f;
+    [SerializeField] [Range(0f,1f)] private float drag = 0.95f;
+    [SerializeField] private float fastAcceleration = 6f;
+    [SerializeField] private float fastMaxSpeed = 7f;
     [SerializeField] private float catchUpThreshold = 2f;
     [SerializeField] private float catchUpResolvedThreshold = 0.5f;
     [SerializeField] private float catchUpDuration = 2f;
     private Vector2 _velocity;
     private bool _isCatchingUp;
-    private float Acceleration => _isCatchingUp ? catchUpAcceleration : acceleration;
-    private float Speed => _isCatchingUp ? catchUpMaxSpeed : maxSpeed;
+    private bool _isMovingFast;
+    private float Acceleration => _isMovingFast ? fastAcceleration : acceleration;
+    private float Speed => _isCatchingUp ? fastMaxSpeed : maxSpeed;
     private float _startedCatchingUpTime = float.MinValue;
 
     [Header("Glow")]
     [SerializeField] private Light2D glowLight;
     [SerializeField] private float maxGlowIntensity = 3f;
     private Coroutine _glowRoutine;
+
+    [Header("Retaliation")]
+    [SerializeField] private float retaliationAttackSpeedMultiplier = 1.5f;
+    private float _retaliationDuration;
+    private bool _isRetaliating;
+    private float _startedRetaliatingTime;
 
     // Other
     private LevelBounds LB => LevelBounds.Instance;
@@ -42,6 +49,12 @@ public class FloatingEnemy : MonoBehaviour
     {
         _healthComponent = GetComponent<HealthComponent>();
         _attacker = GetComponent<IAttacker>();
+    }
+
+    private void Start()
+    {
+        _retaliationDuration = _healthComponent.InvincibilityDuration;
+        StartAttacking();
     }
 
     private void OnEnable()
@@ -58,25 +71,26 @@ public class FloatingEnemy : MonoBehaviour
         _attacker.ChargeDownStarted -= GlowDown;
     }
 
-    private void Start()
-    {
-        StartAttacking();
-    }
-
     private void Update()
     {
         _time += Time.deltaTime;
         HandleMovement();
+
+        if (_isRetaliating && _time >= _startedRetaliatingTime + _retaliationDuration)
+        {
+            StopRetaliation();
+        }
     }
 
     private void HandleMovement()
     {
+        // Get target position
         float playerSide = player.position.x - LB.MidX;
-
         float targetX = LB.MidX - playerSide + (playerSide < 0 ? playerOffsetX : -playerOffsetX);
         float targetY = LB.CameraTopY - cameraOffsetY;
         Vector2 target = new Vector2(targetX, targetY);
 
+        // Get distance
         Vector2 direction = (target - (Vector2)transform.position).normalized;
         float distanceFromTarget = Vector2.Distance(transform.position, target);
 
@@ -87,7 +101,7 @@ public class FloatingEnemy : MonoBehaviour
         bool belowPlayer = displacementFromPlayer < 0 && -displacementFromPlayer >= catchUpThreshold;
         bool aboveTargetY = displacementFromTargetY > 0 && displacementFromTargetY >= catchUpThreshold;
 
-        if (!_isCatchingUp && (belowPlayer || aboveTargetY))
+        if (!_isCatchingUp && !_isRetaliating && (belowPlayer || aboveTargetY))
         {
             StartCatchingUp();
         }
@@ -105,7 +119,18 @@ public class FloatingEnemy : MonoBehaviour
 
         _velocity *= drag;
         _velocity = Vector2.ClampMagnitude(_velocity, Speed);
+        Debug.Log(_velocity.magnitude);
         transform.position += (Vector3)_velocity * Time.deltaTime;
+    }
+
+    private void StartMovingFast()
+    {
+        _isMovingFast = true;
+    }
+
+    private void StopMovingFast()
+    {
+        _isMovingFast = false;
     }
 
     private void StartCatchingUp()
@@ -115,6 +140,7 @@ public class FloatingEnemy : MonoBehaviour
         _isCatchingUp = true;
         StopAttacking();
         StopGlowInstantly();
+        StartMovingFast(); 
         _healthComponent.AddInvincibleEffect();
     }
 
@@ -122,8 +148,8 @@ public class FloatingEnemy : MonoBehaviour
     {
         if (!_isCatchingUp) return;
         _isCatchingUp = false;
-        _velocity = Vector2.ClampMagnitude(_velocity, caughtUpSpeed);
         StartAttacking();
+        StopMovingFast();
         _healthComponent.RemoveInvincibleEffect();
     }
 
@@ -139,13 +165,37 @@ public class FloatingEnemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Placeholder. Later, check collision with attack hitbox
         if (collision.gameObject.GetComponent<PlayerController>() != null)
         {
             Vector2 direction = (collision.transform.position - transform.position).normalized;
             _healthComponent.TakeDamage(25f, direction);
-            StartCatchingUp();
+            StartRetaliation();
         }
+    }
+
+    private void StartRetaliation()
+    {
+        StopCatchingUp();
+
+        _isRetaliating = true;
+        _startedRetaliatingTime = _time;
+
+        _healthComponent.AddInvincibleEffect();
+
+        StopAttacking();
+        _attacker.SetAttackSpeedMultiplier(retaliationAttackSpeedMultiplier);
+        StartAttacking();
+
+        StartMovingFast();
+    }
+
+    private void StopRetaliation()
+    {
+        _isRetaliating = false;
+        _attacker.SetAttackSpeedMultiplier(1f);
+        _healthComponent.RemoveInvincibleEffect();
+        StopMovingFast();
+        StartAttacking();
     }
 
     private void Die()

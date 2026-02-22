@@ -13,11 +13,15 @@ public class ProjectileShooter : MonoBehaviour, IAttacker
     [SerializeField] private float chargeUpDuration = 1f;
     [SerializeField] private float chargeDownDuration = 1f;
     [SerializeField] private float cooldownDuration = 1f;
-    //[SerializeField] private float shootProjectilesInterval = 5.0f;
+
+    private float _speedMultiplier = 1f;
+    private float ChargeUp => chargeUpDuration / _speedMultiplier;
+    private float ChargeDown => chargeDownDuration / _speedMultiplier;
+    private float Cooldown => cooldownDuration / _speedMultiplier;
+
     private Coroutine _shootProjectilesRoutine;
     private bool _isAttacking = false;
     public Transform target;
-
 
     public void StartAttacking()
     {
@@ -34,20 +38,28 @@ public class ProjectileShooter : MonoBehaviour, IAttacker
         _shootProjectilesRoutine = null;
     }
 
+    public void SetAttackSpeedMultiplier(float multiplier)
+    {
+        _speedMultiplier = Mathf.Max(0.01f, multiplier);
+
+        if (_isAttacking)
+        {
+            StopCoroutine(_shootProjectilesRoutine);
+            _shootProjectilesRoutine = StartCoroutine(ShootProjectilesCoroutine());
+        }
+    }
+
     private IEnumerator ShootProjectilesCoroutine()
     {
         while (true)
         {
-            ChargeUpStarted?.Invoke(chargeUpDuration);
-            yield return new WaitForSeconds(chargeUpDuration);
-
+            ChargeUpStarted?.Invoke(ChargeUp);
+            yield return new WaitForSeconds(ChargeUp);
             ShootProjectile();
-
-            ChargeDownStarted?.Invoke(chargeDownDuration);
-            yield return new WaitForSeconds(chargeDownDuration);
-
-            CooldownStarted?.Invoke(cooldownDuration);
-            yield return new WaitForSeconds(cooldownDuration);
+            ChargeDownStarted?.Invoke(ChargeDown);
+            yield return new WaitForSeconds(ChargeDown);
+            CooldownStarted?.Invoke(Cooldown);
+            yield return new WaitForSeconds(Cooldown);
         }
     }
 
@@ -56,5 +68,4 @@ public class ProjectileShooter : MonoBehaviour, IAttacker
         Projectile projectile = Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
         projectile.Initialize(target.position);
     }
-
 }

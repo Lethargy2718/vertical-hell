@@ -26,6 +26,12 @@ public class LevelGenerator : MonoBehaviour
     private float DistanceBetweenPlatforms => Random.Range(minDistanceBetweenPlatforms, maxDistanceBetweenPlatforms);
     private float PlatformWidth => Random.Range(minPlatformWidth, maxPlatformWidth);
     private GameObject _platformContainer;
+
+    [Header("Platform Overlap")]
+    [SerializeField] private int maxPlacementAttempts = 10;
+    [SerializeField] private float maxAllowedOverlap = 0.3f;
+    private PlacedPlatform? _lastPlacedPlatform;
+
     private LevelBounds LB => LevelBounds.Instance;
 
     private void Start()
@@ -56,7 +62,8 @@ public class LevelGenerator : MonoBehaviour
 
     private void SpawnPlatforms()
     {
-        SpawnPlatformsOnSides();
+        //SpawnPlatformsOnSides();
+        SpawnPlatformsRandomly();
     }
 
     private void SpawnPlatformsOnSides()
@@ -68,16 +75,14 @@ public class LevelGenerator : MonoBehaviour
             float x;
             float platformWidth = PlatformWidth;
 
-            //if (i % 2 == 0) // Left
-            //{
-            //    x = LB.LeftWallX + platformWidth / 2;
-            //}
-            //else
-            //{
-            //    x = LB.RightWallX - platformWidth / 2;
-            //}
-
-            x = LB.GetRandomX(platformWidth);
+            if (i % 2 == 0) // Left
+            {
+                x = LB.LeftWallX + platformWidth / 2;
+            }
+            else
+            {
+                x = LB.RightWallX - platformWidth / 2;
+            }
 
             float dist;
             if (i == 0) dist = firstPlatformY;
@@ -86,6 +91,25 @@ public class LevelGenerator : MonoBehaviour
             float y = currentPos + dist;
             currentPos += dist;
 
+            SpawnPlatform(x, y, platformWidth);
+        }
+    }
+
+    private void SpawnPlatformsRandomly()
+    {
+        _lastPlacedPlatform = null;
+        float currentPos = 0;
+
+        for (int i = 0; i < platformCount; i++)
+        {
+            float dist = i == 0 ? firstPlatformY : DistanceBetweenPlatforms;
+            float y = currentPos + dist;
+            currentPos += dist;
+
+            float platformWidth = PlatformWidth;
+            float x = TryGetNonOverlappingX(platformWidth);
+
+            _lastPlacedPlatform = new PlacedPlatform { X = x, Width = platformWidth };
             SpawnPlatform(x, y, platformWidth);
         }
     }
@@ -101,5 +125,38 @@ public class LevelGenerator : MonoBehaviour
         instance.Initialize(width, height, color);
         instance.transform.position = new Vector3(x, y, 0f);
         return instance;
+    }
+
+    private float TryGetNonOverlappingX(float width)
+    {
+        for (int attempt = 0; attempt < maxPlacementAttempts; attempt++)
+        {
+            float x = LB.GetRandomX(width);
+            if (!TooMuchOverlap(x, width))
+            {
+                return x;
+            }
+        }
+
+        return LB.GetRandomX(width);
+    }
+
+    private bool TooMuchOverlap(float x, float width)
+    {
+        if (_lastPlacedPlatform == null) return false;
+
+        float left = x - width / 2f;
+        float right = x + width / 2f;
+
+        var p = _lastPlacedPlatform.Value;
+        float xOverlap = Mathf.Min(right, p.Right) - Mathf.Max(left, p.Left);
+        return xOverlap > maxAllowedOverlap;
+    }
+
+    private struct PlacedPlatform
+    {
+        public float X, Width;
+        public float Left => X - Width / 2f;
+        public float Right => X + Width / 2f;
     }
 }
