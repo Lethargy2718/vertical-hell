@@ -15,8 +15,6 @@ public class Afterimage : MonoBehaviour
     private Coroutine _spawnRoutine;
     private GameObject _afterimageContainer;
 
-    private List<GameObject> _activeAfterimages = new List<GameObject>();
-
     private void Awake()
     {
         _sr = GetComponentInChildren<SpriteRenderer>();
@@ -61,8 +59,6 @@ public class Afterimage : MonoBehaviour
         afterImage.transform.SetPositionAndRotation(transform.position, transform.rotation);
         afterImage.transform.localScale = transform.localScale;
 
-        _activeAfterimages.Add(afterImage);
-
         SpriteRenderer sr = afterImage.AddComponent<SpriteRenderer>();
         sr.sprite = _sr.sprite;
         sr.sortingLayerID = _sr.sortingLayerID;
@@ -87,14 +83,14 @@ public class Afterimage : MonoBehaviour
             yield return null;
         }
 
-        _activeAfterimages.Remove(_sr.gameObject);
         Destroy(sr.gameObject);
     }
+
     private void OnDestroy()
     {
-        foreach (var image in _activeAfterimages)
+        if (_afterimageContainer != null)
         {
-            if (image != null) Destroy(image);
+            Destroy(_afterimageContainer);
         }
     }
 }
