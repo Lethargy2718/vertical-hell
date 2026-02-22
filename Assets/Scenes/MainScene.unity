@@ -2612,6 +2612,22 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 839998496}
+    - target: {fileID: 7721535141972668100, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
+      propertyPath: maxSpeed
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7721535141972668100, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
+      propertyPath: acceleration
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7721535141972668100, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
+      propertyPath: caughtUpSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7721535141972668100, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
+      propertyPath: catchUpMaxSpeed
+      value: 80
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -123,7 +123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   spawnInterval: 0.004
   fadeDuration: 0.1
-  afterFadeDuration: 0.2
+  afterStopDuration: 0.2
   afterimageColor: {r: 0.474, g: 0.474, b: 0.474, a: 0.23921569}
   afterimageMaterial: {fileID: 2100000, guid: 041d5194bb48cd5449ffbe5276e3fdf6, type: 2}
   startOnSpawn: 0
@@ -153,6 +153,7 @@ GameObject:
   - component: {fileID: 3812741773816018122}
   - component: {fileID: 1730961329049799657}
   - component: {fileID: 2351480259535395304}
+  - component: {fileID: 2808556417747577527}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -192,6 +193,11 @@ MonoBehaviour:
   collisionCheckDistance: 0.05
   playerLayer:
     serializedVersion: 2
+    m_Bits: 8
+  excludeFromCollision:
+  - serializedVersion: 2
+    m_Bits: 8
+  - serializedVersion: 2
     m_Bits: 8
   jumpBuffer: 0.1
   coyoteTime: 0.1
@@ -384,3 +390,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2808556417747577527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6025537084884123241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f61ba496a8f15de4c9cf0d50d234bda4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageParticles
+  particleColor: {r: 0.462, g: 0.018236829, b: 0.018236829, a: 1}
+  particleCount: 20
+  spreadSpeed: 3
+  lifetime: 1
+  particleSize: 1.33
+  gravity: -10

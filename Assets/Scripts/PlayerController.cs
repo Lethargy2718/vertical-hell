@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     // Collision
     [Header("Collision Settings")]
     [SerializeField] private float collisionCheckDistance = 0.05f;
-    [SerializeField] private LayerMask playerLayer;
+    [SerializeField] private LayerMask excludeFromCollisions;
     private float _lastGroundedTime = float.MinValue;
     private bool _grounded;
     private bool _globalQueryStartInColliders;
@@ -101,7 +101,7 @@ public class PlayerController : MonoBehaviour
         if (_currentDirection == 0f)
         {
             _currentDirection = _sr.flipX ? -1f : 1f;
-        }   
+        }
     }
 
     private void Update()
@@ -202,8 +202,8 @@ public class PlayerController : MonoBehaviour
         Physics2D.queriesStartInColliders = false;
 
         // Ground and Ceiling
-        bool groundHit = Physics2D.CapsuleCast(_col.bounds.center, _col.size, _col.direction, 0, Vector2.down, collisionCheckDistance, ~playerLayer);
-        bool ceilingHit = Physics2D.CapsuleCast(_col.bounds.center, _col.size, _col.direction, 0, Vector2.up, collisionCheckDistance, ~playerLayer);
+        bool groundHit = Physics2D.CapsuleCast(_col.bounds.center, _col.size, _col.direction, 0, Vector2.down, collisionCheckDistance, ~excludeFromCollisions);
+        bool ceilingHit = Physics2D.CapsuleCast(_col.bounds.center, _col.size, _col.direction, 0, Vector2.up, collisionCheckDistance, ~excludeFromCollisions);
 
         // Hit a Ceiling
         if (ceilingHit) _frameVelocity.y = Mathf.Min(0, _frameVelocity.y);

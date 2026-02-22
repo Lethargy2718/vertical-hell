@@ -16,6 +16,7 @@ public class FloatingEnemy : MonoBehaviour
     [Header("Movement")]
     [SerializeField] private float acceleration = 2f;
     [SerializeField] private float maxSpeed = 3f;
+    [SerializeField] private float caughtUpSpeed = 10f;
     [SerializeField] private float drag = 0.95f;
     [SerializeField] private float catchUpAcceleration = 6f;
     [SerializeField] private float catchUpMaxSpeed = 7f;
@@ -121,6 +122,7 @@ public class FloatingEnemy : MonoBehaviour
     {
         if (!_isCatchingUp) return;
         _isCatchingUp = false;
+        _velocity = Vector2.ClampMagnitude(_velocity, caughtUpSpeed);
         StartAttacking();
         _healthComponent.RemoveInvincibleEffect();
     }

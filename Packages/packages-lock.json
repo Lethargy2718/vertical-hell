@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.matthewminer.selection-history-navigator": {
+      "version": "https://github.com/mminer/selection-history-navigator.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "6178080abef270ac7df4b1f5037368a0cc0bf9ca"
+    },
     "com.unity.2d.animation": {
       "version": "13.0.2",
       "depth": 0,
