@@ -104,18 +104,16 @@ public class UIManager : MonoBehaviour
 
             float intensity = dimCurve.Evaluate(t) * startIntensity;
             FaceColor = startColor.WithIntensity(intensity);
-
             yield return null;
         }
 
         // Make sure it's reset if the curve was erroneous
-        FaceColor = startColor.WithIntensity(0f);
+        FaceColor = FaceColor.WithIntensity(0f);
     }
 
     private void UpdateText(float value)
     {
         healthText.text = $"{Mathf.Ceil(value)} / {playerHealth.MaxHealth}";
     }
-
 }
 

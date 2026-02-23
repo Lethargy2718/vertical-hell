@@ -70,7 +70,7 @@ public class LowHealthEffects : MonoBehaviour
         for (int i = 0; i < textInfo.meshInfo.Length; i++)
         {
             textInfo.meshInfo[i].mesh.vertices = textInfo.meshInfo[i].vertices;
-            healthText.UpdateGeometry(textInfo.meshInfo[i].mesh, i);
+            healthText.UpdateGeometry(textInfo.meshInfo[i].mesh, i);    
         }
     }
 }

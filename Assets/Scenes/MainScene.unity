@@ -860,7 +860,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HitEffects
   effectDuration: 0.5
   healthComponent: {fileID: 839998501}
-  enableSlowMo: 1
+  enableSlowMo: 0
   slowMoTimeScale: 0.2
   virtualCamera: {fileID: 959431872}
   pulseAmount: 0.3
