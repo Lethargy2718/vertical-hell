@@ -514,7 +514,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 0.3872369, g: 0.6495956, b: 0.26876792, a: 1}
-  m_Intensity: 7
+  m_Intensity: 10
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
   m_ApplyToSortingLayers: 000000001956670ab374a766a9545ae127636bd1
@@ -612,7 +612,7 @@ MonoBehaviour:
   player: {fileID: 839998496}
   fallingSpikePrefab: {fileID: 3359322381305885662, guid: e19004a9182c48f4281d5fc9bea645de, type: 3}
   fallingSpikeSpacing: 10
-  fallingSpikeSpeed: 5
+  fallingSpikeSpeed: 10
   skippedPreGeneratedSpikes: 2
   warningPrefab: {fileID: 3401736334866572788, guid: d268b8d05dd7263458c0e37e7c8233e7, type: 3}
 --- !u!1 &747635539
@@ -658,7 +658,7 @@ MonoBehaviour:
   platformCount: 50
   firstPlatformY: 1.25
   minDistanceBetweenPlatforms: 2
-  maxDistanceBetweenPlatforms: 2.25
+  maxDistanceBetweenPlatforms: 4
   platformsType: 1
   maxPlacementAttempts: 20
   maxAllowedOverlap: 0.4
@@ -1508,7 +1508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   baseWidth: 180
-  baseHeight: 160
+  baseHeight: 320
   ppu: 32
   vcam: {fileID: 959431872}
 --- !u!4 &1187355051
@@ -1791,7 +1791,7 @@ MonoBehaviour:
   healthText: {fileID: 2072760534}
   maxCharShakeAmount: 1
   vignetteColor: {r: 0.342, g: 0, b: 0, a: 1}
-  maxVignetteBoost: 0.3
+  maxVignetteBoost: 0.2
   maxChromaticBoost: 0.5
   threshold: 0.4
 --- !u!1 &1494003867

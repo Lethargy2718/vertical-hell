@@ -302,7 +302,7 @@ public class PlayerController : MonoBehaviour
     private void ExecuteDash()
     {
         Vector2 dashDirection;
-        if (_inputVec == new Vector2(0f, -1f))
+        if (_inputVec.x == 0f && _inputVec.y != 0f)
         {
             dashDirection = _inputVec;
         }
