@@ -170,15 +170,15 @@ public class PlayerController : MonoBehaviour
     }
 
     private float HandleInputPriority(bool pressed1, bool pressed2, bool held1, bool held2, float oldVal)
-{
-    if (pressed1 && pressed2) return 1.0f;
-    if (pressed1) return -1.0f;
-    if (pressed2) return 1.0f;
-    if (held1 && held2) return oldVal;
-    if (held1) return -1.0f;
-    if (held2) return 1.0f;
-    return 0.0f;
-}
+    {
+        if (pressed1 && pressed2) return 1.0f;
+        if (pressed1) return -1.0f;
+        if (pressed2) return 1.0f;
+        if (held1 && held2) return oldVal;
+        if (held1) return -1.0f;
+        if (held2) return 1.0f;
+        return 0.0f;
+    }
 
     private void FixedUpdate()
     {

@@ -5,7 +5,7 @@ using UnityEngine.Rendering.Universal;
 public class FloatingEnemy : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private Transform player;
+    public  Transform player;
     private HealthComponent _healthComponent;
     private SpriteRenderer _sr;
     private IAttacker _attacker;
@@ -133,6 +133,7 @@ public class FloatingEnemy : MonoBehaviour
 
     private void StopMovingFast()
     {
+        _velocity = Vector2.ClampMagnitude(_velocity, caughtUpSpeed);
         _isMovingFast = false;
     }
 

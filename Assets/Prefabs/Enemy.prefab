@@ -208,7 +208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileShooter
   projectilePrefab: {fileID: 6590986962884944413, guid: b9388da98c08ae04dbac80ee96c6fbdf, type: 3}
-  chargeUpDuration: 1
+  chargeUpDuration: 0.5
   chargeDownDuration: 0.5
   cooldownDuration: 0.5
   target: {fileID: 0}
@@ -326,7 +326,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: c80fe60223a81a64daac79540f6f7116, type: 3}
-  m_Color: {r: 1, g: 0.46226406, b: 0.353, a: 0.43529412}
+  m_Color: {r: 1, g: 0.46274507, b: 0.35294116, a: 0.43529412}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -398,9 +398,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f61ba496a8f15de4c9cf0d50d234bda4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageParticles
-  particleColor: {r: 0.024258733, g: 0.0036289988, b: 0.0036289988, a: 1}
-  particleCount: 40
-  spreadSpeed: 3
+  particleColor: {r: 0, g: 0, b: 0, a: 1}
+  particleCount: 50
+  spreadSpeed: 7
   lifetime: 1.5
   particleSize: 1.5
   gravity: -20

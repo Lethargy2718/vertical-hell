@@ -211,7 +211,7 @@ MonoBehaviour:
   collisionCheckDistance: 0.05
   excludeFromCollisions:
     serializedVersion: 2
-    m_Bits: 520
+    m_Bits: 3592
   jumpBuffer: 0.1
   coyoteTime: 0.1
   jumpHeight: 2.5
@@ -224,7 +224,7 @@ MonoBehaviour:
   maxHorizontalSpeed: 6
   acceleration: 1000000
   groundingForce: -1.5
-  fallAcceleration: 35
+  fallAcceleration: 50
   jumpEndEarlyGravityModifier: 4
   maxFallSpeed: 12.5
 --- !u!50 &4101939361758923610
