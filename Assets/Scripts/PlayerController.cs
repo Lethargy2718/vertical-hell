@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     private bool _jumpDown;
     private bool _jumpHeld;
     private bool _dashDown;
-    private float _horizontalMoveDirection;
+    private Vector2 _inputVec;
 
     // Collision
     [Header("Collision Settings")]
@@ -67,6 +67,7 @@ public class PlayerController : MonoBehaviour
     private bool _touchedGroundAfterDash = false;
     private bool CanDash => _dashCooldownEnded && _touchedGroundAfterDash && !_isDashing;
     private Coroutine dashCoroutine;
+    private float _currentVerticalDirection;
 
     // Horizontal Movement
     [Header("Horizontal Movement")]
@@ -74,7 +75,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float airDeceleration = 1.0f;
     [SerializeField] private float maxHorizontalSpeed = 1.0f;
     [SerializeField] private float acceleration = 100.0f;
-    private float _currentDirection;
+    private float _currentHorizontalDirection;
 
     // Gravity
     [Header("Gravity")]
@@ -98,9 +99,9 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        if (_currentDirection == 0f)
+        if (_currentHorizontalDirection == 0f)
         {
-            _currentDirection = _sr.flipX ? -1f : 1f;
+            _currentHorizontalDirection = _sr.flipX ? -1f : 1f;
         }
     }
 
@@ -113,7 +114,7 @@ public class PlayerController : MonoBehaviour
 
     private void GatherInput()
     {
-        #region jump
+        #region Jump Input
 
         _jumpDown = Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Space);
         _jumpHeld = Input.GetButton("Jump") || Input.GetKey(KeyCode.Space);
@@ -127,7 +128,7 @@ public class PlayerController : MonoBehaviour
 
         #endregion
 
-        #region dash
+        #region Dash Input
 
         _dashDown = Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Mouse3);
 
@@ -140,7 +141,7 @@ public class PlayerController : MonoBehaviour
 
         #endregion
 
-        #region horizontal movement
+        #region Horizontal Input
 
         bool leftPressed = Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow);
         bool rightPressed = Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow);
@@ -148,40 +149,36 @@ public class PlayerController : MonoBehaviour
         bool leftHeld = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow);
         bool rightHeld = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow);
 
-        if (leftPressed && rightPressed)
-        {
-            _horizontalMoveDirection = 1.0f;
-        }
-        else if (leftPressed)
-        {
-            _horizontalMoveDirection = -1.0f;
-        }
-        else if (rightPressed)
-        {
-            _horizontalMoveDirection = 1.0f;
-        }
-        else if (leftHeld && rightHeld)
-        {
-            // Both held from before, so it keeps the last direction
-        }
-        else if (leftHeld)
-        {
-            _horizontalMoveDirection = -1.0f;
-        }
-        else if (rightHeld)
-        {
-            _horizontalMoveDirection = 1.0f;
-        }
-        else
-        {
-            // Nothing held
-            _horizontalMoveDirection = 0.0f;
-        }
+        _inputVec.x = HandleInputPriority(leftPressed, rightPressed, leftHeld, rightHeld, _inputVec.x);
+        if (_inputVec.x != 0.0f) _currentHorizontalDirection = _inputVec.x;
 
-        if (_horizontalMoveDirection != 0.0f) _currentDirection = _horizontalMoveDirection;
+        #endregion
+
+        #region Vertical Input
+
+        bool downPressed = Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow);
+        bool upPressed = Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow);
+
+        bool downHeld = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
+        bool upHeld = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
+
+
+        _inputVec.y = HandleInputPriority(downPressed, upPressed, downHeld, upHeld, _inputVec.y);
+        if (_inputVec.y != 0.0f) _currentVerticalDirection = _inputVec.y;
 
         #endregion
     }
+
+    private float HandleInputPriority(bool pressed1, bool pressed2, bool held1, bool held2, float oldVal)
+{
+    if (pressed1 && pressed2) return 1.0f;
+    if (pressed1) return -1.0f;
+    if (pressed2) return 1.0f;
+    if (held1 && held2) return oldVal;
+    if (held1) return -1.0f;
+    if (held2) return 1.0f;
+    return 0.0f;
+}
 
     private void FixedUpdate()
     {
@@ -262,14 +259,14 @@ public class PlayerController : MonoBehaviour
 
     private void HandleDirection()
     {
-        if (_horizontalMoveDirection == 0)
+        if (_inputVec.x == 0)
         {
             float deceleration = _grounded ? groundDeceleration : airDeceleration;
             _frameVelocity.x = Mathf.MoveTowards(_frameVelocity.x, 0, deceleration * Time.fixedDeltaTime);
         }
         else
         {
-            float targetVelocity = _horizontalMoveDirection * maxHorizontalSpeed;
+            float targetVelocity = _inputVec.x * maxHorizontalSpeed;
             _frameVelocity.x = Mathf.MoveTowards(_frameVelocity.x, targetVelocity, acceleration * Time.fixedDeltaTime);
         }
     }
@@ -304,7 +301,14 @@ public class PlayerController : MonoBehaviour
 
     private void ExecuteDash()
     {
-        _frameVelocity = Mathf.Sign(_currentDirection) * dashSpeed * Vector2.right;
+        Vector2 dashDirection;
+        if (_inputVec == new Vector2(0f, -1f))
+        {
+            dashDirection = _inputVec;
+        }
+        else dashDirection = new Vector2(_currentHorizontalDirection, _inputVec.y).normalized;
+
+        _frameVelocity = dashSpeed * dashDirection;
 
         _isDashing = true;
         _touchedGroundAfterDash = false;
@@ -323,7 +327,7 @@ public class PlayerController : MonoBehaviour
     private void EndDash()
     {
         _isDashing = false;
-        _frameVelocity = Vector2.zero;
+        _frameVelocity = new Vector2(0, _frameVelocity.y);
         DashEnded?.Invoke();
         StartCoroutine(DashCooldownRoutine());
 
@@ -341,11 +345,11 @@ public class PlayerController : MonoBehaviour
 
     private void HandleSpriteFlip()
     {
-        if (_horizontalMoveDirection > 0f)
+        if (_inputVec.x > 0f)
         {
             _sr.flipX = false;
         }
-        else if (_horizontalMoveDirection < 0f)
+        else if (_inputVec.x < 0f)
         {
             _sr.flipX = true;
         }
