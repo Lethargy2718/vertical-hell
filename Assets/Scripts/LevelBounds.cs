@@ -1,25 +1,32 @@
 using UnityEngine;
+using Cinemachine;
 
 public class LevelBounds : MonoBehaviour
 {
     public static LevelBounds Instance { get; private set; }
 
     // Base settings
-    private const float _BASE_WIDTH = 180f;
-    private const float _BASE_HEIGHT = 320f;
-    private const float _PPU = 32f;
-    private const float _WALL_OFFSET = 0.3125f;
+    [SerializeField] private float baseWidth = 180f;
+    [SerializeField] private float baseHeight = 320f;
+    [SerializeField] private float ppu = 32f;
+
+    public float FullHorizontalTiles => baseWidth / ppu;
+    public float HorizontalTiles => Mathf.Floor(FullHorizontalTiles);
 
     // Camera
+    [SerializeField] private CinemachineVirtualCamera vcam;
     private Camera cam;
+    public float OrthoSize => baseHeight / ppu / 2;
     public float CameraTopY => cam.ScreenToWorldPoint(new Vector3(0, Screen.height, 0)).y;
     public float CameraBottomY => cam.ScreenToWorldPoint(Vector3.zero).y;
-    public float CameraLeftX => -(_BASE_WIDTH / 2) / _PPU;
+    public float CameraLeftX => -(baseWidth / 2) / ppu;
     public float CameraRightX => -CameraLeftX;
 
     // Walls
-    public float LeftWallX => CameraLeftX + _WALL_OFFSET;
-    public float RightWallX => CameraRightX - _WALL_OFFSET;
+    public float WallOffset => (FullHorizontalTiles - HorizontalTiles) / 2;
+    public float LeftWallX => CameraLeftX + WallOffset;
+    public float RightWallX => CameraRightX - WallOffset;
+
 
 
     private void Awake()
@@ -33,9 +40,14 @@ public class LevelBounds : MonoBehaviour
         cam = Camera.main;
     }
 
+    private void Start()
+    {
+        vcam.m_Lens.OrthographicSize = OrthoSize;
+    }
+
     public float GetLeftWallCenterX(float wallWidth)
     {
-        return CameraLeftX - wallWidth / 2 + _WALL_OFFSET;
+        return CameraLeftX - wallWidth / 2 + WallOffset;
     }
 
     public float GetRightWallCenterX(float wallWidth)

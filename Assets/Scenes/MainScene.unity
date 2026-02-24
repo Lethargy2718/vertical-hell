@@ -652,8 +652,8 @@ MonoBehaviour:
   wallHeight: 200
   platformPrefab: {fileID: 3970942876045467863, guid: 1fac8c1eda0544f40b033f4e4c730e8f, type: 3}
   minPlatformWidth: 0.8
-  maxPlatformWidth: 1.2
-  platformHeight: 0.125
+  maxPlatformWidth: 1.1
+  platformHeight: 0.1
   platformColor: {r: 0.011764706, g: 0.003921569, b: 0.011764706, a: 1}
   platformCount: 50
   firstPlatformY: 1.25
@@ -661,7 +661,7 @@ MonoBehaviour:
   maxDistanceBetweenPlatforms: 2.25
   platformsType: 1
   maxPlacementAttempts: 20
-  maxAllowedOverlap: 0
+  maxAllowedOverlap: 0.4
 --- !u!4 &747635541
 Transform:
   m_ObjectHideFlags: 0
@@ -1507,6 +1507,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c22fdfb8f211054c952eb769ee7110c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  baseWidth: 180
+  baseHeight: 160
+  ppu: 32
+  vcam: {fileID: 959431872}
 --- !u!4 &1187355051
 Transform:
   m_ObjectHideFlags: 0
