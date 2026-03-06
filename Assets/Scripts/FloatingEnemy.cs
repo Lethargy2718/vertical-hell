@@ -171,7 +171,8 @@ public class FloatingEnemy : MonoBehaviour
     {
         if (_healthComponent.IsInvincible) return;
 
-        if (collision.gameObject.GetComponent<PlayerController>() != null)
+        // TODO: detect player in another way
+        if (collision.gameObject.GetComponent<PlayerStateDriver>() != null)
         {
             Vector2 direction = (collision.transform.position - transform.position).normalized;
             _healthComponent.TakeDamage(25f, direction);

@@ -184,11 +184,11 @@ MonoBehaviour:
   cameraOffsetY: 1
   playerOffsetX: 2
   acceleration: 50
-  maxSpeed: 50
-  caughtUpSpeed: 3
+  maxSpeed: 100
+  caughtUpSpeed: 75
   drag: 0.95
   fastAcceleration: 500
-  fastMaxSpeed: 250
+  fastMaxSpeed: 500
   catchUpThreshold: 3.2
   catchUpResolvedThreshold: 0.5
   catchUpDuration: 3

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Afterimage : MonoBehaviour
@@ -9,10 +8,11 @@ public class Afterimage : MonoBehaviour
     [SerializeField] private float afterStopDuration = 0.2f;
     [SerializeField] private Color afterimageColor = new Color(1f, 1f, 1f, 0.5f);
     [SerializeField] private Material afterimageMaterial = null;
-    [SerializeField] private bool startOnSpawn = true;
+    [SerializeField] private bool startOnSpawn = false; // Changed default to false — safer with a controller
 
     private SpriteRenderer _sr;
     private Coroutine _spawnRoutine;
+    private Coroutine _waitRoutine;
     private GameObject _afterimageContainer;
 
     private void Awake()
@@ -23,24 +23,52 @@ public class Afterimage : MonoBehaviour
     private void Start()
     {
         _afterimageContainer = new GameObject(transform.parent.name + "-Afterimages");
-
         if (startOnSpawn)
         {
             StartAfterimages();
         }
     }
 
-    public void StartAfterimages() => _spawnRoutine = StartCoroutine(SpawnCoroutine());
-    public void StopAfterimages() => StopCoroutine(_spawnRoutine);
-
-    public void WaitThenStopAfterImages()
+    public void StartAfterimages()
     {
-        StartCoroutine(WaitCoroutine());
-        IEnumerator WaitCoroutine()
+        // Cancel any pending stop-delay
+        if (_waitRoutine != null)
         {
-            yield return new WaitForSeconds(afterStopDuration);
-            StopAfterimages();
+            StopCoroutine(_waitRoutine);
+            _waitRoutine = null;
         }
+
+        // KEY FIX: stop any already-running spawn coroutine before starting a new one
+        if (_spawnRoutine != null)
+        {
+            StopCoroutine(_spawnRoutine);
+            _spawnRoutine = null;
+        }
+
+        _spawnRoutine = StartCoroutine(SpawnCoroutine());
+    }
+
+    public void StopAfterimages()
+    {
+        if (_spawnRoutine != null)
+        {
+            StopCoroutine(_spawnRoutine);
+            _spawnRoutine = null;
+        }
+    }
+
+    public void WaitThenStopAfterimages()
+    {
+        // Don't double-queue a wait
+        if (_waitRoutine != null) return;
+        _waitRoutine = StartCoroutine(WaitCoroutine());
+    }
+
+    private IEnumerator WaitCoroutine()
+    {
+        yield return new WaitForSeconds(afterStopDuration);
+        StopAfterimages();
+        _waitRoutine = null;
     }
 
     private IEnumerator SpawnCoroutine()
@@ -55,7 +83,7 @@ public class Afterimage : MonoBehaviour
     private void SpawnImage()
     {
         GameObject afterImage = new GameObject("Afterimage");
-        afterImage.transform.parent = _afterimageContainer.transform;
+        afterImage.transform.SetParent(_afterimageContainer.transform);
         afterImage.transform.SetPositionAndRotation(transform.position, transform.rotation);
         afterImage.transform.localScale = transform.localScale;
 
