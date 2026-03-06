@@ -18,7 +18,6 @@ public class FloatingEnemy : MonoBehaviour
     [SerializeField] private float acceleration = 2f;
     [SerializeField] private float maxSpeed = 3f;
     [SerializeField] private float caughtUpSpeed = 10f;
-    [SerializeField] [Range(0f,1f)] private float drag = 0.95f;
     [SerializeField] private float fastAcceleration = 6f;
     [SerializeField] private float fastMaxSpeed = 7f;
     [SerializeField] private float catchUpThreshold = 2f;
@@ -28,7 +27,7 @@ public class FloatingEnemy : MonoBehaviour
     private bool _isCatchingUp;
     private bool _isMovingFast;
     private float Acceleration => _isMovingFast ? fastAcceleration : acceleration;
-    private float MaxSpeed => _isCatchingUp ? fastMaxSpeed : maxSpeed;
+    private float MaxSpeed => _isMovingFast ? fastMaxSpeed : maxSpeed;
     private float _startedCatchingUpTime = float.MinValue;
 
     [Header("Glow")]
@@ -121,7 +120,6 @@ public class FloatingEnemy : MonoBehaviour
         if (distanceFromTarget > 0.1f)
             _velocity += Acceleration * Time.deltaTime * direction;
 
-        _velocity *= drag;
         _velocity = Vector2.ClampMagnitude(_velocity, MaxSpeed);
         transform.position += (Vector3)_velocity * Time.deltaTime;
     }
@@ -207,6 +205,7 @@ public class FloatingEnemy : MonoBehaviour
         Destroy(gameObject);
     }
 
+    // TODO: make a glowing component
     private void GlowUp(float duration)
     {
         if (_glowRoutine != null)
@@ -248,8 +247,14 @@ public class FloatingEnemy : MonoBehaviour
         _glowRoutine = StartCoroutine(AnimateGlow(glowLight.intensity, 0f, 0.05f));
     }
 
+    // TODO: refactor to a general 'Look at' component or whatever that looks at a target
     private void FlipX()
     {
         _sr.flipX = player.transform.position.x < transform.position.x;
+    }
+
+    private void LateUpdate()
+    {
+        Debug.Log(_velocity.magnitude);       
     }
 }
