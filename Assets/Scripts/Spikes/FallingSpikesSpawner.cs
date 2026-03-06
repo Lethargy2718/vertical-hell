@@ -20,11 +20,11 @@ public class FallingSpikesSpawner : MonoBehaviour
     private bool _spawningFallingSpikes = false;
     private LevelBounds LB => LevelBounds.Instance;
 
-
+    // TODO: strategy pattern
     private void Start()
     {
         fallingSpikeContainer = new GameObject("Spikes");
-        StartGeneratingMiddleFallingSpikes();
+        StartGeneratingFollowFallingSpikes();
 
     }
     private void Update()
