@@ -251,9 +251,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileShooter
   projectilePrefab: {fileID: 6590986962884944413, guid: b9388da98c08ae04dbac80ee96c6fbdf, type: 3}
   projectileSpeed: 8
-  chargeUpDuration: 0.5
-  chargeDownDuration: 0.5
-  cooldownDuration: 0.5
+  chargeUpDuration: 0.1
+  chargeDownDuration: 0.1
+  cooldownDuration: 0.1
 --- !u!114 &3361071736871219499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,11 +267,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CircularShooter
   projectilePrefab: {fileID: 6590986962884944413, guid: b9388da98c08ae04dbac80ee96c6fbdf, type: 3}
-  projectileSpeed: 5
+  projectileSpeed: 10
   chargeUpDuration: 1
   chargeDownDuration: 0.2
   cooldownDuration: 1.5
-  bulletCount: 6
+  bulletCount: 12
   alignToPlayer: 1
   rotationOffset: 0
 --- !u!114 &2226452818887087149
@@ -287,14 +287,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShotgunShooter
   projectilePrefab: {fileID: 6590986962884944413, guid: b9388da98c08ae04dbac80ee96c6fbdf, type: 3}
-  projectileSpeed: 5
+  projectileSpeed: 12
   chargeUpDuration: 0.5
   chargeDownDuration: 0.1
   cooldownDuration: 1
-  bulletCount: 3
-  spreadAngle: 150
+  bulletCount: 12
+  spreadAngle: 180
   predictionTime: 0
-  bulletSpeed: 8
   autoPrediction: 1
 --- !u!1 &7262461083491538056
 GameObject:

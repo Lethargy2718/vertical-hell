@@ -271,6 +271,9 @@ public class PlayerContext
     [HideInInspector] public float timeDashEnded = float.MinValue;
     [HideInInspector] public float timeDashWasPressed = float.MinValue;
 
+    // Fly
+    [HideInInspector] public float flyTimeUsed = 0f;
+
     // Horizontal Movement Parameters
     [Header("Horizontal Movement")]
     public float maxHorizontalSpeed = 6f;
@@ -300,6 +303,7 @@ public class PlayerContext
 
     // Fly Parameters
     [Header("Fly")]
+    public float maxFlyDuration = float.MaxValue;
     public float flySpeed = 10f;
     public float flyDeceleration = 1f;
 
@@ -309,6 +313,8 @@ public class PlayerContext
     public bool CanUseBufferedDash => hasBufferedDash
         && time < timeDashWasPressed + dashBuffer
         && time > timeDashEnded + dashCooldown;
+        //&& (grounded || lastGroundedTime > timeDashEnded);
+    public bool CanFly => flyTimeUsed < maxFlyDuration;
 
     // Events
     public void InvokeJumped() => Jumped?.Invoke();

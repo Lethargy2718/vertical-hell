@@ -20,7 +20,7 @@ public class PlayerFall : State
         {
             return ((PlayerAirborne)Parent).PlayerJump;
         }
-        if (ctx.jumpPressed)
+        if (ctx.jumpPressed && ctx.CanFly)
         {
             return ((PlayerRoot)Parent.Parent).PlayerFly;
         }

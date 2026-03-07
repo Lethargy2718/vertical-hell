@@ -35,7 +35,7 @@ public class PlayerGrounded : State
     protected override void OnEnter()
     {
         ctx.grounded = true;
-
+        ctx.lastGroundedTime = ctx.time;
         ctx.frameVelocity.y = ctx.groundingForce;
         ctx.coyoteUsable = true;
         ctx.endedJumpEarly = false;
@@ -47,6 +47,7 @@ public class PlayerGrounded : State
         ctx.grounded = false;
 
         ctx.lastGroundedTime = ctx.time;
+        ctx.flyTimeUsed = 0f;
         ctx.InvokeGroundedChanged(false, 0f);
     }
 

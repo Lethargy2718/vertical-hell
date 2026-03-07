@@ -6,12 +6,12 @@ public class LevelBounds : MonoBehaviour
     public static LevelBounds Instance { get; private set; }
 
     // Base settings
-    [SerializeField] private float baseWidth = 180f;
-    [SerializeField] private float baseHeight = 320f;
-    [SerializeField] private float ppu = 32f;
+    private const float baseWidth = 640f;
+    private const float baseHeight = 360f;
+    private const float ppu = 32f;
 
-    public float FullHorizontalTiles => baseWidth / ppu;
-    public float HorizontalTiles => Mathf.Floor(FullHorizontalTiles);
+    public const float fullHorizontalTiles = 20;
+    public const float horizontalTiles = 18;
 
     // Camera
     [SerializeField] private CinemachineVirtualCamera vcam;
@@ -23,7 +23,7 @@ public class LevelBounds : MonoBehaviour
     public float CameraRightX => -CameraLeftX;
 
     // Walls
-    public float WallOffset => (FullHorizontalTiles - HorizontalTiles) / 2;
+    public float WallOffset => (fullHorizontalTiles - horizontalTiles) / 2;
     public float LeftWallX => CameraLeftX + WallOffset;
     public float RightWallX => CameraRightX - WallOffset;
 

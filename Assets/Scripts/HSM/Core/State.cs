@@ -39,7 +39,7 @@ public abstract class State {
     internal void Update(float deltaTime) {
         State t = GetTransition();
         if (t != null) {
-            //UnityEngine.Debug.Log($"{this} : {ActiveChild} > {t}");
+            //UnityEngine.Debug.Log($"{ToString()} : {ActiveChild} > {t}");
             Machine.Sequencer.RequestTransition(this, t);
             return;
         }

@@ -30,8 +30,10 @@ public class PlayerDash : State
             {
                 return ((PlayerRoot)Parent).PlayerAirborne.PlayerJump;
             }
-
-            return ((PlayerRoot)Parent).PlayerFly;
+            if (ctx.CanFly)
+            {
+                return ((PlayerRoot)Parent).PlayerFly;
+            }
         }
 
         return null;
@@ -71,7 +73,7 @@ public class PlayerDash : State
     {
         ctx.timeDashEnded = ctx.time;
         //ctx.frameVelocity = new Vector2(0f, ctx.frameVelocity.y);
-        //ctx.frameVelocity = Vector2.zero;
+        ctx.frameVelocity = Vector2.zero;
         ctx.InvokeDashEnded();
     }
 }

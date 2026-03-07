@@ -11,15 +11,17 @@ public class PlayerFly : State
 
     protected override State GetTransition()
     {
-        // TODO: this is a placeholder, add a finite fly later
-        //return ((PlayerRoot)Parent).PlayerAirborne;
-
-        if (!ctx.jumpHeld)
+        if (!ctx.jumpHeld || !ctx.CanFly)
         {
             return ((PlayerRoot)Parent).PlayerAirborne.PlayerFall;
         }
 
         return null;
+    }
+
+    protected override void OnUpdate(float deltaTime)
+    {
+        ctx.flyTimeUsed += deltaTime;
     }
 
     protected override void OnFixedUpdate(float fixedDeltaTime)

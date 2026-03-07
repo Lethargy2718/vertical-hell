@@ -43,7 +43,7 @@ public class FloatingEnemy : MonoBehaviour
     private float _retaliationDuration;
     private bool _isRetaliating;
     private float _startedRetaliatingTime;
-    private bool retaliationSideRight = true;
+    private bool lastSideWasRight = true;
 
     // Other
     private LevelBounds LB => LevelBounds.Instance;
@@ -100,10 +100,9 @@ public class FloatingEnemy : MonoBehaviour
         float targetX;
         float targetY = LB.CameraTopY - cameraOffsetY;
 
-        if (_isRetaliating)
+        if (_isRetaliating || healthComponent.HealthPercentage <= 0.5f) // TODO: convert to threshold field. it will be a whole mode later anyways.
         {
-            float offset = retaliationSideRight ? playerOffsetX : -playerOffsetX;
-            targetX = LB.MidX + offset;
+            targetX = lastSideWasRight ? LB.LeftWallX : LB.RightWallX;
         }
         else
         {
@@ -286,8 +285,7 @@ public class FloatingEnemy : MonoBehaviour
 
     private void OnCooldownStarted(float duration)
     {
-        if (_isRetaliating)
-            retaliationSideRight = !retaliationSideRight;
+        lastSideWasRight = !lastSideWasRight;
     }
 
     private void OnGameStateChanged(GameManager.GameState gameState)

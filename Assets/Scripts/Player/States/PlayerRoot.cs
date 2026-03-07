@@ -21,7 +21,7 @@ public class PlayerRoot : State
 
     protected override State GetTransition()
     {
-        if (ctx.CanUseBufferedDash)
+        if (ctx.CanUseBufferedDash && Leaf() != PlayerDash)
         {
             return PlayerDash;
         }

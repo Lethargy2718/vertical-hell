@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4176417665231926259}
   - component: {fileID: 8972674846948218193}
   - component: {fileID: 3181760953372911286}
+  - component: {fileID: 7009903213949041125}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -158,6 +159,23 @@ MonoBehaviour:
   lifetime: 1
   particleSize: 1.33
   gravity: -10
+--- !u!114 &7009903213949041125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5379584858980567420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a233747774904841ac4f1f37e476cce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DisintegrationEffect
+  duration: 1.2
+  spreadSpeed: 2
+  gravity: -1
+  pixelSampleStep: 2
+  material: {fileID: 2100000, guid: 041d5194bb48cd5449ffbe5276e3fdf6, type: 2}
 --- !u!1 &6025537084884123241
 GameObject:
   m_ObjectHideFlags: 0
@@ -171,6 +189,7 @@ GameObject:
   - component: {fileID: 3812741773816018122}
   - component: {fileID: 1730961329049799657}
   - component: {fileID: 2351480259535395304}
+  - component: {fileID: 5460990555496990410}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -189,7 +208,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 9195900649586646249}
   m_Father: {fileID: 0}
@@ -270,7 +289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dedffe9a8c47d247969460aa3617f86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  _health: 0
+  _health: 100
   _maxHealth: 100
   invincibilityDuration: 1
 --- !u!82 &2351480259535395304
@@ -370,3 +389,63 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5460990555496990410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6025537084884123241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fd6424e75943e94d8fb6efe451b3e79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStateDriver
+  ctx:
+    rb: {fileID: 4101939361758923610}
+    col: {fileID: 3812741773816018122}
+    sr: {fileID: 3618778088776402157}
+    globalQueryStartInColliders: 1
+    time: 91.75963
+    inputVec: {x: 0, y: 0}
+    jumpPressed: 0
+    jumpHeld: 0
+    dashPressed: 0
+    frameVelocity: {x: 0, y: -1.5}
+    currentHorizontalDirection: 1
+    currentVerticalDirection: 1
+    grounded: 1
+    lastGroundedTime: 88.882095
+    hasBufferedJump: 1
+    endedJumpEarly: 0
+    coyoteUsable: 1
+    timeJumpWasPressed: 88.617294
+    dashToConsume: 0
+    hasBufferedDash: 0
+    timeDashEnded: 88.54883
+    timeDashWasPressed: 88.37068
+    flyTimeUsed: 0.50281197
+    maxHorizontalSpeed: 6
+    acceleration: 1000000
+    groundDeceleration: 1000000
+    airDeceleration: 30
+    jumpHeight: 2.5
+    coyoteTime: 0.1
+    jumpBuffer: 0.2
+    jumpEndEarlyGravityModifier: 4
+    fallAcceleration: 60
+    maxFallSpeed: 12.5
+    groundingForce: -1.5
+    dashSpeed: 20
+    dashDuration: 0.15
+    dashCooldown: 0.3
+    dashBuffer: 0.1
+    maxFlyDuration: 3.402823e+38
+    flySpeed: 12.5
+    flyDeceleration: 1000000
+  collisionCheckDistance: 0.05
+  excludeFromCollisions:
+    serializedVersion: 2
+    m_Bits: 0
+  drawGizmos: 1
+  stateText: {fileID: 0}

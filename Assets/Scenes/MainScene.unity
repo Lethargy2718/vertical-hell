@@ -119,28 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &57605068 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5379584858980567420, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
-  m_PrefabInstance: {fileID: 2803841691420810596}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &57605075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 57605068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a233747774904841ac4f1f37e476cce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DisintegrationEffect
-  duration: 1.2
-  spreadSpeed: 2
-  gravity: -1
-  pixelSampleStep: 2
-  material: {fileID: 2100000, guid: 041d5194bb48cd5449ffbe5276e3fdf6, type: 2}
 --- !u!1 &71870834
 GameObject:
   m_ObjectHideFlags: 0
@@ -492,7 +470,7 @@ Camera:
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 5.625
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -725,7 +703,7 @@ MonoBehaviour:
   levelGenerator: {fileID: 747635540}
   player: {fileID: 839998496}
   fallingSpikePrefab: {fileID: 3359322381305885662, guid: e19004a9182c48f4281d5fc9bea645de, type: 3}
-  fallingSpikeSpacing: 10
+  fallingSpikeSpacing: 5
   fallingSpikeSpeed: 10
   skippedPreGeneratedSpikes: 2
   warningPrefab: {fileID: 3401736334866572788, guid: d268b8d05dd7263458c0e37e7c8233e7, type: 3}
@@ -761,9 +739,9 @@ MonoBehaviour:
   player: {fileID: 839998496}
   wallPrefab: {fileID: 8609112689419610459, guid: a8df09b70e1b89349b1790ca5662b4b4, type: 3}
   wallColor: {r: 0.03137255, g: 0.011764704, b: 0.013392795, a: 1}
-  wallExtraPart: 75.6
+  wallExtraPart: 75
   wallWidth: 50
-  wallHeight: 200
+  wallHeight: 500
   platformPrefab: {fileID: 3970942876045467863, guid: 1fac8c1eda0544f40b033f4e4c730e8f, type: 3}
   minPlatformWidth: 0.6
   maxPlatformWidth: 0.8
@@ -771,8 +749,8 @@ MonoBehaviour:
   platformColor: {r: 0.011764706, g: 0.003921569, b: 0.011764706, a: 1}
   platformCount: 50
   firstPlatformY: 1.25
-  minDistanceBetweenPlatforms: 2
-  maxDistanceBetweenPlatforms: 4
+  minDistanceBetweenPlatforms: 4
+  maxDistanceBetweenPlatforms: 8
   platformsType: 1
   maxPlacementAttempts: 20
   maxAllowedOverlap: 0.4
@@ -927,64 +905,6 @@ AudioSource:
   m_CorrespondingSourceObject: {fileID: 2351480259535395304, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
   m_PrefabInstance: {fileID: 2803841691420810596}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &839998506
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 143872503}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fd6424e75943e94d8fb6efe451b3e79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerStateDriver
-  ctx:
-    rb: {fileID: 0}
-    col: {fileID: 0}
-    sr: {fileID: 0}
-    globalQueryStartInColliders: 0
-    time: 0
-    inputVec: {x: 0, y: 0}
-    jumpPressed: 0
-    jumpHeld: 0
-    dashPressed: 0
-    frameVelocity: {x: 0, y: 0}
-    currentHorizontalDirection: 0
-    currentVerticalDirection: 0
-    grounded: 0
-    lastGroundedTime: -3.4028235e+38
-    hasBufferedJump: 0
-    endedJumpEarly: 0
-    coyoteUsable: 0
-    timeJumpWasPressed: -3.4028235e+38
-    dashToConsume: 0
-    hasBufferedDash: 0
-    timeDashEnded: -3.4028235e+38
-    timeDashWasPressed: -3.4028235e+38
-    maxHorizontalSpeed: 6
-    acceleration: 1000000
-    groundDeceleration: 1000000
-    airDeceleration: 30
-    jumpHeight: 2.5
-    coyoteTime: 0.1
-    jumpBuffer: 0.2
-    jumpEndEarlyGravityModifier: 4
-    fallAcceleration: 60
-    maxFallSpeed: 12.5
-    groundingForce: -1.5
-    dashSpeed: 20
-    dashDuration: 0.075
-    dashCooldown: 0.3
-    dashBuffer: 0.1
-    flySpeed: 12.5
-    flyDeceleration: 1000000
-  collisionCheckDistance: 0.05
-  excludeFromCollisions:
-    serializedVersion: 2
-    m_Bits: 0
-  drawGizmos: 1
-  stateText: {fileID: 1287150139}
 --- !u!1 &886987924
 GameObject:
   m_ObjectHideFlags: 0
@@ -1032,7 +952,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HitEffects
   effectDuration: 0.5
   healthComponent: {fileID: 839998501}
-  enableSlowMo: 1
+  enableSlowMo: 0
   slowMoTimeScale: 0.2
   virtualCamera: {fileID: 959431872}
   pulseAmount: 0.3
@@ -1552,7 +1472,7 @@ MonoBehaviour:
   m_Follow: {fileID: 839998496}
   m_Lens:
     FieldOfView: 40
-    OrthographicSize: 5
+    OrthographicSize: 5.625
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
@@ -1850,10 +1770,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8c22fdfb8f211054c952eb769ee7110c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
-  baseWidth: 180
-  baseHeight: 320
-  ppu: 32
+  m_EditorClassIdentifier: Assembly-CSharp::LevelBounds
   vcam: {fileID: 959431872}
 --- !u!4 &1187355051
 Transform:
@@ -1864,7 +1781,7 @@ Transform:
   m_GameObject: {fileID: 1187355049}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.26036, y: -3.77543, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3082,22 +2999,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 380607055}
     m_Modifications:
-    - target: {fileID: 1730961329049799657, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
-      propertyPath: _health
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1730961329049799657, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
-      propertyPath: _maxHealth
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 3236230300322579213, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4101939361758923610, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
-      propertyPath: m_Interpolate
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4182299899390170049, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3138,21 +3039,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5460990555496990410, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
+      propertyPath: stateText
+      value: 
+      objectReference: {fileID: 1287150139}
     - target: {fileID: 6025537084884123241, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 3236230300322579213, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6025537084884123241, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 839998506}
-    - targetCorrespondingSourceObject: {fileID: 5379584858980567420, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 57605075}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
 --- !u!1001 &3087648517557650513
 PrefabInstance:
@@ -3162,17 +3060,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 380607055}
     m_Modifications:
-    - target: {fileID: 2358642074890276525, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 839998496}
     - target: {fileID: 5285945736117505294, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
       propertyPath: m_Name
       value: Enemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 5285945736117505294, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7621943446745219019, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3214,10 +3104,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7721535141972668100, guid: 62546daf343ba5a4bbf0dd473156724d, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 839998496}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
