@@ -254,7 +254,7 @@ MonoBehaviour:
   chargeUpDuration: 0.5
   chargeDownDuration: 0.2
   cooldownDuration: 0.3
-  autoPrediction: 1
+  autoPrediction: 0
   predictionTime: 0
 --- !u!114 &3361071736871219499
 MonoBehaviour:
@@ -293,7 +293,7 @@ MonoBehaviour:
   chargeUpDuration: 0.5
   chargeDownDuration: 0.1
   cooldownDuration: 1
-  bulletCount: 12
+  bulletCount: 9
   spreadAngle: 180
   predictionTime: 0
   autoPrediction: 0

@@ -68,18 +68,20 @@ public class DeathHandler : MonoBehaviour
         StopPlayer();
         StartCoroutine(RampUpNoise(targetAmplitude, zoomDuration));
         StartCoroutine(RampUpPostProcess(ppDuration, vignetteIntensity, chromaticAmount));
+
         yield return StartCoroutine(PanCamera());
+
         StopNoise();
         StopTextShake();
+
         yield return new WaitForSeconds(1f);
+
         DisintegratePlayer();
         StartCoroutine(LerpLightIntensity(ppDuration, 0.3f)); // TODO: replace placeholders with fields
         ppm.vignetteColor = Color.black;
         StartCoroutine(RampUpPostProcess(ppDuration, 100f, 100f));
         healthText.SetActive(false);
-        killText.text = $"You killed {GameManager.Instance.killed} enem{(GameManager.Instance.killed == 1 ? "y" : "ies")}";
-        invitationText.text = GameManager.Instance.killed <= 0 ? "Will you try once more?" : "Would you like to kill more?";
-        gameOverUI.SetActive(true);
+        ShowGameOverUI();
     }
 
     private IEnumerator RampUpPostProcess(float duration, float targetVignette, float targetChromatic)
@@ -199,5 +201,12 @@ public class DeathHandler : MonoBehaviour
         }
 
         globalLight.intensity = targetIntensity;
+    }
+
+    private void ShowGameOverUI()
+    {
+        killText.text = $"You killed {GameManager.Instance.killed} enem{(GameManager.Instance.killed == 1 ? "y" : "ies")}";
+        invitationText.text = GameManager.Instance.killed <= 0 ? "Will you try once more?" : "Would you like to kill more?";
+        gameOverUI.SetActive(true);
     }
 }
