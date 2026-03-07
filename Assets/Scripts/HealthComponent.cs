@@ -58,6 +58,8 @@ public class HealthComponent : MonoBehaviour
     [SerializeField] private float invincibilityDuration = 1.0f;
     public float InvincibilityDuration => invincibilityDuration;
 
+    public float HealthPercentage => Health / MaxHealth;
+
     private void Start()
     {
         Health = MaxHealth;

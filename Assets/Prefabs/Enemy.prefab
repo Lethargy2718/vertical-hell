@@ -73,7 +73,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 1
+  m_PointLightOuterRadius: 1.5
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -100,6 +100,7 @@ GameObject:
   - component: {fileID: 8622805276219529777}
   - component: {fileID: 2358642074890276525}
   - component: {fileID: 3361071736871219499}
+  - component: {fileID: 2226452818887087149}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Untagged
@@ -186,7 +187,7 @@ MonoBehaviour:
   cameraOffsetY: 1
   playerOffsetX: 2
   acceleration: 200
-  maxSpeed: 9.8
+  maxSpeed: 11
   caughtUpSpeed: 0
   fastAcceleration: 500
   fastMaxSpeed: 30
@@ -249,10 +250,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileShooter
   projectilePrefab: {fileID: 6590986962884944413, guid: b9388da98c08ae04dbac80ee96c6fbdf, type: 3}
+  projectileSpeed: 8
   chargeUpDuration: 0.5
   chargeDownDuration: 0.5
   cooldownDuration: 0.5
-  target: {fileID: 0}
 --- !u!114 &3361071736871219499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,13 +267,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CircularShooter
   projectilePrefab: {fileID: 6590986962884944413, guid: b9388da98c08ae04dbac80ee96c6fbdf, type: 3}
-  bulletCount: 8
+  projectileSpeed: 5
   chargeUpDuration: 1
   chargeDownDuration: 0.2
   cooldownDuration: 1.5
+  bulletCount: 6
   alignToPlayer: 1
   rotationOffset: 0
-  target: {fileID: 0}
+--- !u!114 &2226452818887087149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5285945736117505294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6ffcf55a12f45846a1d5a09bdeef91d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShotgunShooter
+  projectilePrefab: {fileID: 6590986962884944413, guid: b9388da98c08ae04dbac80ee96c6fbdf, type: 3}
+  projectileSpeed: 5
+  chargeUpDuration: 0.5
+  chargeDownDuration: 0.1
+  cooldownDuration: 1
+  bulletCount: 3
+  spreadAngle: 150
+  predictionTime: 0
+  bulletSpeed: 8
+  autoPrediction: 1
 --- !u!1 &7262461083491538056
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,7 +418,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a233747774904841ac4f1f37e476cce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DisintegrationEffect
-  healthComponent: {fileID: 3636041091923254227}
   duration: 3
   spreadSpeed: 0.7
   gravity: -1.2

@@ -10,6 +10,7 @@ public abstract class Attacker : MonoBehaviour, IAttacker
 
     [Header("Projectile")]
     [SerializeField] protected Projectile projectilePrefab;
+    [SerializeField] protected float projectileSpeed;
 
     [Header("Timing")]
     [SerializeField] protected float chargeUpDuration = 1f;

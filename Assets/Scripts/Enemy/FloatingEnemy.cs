@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -44,6 +43,7 @@ public class FloatingEnemy : MonoBehaviour
     private float _retaliationDuration;
     private bool _isRetaliating;
     private float _startedRetaliatingTime;
+    private bool retaliationSideRight = true;
 
     // Other
     private LevelBounds LB => LevelBounds.Instance;
@@ -69,6 +69,7 @@ public class FloatingEnemy : MonoBehaviour
         healthComponent.HealthDepleted += Die;
         attacker.ChargeUpStarted += GlowUp;
         attacker.ChargeDownStarted += GlowDown;
+        attacker.CooldownStarted += OnCooldownStarted;
     }
 
     private void OnDisable()
@@ -77,6 +78,7 @@ public class FloatingEnemy : MonoBehaviour
         healthComponent.HealthDepleted -= Die;
         attacker.ChargeUpStarted -= GlowUp;
         attacker.ChargeDownStarted -= GlowDown;
+        attacker.CooldownStarted -= OnCooldownStarted;
     }
 
     private void Update()
@@ -94,10 +96,20 @@ public class FloatingEnemy : MonoBehaviour
 
     private void HandleMovement()
     {
-        // Get target position
-        float playerSide = player.position.x - LB.MidX;
-        float targetX = LB.MidX - playerSide + (playerSide < 0 ? playerOffsetX : -playerOffsetX);
+        // TODO: add targeting strategies instead or something. Just refactor to an FSM first
+        float targetX;
         float targetY = LB.CameraTopY - cameraOffsetY;
+
+        if (_isRetaliating)
+        {
+            float offset = retaliationSideRight ? playerOffsetX : -playerOffsetX;
+            targetX = LB.MidX + offset;
+        }
+        else
+        {
+            float playerSide = player.position.x - LB.MidX;
+            targetX = LB.MidX - playerSide + (playerSide < 0 ? playerOffsetX : -playerOffsetX);
+        }
         Vector2 target = new Vector2(targetX, targetY);
 
         // Get distance
@@ -204,7 +216,16 @@ public class FloatingEnemy : MonoBehaviour
     {
         _isRetaliating = false;
         attacker.SetAttackSpeedMultiplier(1f);
-        attacker.SwitchTo<ProjectileShooter>();
+
+        if (healthComponent.HealthPercentage <= 0.5)
+        {
+            attacker.SwitchTo<ShotgunShooter>();
+        }
+        else
+        {
+            attacker.SwitchTo<ProjectileShooter>();
+        } 
+
         StopMovingFast();
         StartAttacking();
     }
@@ -261,6 +282,12 @@ public class FloatingEnemy : MonoBehaviour
     private void FlipX()
     {
         sr.flipX = player.transform.position.x < transform.position.x;
+    }
+
+    private void OnCooldownStarted(float duration)
+    {
+        if (_isRetaliating)
+            retaliationSideRight = !retaliationSideRight;
     }
 
     private void OnGameStateChanged(GameManager.GameState gameState)
