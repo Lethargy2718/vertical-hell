@@ -8,7 +8,7 @@ public class Afterimage : MonoBehaviour
     [SerializeField] private float afterStopDuration = 0.2f;
     [SerializeField] private Color afterimageColor = new Color(1f, 1f, 1f, 0.5f);
     [SerializeField] private Material afterimageMaterial = null;
-    [SerializeField] private bool startOnSpawn = false; // Changed default to false — safer with a controller
+    [SerializeField] private bool startOnSpawn = true;
 
     private SpriteRenderer _sr;
     private Coroutine _spawnRoutine;
@@ -31,14 +31,12 @@ public class Afterimage : MonoBehaviour
 
     public void StartAfterimages()
     {
-        // Cancel any pending stop-delay
         if (_waitRoutine != null)
         {
             StopCoroutine(_waitRoutine);
             _waitRoutine = null;
         }
 
-        // KEY FIX: stop any already-running spawn coroutine before starting a new one
         if (_spawnRoutine != null)
         {
             StopCoroutine(_spawnRoutine);
@@ -59,7 +57,6 @@ public class Afterimage : MonoBehaviour
 
     public void WaitThenStopAfterimages()
     {
-        // Don't double-queue a wait
         if (_waitRoutine != null) return;
         _waitRoutine = StartCoroutine(WaitCoroutine());
     }
@@ -112,14 +109,21 @@ public class Afterimage : MonoBehaviour
             yield return null;
         }
 
-        Destroy(sr.gameObject);
+        if (sr != null)
+            Destroy(sr.gameObject);
     }
 
-    private void OnDestroy()
+    public void DestroyAfterimages()
     {
+        StopAllCoroutines();
         if (_afterimageContainer != null)
         {
             Destroy(_afterimageContainer);
         }
+    }
+
+    private void OnDestroy()
+    {
+        DestroyAfterimages();
     }
 }

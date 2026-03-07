@@ -72,7 +72,9 @@ public class HealthComponent : MonoBehaviour
         if (damageType == DamageType.Normal)
         {
             DamageTaken?.Invoke(Health, attackDirection);
-            StartCoroutine(InvincibilityCoroutine());
+
+            if (Health != 0)
+                StartCoroutine(InvincibilityCoroutine());
         }
     }
 

@@ -9,9 +9,10 @@ public class FloatingEnemy : MonoBehaviour
 {
     [Header("References")]
     public  Transform player;
-    private HealthComponent _healthComponent;
-    private SpriteRenderer _sr;
-    private SwitchableAttacker _attacker;
+    private HealthComponent healthComponent;
+    private SpriteRenderer sr;
+    private SwitchableAttacker attacker;
+    private DisintegrationEffect disintegrationEffect;
 
     [Header("Positioning")]
     [SerializeField] private float cameraOffsetY = 1f;
@@ -50,29 +51,32 @@ public class FloatingEnemy : MonoBehaviour
 
     private void Awake()
     {
-        _healthComponent = GetComponent<HealthComponent>();
-        _attacker = GetComponent<SwitchableAttacker>();
-        _sr = GetComponentInChildren<SpriteRenderer>();
+        healthComponent = GetComponent<HealthComponent>();
+        attacker = GetComponent<SwitchableAttacker>();
+        sr = GetComponentInChildren<SpriteRenderer>();
+        disintegrationEffect = GetComponentInChildren<DisintegrationEffect>();
     }
 
     private void Start()
     {
-        _retaliationDuration = _healthComponent.InvincibilityDuration;
+        _retaliationDuration = healthComponent.InvincibilityDuration;
         StartAttacking();
     }
 
     private void OnEnable()
     {
-        _healthComponent.HealthDepleted += Die;
-        _attacker.ChargeUpStarted += GlowUp;
-        _attacker.ChargeDownStarted += GlowDown;
+        GameManager.GameStateChanged += OnGameStateChanged;
+        healthComponent.HealthDepleted += Die;
+        attacker.ChargeUpStarted += GlowUp;
+        attacker.ChargeDownStarted += GlowDown;
     }
 
     private void OnDisable()
     {
-        _healthComponent.HealthDepleted -= Die;
-        _attacker.ChargeUpStarted -= GlowUp;
-        _attacker.ChargeDownStarted -= GlowDown;
+        GameManager.GameStateChanged -= OnGameStateChanged;
+        healthComponent.HealthDepleted -= Die;
+        attacker.ChargeUpStarted -= GlowUp;
+        attacker.ChargeDownStarted -= GlowDown;
     }
 
     private void Update()
@@ -146,7 +150,7 @@ public class FloatingEnemy : MonoBehaviour
         StopAttacking();
         StopGlowInstantly();
         StartMovingFast(); 
-        _healthComponent.AddInvincibleEffect();
+        healthComponent.AddInvincibleEffect();
     }
 
     private void StopCatchingUp()
@@ -155,28 +159,28 @@ public class FloatingEnemy : MonoBehaviour
         _isCatchingUp = false;
         StartAttacking();
         StopMovingFast();
-        _healthComponent.RemoveInvincibleEffect();
+        healthComponent.RemoveInvincibleEffect();
     }
 
     private void StartAttacking()
     {
-        _attacker.StartAttacking();
+        attacker.StartAttacking();
     }
 
     private void StopAttacking()
     {
-        _attacker.StopAttacking();
+        attacker.StopAttacking();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (_healthComponent.IsInvincible) return;
+        if (healthComponent.IsInvincible) return;
 
         // TODO: detect player in another way
         if (collision.gameObject.GetComponent<PlayerStateDriver>() != null)
         {
             Vector2 direction = (collision.transform.position - transform.position).normalized;
-            _healthComponent.TakeDamage(25f, direction);
+            healthComponent.TakeDamage(25f, direction);
             StartRetaliation();
         }
     }
@@ -189,8 +193,8 @@ public class FloatingEnemy : MonoBehaviour
         _startedRetaliatingTime = _time;
 
         StopAttacking();
-        _attacker.SwitchTo<CircularShooter>();
-        _attacker.SetAttackSpeedMultiplier(retaliationAttackSpeedMultiplier);
+        attacker.SwitchTo<CircularShooter>();
+        attacker.SetAttackSpeedMultiplier(retaliationAttackSpeedMultiplier);
         StartAttacking();
 
         StartMovingFast();
@@ -199,14 +203,15 @@ public class FloatingEnemy : MonoBehaviour
     private void StopRetaliation()
     {
         _isRetaliating = false;
-        _attacker.SetAttackSpeedMultiplier(1f);
-        _attacker.SwitchTo<ProjectileShooter>();
+        attacker.SetAttackSpeedMultiplier(1f);
+        attacker.SwitchTo<ProjectileShooter>();
         StopMovingFast();
         StartAttacking();
     }
 
     private void Die()
     {
+        disintegrationEffect.Disintegrate();
         Destroy(gameObject);
     }
 
@@ -255,6 +260,16 @@ public class FloatingEnemy : MonoBehaviour
     // TODO: refactor to a general 'Look at' component or whatever that looks at a target
     private void FlipX()
     {
-        _sr.flipX = player.transform.position.x < transform.position.x;
+        sr.flipX = player.transform.position.x < transform.position.x;
+    }
+
+    private void OnGameStateChanged(GameManager.GameState gameState)
+    {
+        if (gameState == GameManager.GameState.Dead)
+        {
+            enabled = false;
+            StopAttacking();
+            attacker.enabled = false;
+        }
     }
 }

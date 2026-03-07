@@ -63,6 +63,7 @@ public class HitEffects : MonoBehaviour
         _sc.Play();
         if (_effectRoutine != null)
             StopCoroutine(_effectRoutine);
+        if (healthComponent.Health == 0f) return; // DeathHandler handles it
         _effectRoutine = StartCoroutine(HitRoutine());
     }
 

@@ -3,8 +3,6 @@ using System.Collections;
 
 public class DisintegrationEffect : MonoBehaviour
 {
-    [SerializeField] private HealthComponent healthComponent;
-
     [Header("Effect Settings")]
     [SerializeField] private float duration = 1.2f;
     [SerializeField] private float spreadSpeed = 2f;
@@ -18,17 +16,8 @@ public class DisintegrationEffect : MonoBehaviour
     private void Awake()
     {
         _sr = GetComponent<SpriteRenderer>();
-
-        healthComponent.HealthDepleted += Disintegrate;
     }
-
-    private void OnDisable()
-    {
-        healthComponent.HealthDepleted -= Disintegrate;
-    }
-
     public void Disintegrate() => StartCoroutine(DisintegrateCoroutine());
-
     private IEnumerator DisintegrateCoroutine()
     {
         Texture2D tex = MakeTextureReadable(_sr.sprite.texture);

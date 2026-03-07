@@ -167,7 +167,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4182299899390170049}
-  - component: {fileID: 3236230300322579213}
   - component: {fileID: 4101939361758923610}
   - component: {fileID: 3812741773816018122}
   - component: {fileID: 1730961329049799657}
@@ -195,38 +194,6 @@ Transform:
   - {fileID: 9195900649586646249}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3236230300322579213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6025537084884123241}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 589757a751f2a264f876a6a90f7d71cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  _sr: {fileID: 3618778088776402157}
-  collisionCheckDistance: 0.05
-  excludeFromCollisions:
-    serializedVersion: 2
-    m_Bits: 3592
-  jumpBuffer: 0.1
-  coyoteTime: 0.1
-  jumpHeight: 2.5
-  dashBuffer: 0.1
-  dashSpeed: 20
-  dashDuration: 0.1
-  dashCooldown: 0.4
-  groundDeceleration: 1000000
-  airDeceleration: 30
-  maxHorizontalSpeed: 6
-  acceleration: 1000000
-  groundingForce: -1.5
-  fallAcceleration: 50
-  jumpEndEarlyGravityModifier: 4
-  maxFallSpeed: 12.5
 --- !u!50 &4101939361758923610
 Rigidbody2D:
   serializedVersion: 5

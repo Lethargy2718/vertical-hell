@@ -20,6 +20,17 @@ public class FallingSpikesSpawner : MonoBehaviour
     private bool _spawningFallingSpikes = false;
     private LevelBounds LB => LevelBounds.Instance;
 
+    private void OnEnable()
+    {
+        GameManager.GameStateChanged += OnGameStateChanged;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.GameStateChanged -= OnGameStateChanged;
+    }
+
+
     // TODO: strategy pattern
     private void Start()
     {
@@ -214,4 +225,13 @@ public class FallingSpikesSpawner : MonoBehaviour
     }
 
     #endregion
+
+    private void OnGameStateChanged(GameManager.GameState state)
+    {
+        if (state == GameManager.GameState.Dead || state == GameManager.GameState.Paused)
+        {
+            StopGeneratingFallingSpikes();
+            enabled = false;
+        }
+    }
 }
