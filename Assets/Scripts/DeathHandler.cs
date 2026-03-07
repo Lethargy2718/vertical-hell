@@ -2,6 +2,7 @@ using Cinemachine;
 using UnityEngine;
 using System.Collections;
 using TMPro;
+using UnityEngine.Rendering.Universal;
 
 public class DeathHandler : MonoBehaviour
 {
@@ -24,12 +25,15 @@ public class DeathHandler : MonoBehaviour
     [SerializeField] private Transform player;
     private HealthComponent healthComponent;
 
-    [Header("Other")]
-    [SerializeField] private LowHealthEffects lowHealthEffects;
+    [Header("UI")]
     [SerializeField] private GameObject gameOverUI;
     [SerializeField] private GameObject healthText;
     [SerializeField] private TextMeshProUGUI killText;
     [SerializeField] private TextMeshProUGUI invitationText;
+
+    [Header("Other")]
+    [SerializeField] private LowHealthEffects lowHealthEffects;
+    [SerializeField] private Light2D globalLight;
 
     private void Awake()
     {
@@ -69,8 +73,9 @@ public class DeathHandler : MonoBehaviour
         StopTextShake();
         yield return new WaitForSeconds(1f);
         DisintegratePlayer();
+        StartCoroutine(LerpLightIntensity(ppDuration, 0.3f)); // TODO: replace placeholders with fields
         ppm.vignetteColor = Color.black;
-        StartCoroutine(RampUpPostProcess(ppDuration, 1f, 1f));
+        StartCoroutine(RampUpPostProcess(ppDuration, 100f, 100f));
         healthText.SetActive(false);
         killText.text = $"You killed {GameManager.Instance.killed} enem{(GameManager.Instance.killed == 1 ? "y" : "ies")}";
         invitationText.text = GameManager.Instance.killed <= 0 ? "Will you try once more?" : "Would you like to kill more?";
@@ -178,5 +183,21 @@ public class DeathHandler : MonoBehaviour
     private void StopTextShake()
     {
         lowHealthEffects.StopShaking();
+    }
+
+    private IEnumerator LerpLightIntensity(float duration, float targetIntensity)
+    {
+        float startIntensity = globalLight.intensity;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            globalLight.intensity = Mathf.Lerp(startIntensity, targetIntensity, t);
+            yield return null;
+        }
+
+        globalLight.intensity = targetIntensity;
     }
 }

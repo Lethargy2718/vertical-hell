@@ -250,10 +250,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileShooter
   projectilePrefab: {fileID: 6590986962884944413, guid: b9388da98c08ae04dbac80ee96c6fbdf, type: 3}
-  projectileSpeed: 8
-  chargeUpDuration: 0.1
-  chargeDownDuration: 0.1
-  cooldownDuration: 0.1
+  projectileSpeed: 15
+  chargeUpDuration: 0.5
+  chargeDownDuration: 0.2
+  cooldownDuration: 0.3
+  autoPrediction: 1
+  predictionTime: 0
 --- !u!114 &3361071736871219499
 MonoBehaviour:
   m_ObjectHideFlags: 0

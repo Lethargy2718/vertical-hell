@@ -35,8 +35,8 @@ public class FallingSpikesSpawner : MonoBehaviour
     private void Start()
     {
         fallingSpikeContainer = new GameObject("Spikes");
-        StartGeneratingRandomFallingSpikes();
-        //StartGeneratingFollowFallingSpikes();
+        //StartGeneratingRandomFallingSpikes();
+        StartGeneratingFollowFallingSpikes();
         //StartGeneratingMiddleFallingSpikes();
 
     }

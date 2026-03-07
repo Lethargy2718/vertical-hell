@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3331ea010818c048944e31889f0f419, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Warning
-  maxIntensity: 200
+  maxIntensity: 400
   fadeInCurve:
     serializedVersion: 2
     m_Curve:
