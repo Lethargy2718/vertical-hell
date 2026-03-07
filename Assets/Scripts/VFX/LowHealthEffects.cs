@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class LowHealthEffects : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class LowHealthEffects : MonoBehaviour
 
     private readonly PostProcessModifier _modifier = new PostProcessModifier();
     private float _currentIntensity;
+    private Coroutine _shakeRoutine;
 
     private void Start()
     {
@@ -28,7 +30,6 @@ public class LowHealthEffects : MonoBehaviour
     private void Update()
     {
         if (_currentIntensity <= 0f) return;
-        ShakeTextCharacters();
     }
 
     private void OnEnable() => healthComponent.HealthChanged += HandleHealthChanged;
@@ -43,6 +44,33 @@ public class LowHealthEffects : MonoBehaviour
 
         _modifier.vignetteOffset = maxVignetteBoost * _currentIntensity;
         _modifier.chromaticOffset = maxChromaticBoost * _currentIntensity;
+
+        if (_currentIntensity > 0f)
+            StartShaking();
+        else
+            StopShaking();
+    }
+    
+    public void StartShaking()
+    {
+        if (_shakeRoutine != null) return; // already running
+        _shakeRoutine = StartCoroutine(ShakeRoutine());
+    }
+
+    public void StopShaking()
+    {
+        if (_shakeRoutine == null) return;
+        StopCoroutine(_shakeRoutine);
+        _shakeRoutine = null;
+    }
+
+    private IEnumerator ShakeRoutine()
+    {
+        while (true)
+        {
+            ShakeTextCharacters();
+            yield return null;
+        }
     }
 
     private void ShakeTextCharacters()

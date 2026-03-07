@@ -7,7 +7,7 @@ using UnityEngine.Rendering.Universal;
 public class FloatingEnemy : MonoBehaviour
 {
     [Header("References")]
-    public  Transform player;
+    public Transform player;
     private HealthComponent healthComponent;
     private SpriteRenderer sr;
     private SwitchableAttacker attacker;
@@ -160,7 +160,7 @@ public class FloatingEnemy : MonoBehaviour
         _isCatchingUp = true;
         StopAttacking();
         StopGlowInstantly();
-        StartMovingFast(); 
+        StartMovingFast();
         healthComponent.AddInvincibleEffect();
     }
 
@@ -223,7 +223,7 @@ public class FloatingEnemy : MonoBehaviour
         else
         {
             attacker.SwitchTo<ProjectileShooter>();
-        } 
+        }
 
         StopMovingFast();
         StartAttacking();
@@ -232,6 +232,7 @@ public class FloatingEnemy : MonoBehaviour
     private void Die()
     {
         disintegrationEffect.Disintegrate();
+        GameManager.Instance.killed++;
         Destroy(gameObject);
     }
 

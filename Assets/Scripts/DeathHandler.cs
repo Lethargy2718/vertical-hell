@@ -1,6 +1,7 @@
 using Cinemachine;
 using UnityEngine;
 using System.Collections;
+using TMPro;
 
 public class DeathHandler : MonoBehaviour
 {
@@ -17,11 +18,18 @@ public class DeathHandler : MonoBehaviour
     [SerializeField] private float vignetteIntensity = 0.6f;
     [SerializeField] private float chromaticAmount = 1f;
     [SerializeField] private float ppDuration = 1.5f;
-    private readonly PostProcessModifier _postProcessModifier = new();
+    private readonly PostProcessModifier ppm = new();
 
     [Header("Player")]
     [SerializeField] private Transform player;
     private HealthComponent healthComponent;
+
+    [Header("Other")]
+    [SerializeField] private LowHealthEffects lowHealthEffects;
+    [SerializeField] private GameObject gameOverUI;
+    [SerializeField] private GameObject healthText;
+    [SerializeField] private TextMeshProUGUI killText;
+    [SerializeField] private TextMeshProUGUI invitationText;
 
     private void Awake()
     {
@@ -31,8 +39,8 @@ public class DeathHandler : MonoBehaviour
 
     private void Start()
     {
-        _postProcessModifier.vignetteColor = vignetteColor;
-        PostProcessController.Instance.AddModifier(_postProcessModifier);
+        ppm.vignetteColor = vignetteColor;
+        PostProcessController.Instance.AddModifier(ppm);
     }
 
     private void OnEnable()
@@ -43,7 +51,7 @@ public class DeathHandler : MonoBehaviour
     private void OnDisable()
     {
         healthComponent.HealthDepleted -= HandleDeath;
-        PostProcessController.Instance.RemoveModifier(_postProcessModifier);
+        PostProcessController.Instance.RemoveModifier(ppm);
     }
 
     private void HandleDeath()
@@ -55,23 +63,29 @@ public class DeathHandler : MonoBehaviour
     {
         StopPlayer();
         StartCoroutine(RampUpNoise(targetAmplitude, zoomDuration));
-        StartCoroutine(RampUpPostProcess(ppDuration));
+        StartCoroutine(RampUpPostProcess(ppDuration, vignetteIntensity, chromaticAmount));
         yield return StartCoroutine(PanCamera());
         StopNoise();
+        StopTextShake();
         yield return new WaitForSeconds(1f);
         DisintegratePlayer();
-        // black/red screen, then restart button
+        ppm.vignetteColor = Color.black;
+        StartCoroutine(RampUpPostProcess(ppDuration, 1f, 1f));
+        healthText.SetActive(false);
+        killText.text = $"You killed {GameManager.Instance.killed} enem{(GameManager.Instance.killed == 1 ? "y" : "ies")}";
+        invitationText.text = GameManager.Instance.killed <= 0 ? "Will you try once more?" : "Would you like to kill more?";
+        gameOverUI.SetActive(true);
     }
 
-    private IEnumerator RampUpPostProcess(float duration)
+    private IEnumerator RampUpPostProcess(float duration, float targetVignette, float targetChromatic)
     {
         float elapsed = 0f;
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
             float t = Mathf.Clamp01(elapsed / duration);
-            _postProcessModifier.vignetteOffset = Mathf.Lerp(0f, vignetteIntensity, t);
-            _postProcessModifier.chromaticOffset = Mathf.Lerp(0f, chromaticAmount, t);
+            ppm.vignetteOffset = Mathf.Lerp(ppm.vignetteOffset, targetVignette, t);
+            ppm.chromaticOffset = Mathf.Lerp(ppm.chromaticOffset, targetChromatic, t);
             yield return null;
         }
     }
@@ -159,5 +173,10 @@ public class DeathHandler : MonoBehaviour
     private void StopNoise()
     {
         noise.m_AmplitudeGain = 0f;
+    }
+
+    private void StopTextShake()
+    {
+        lowHealthEffects.StopShaking();
     }
 }

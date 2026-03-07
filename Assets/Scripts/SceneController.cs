@@ -29,6 +29,7 @@ public class SceneController : MonoBehaviour
     public void RestartScene()
     {
         Time.timeScale = 1f;
+        GameManager.Instance.killed = 0;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 

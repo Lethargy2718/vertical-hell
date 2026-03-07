@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public static event Action<GameState> GameStateChanged;
 
     public GameState CurrentState { get; private set; }
+    public int killed = 0;
 
     [SerializeField] private GameObject player;
     private HealthComponent playerHC;
