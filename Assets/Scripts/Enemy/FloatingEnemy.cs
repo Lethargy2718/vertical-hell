@@ -1,6 +1,9 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+
+// TODO: refactor with a state machine
 
 public class FloatingEnemy : MonoBehaviour
 {
@@ -8,7 +11,7 @@ public class FloatingEnemy : MonoBehaviour
     public  Transform player;
     private HealthComponent _healthComponent;
     private SpriteRenderer _sr;
-    private IAttacker _attacker;
+    private SwitchableAttacker _attacker;
 
     [Header("Positioning")]
     [SerializeField] private float cameraOffsetY = 1f;
@@ -48,7 +51,7 @@ public class FloatingEnemy : MonoBehaviour
     private void Awake()
     {
         _healthComponent = GetComponent<HealthComponent>();
-        _attacker = GetComponent<IAttacker>();
+        _attacker = GetComponent<SwitchableAttacker>();
         _sr = GetComponentInChildren<SpriteRenderer>();
     }
 
@@ -186,6 +189,7 @@ public class FloatingEnemy : MonoBehaviour
         _startedRetaliatingTime = _time;
 
         StopAttacking();
+        _attacker.SwitchTo<CircularShooter>();
         _attacker.SetAttackSpeedMultiplier(retaliationAttackSpeedMultiplier);
         StartAttacking();
 
@@ -196,6 +200,7 @@ public class FloatingEnemy : MonoBehaviour
     {
         _isRetaliating = false;
         _attacker.SetAttackSpeedMultiplier(1f);
+        _attacker.SwitchTo<ProjectileShooter>();
         StopMovingFast();
         StartAttacking();
     }
@@ -251,10 +256,5 @@ public class FloatingEnemy : MonoBehaviour
     private void FlipX()
     {
         _sr.flipX = player.transform.position.x < transform.position.x;
-    }
-
-    private void LateUpdate()
-    {
-        Debug.Log(_velocity.magnitude);       
     }
 }

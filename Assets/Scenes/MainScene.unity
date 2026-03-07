@@ -589,7 +589,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &651538495
 RectTransform:
   m_ObjectHideFlags: 0
@@ -698,8 +698,8 @@ MonoBehaviour:
   wallWidth: 50
   wallHeight: 200
   platformPrefab: {fileID: 3970942876045467863, guid: 1fac8c1eda0544f40b033f4e4c730e8f, type: 3}
-  minPlatformWidth: 0
-  maxPlatformWidth: 0
+  minPlatformWidth: 0.6
+  maxPlatformWidth: 0.8
   platformHeight: 0.1
   platformColor: {r: 0.011764706, g: 0.003921569, b: 0.011764706, a: 1}
   platformCount: 50
@@ -908,7 +908,7 @@ MonoBehaviour:
     groundingForce: -1.5
     dashSpeed: 20
     dashDuration: 0.075
-    dashCooldown: 0.4
+    dashCooldown: 0.3
     dashBuffer: 0.1
     flySpeed: 12.5
     flyDeceleration: 1000000
@@ -965,7 +965,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HitEffects
   effectDuration: 0.5
   healthComponent: {fileID: 839998501}
-  enableSlowMo: 0
+  enableSlowMo: 1
   slowMoTimeScale: 0.2
   virtualCamera: {fileID: 959431872}
   pulseAmount: 0.3
@@ -1002,12 +1002,12 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  shakeAmplitude: 0.14
+  shakeAmplitude: 0.2
   shakeFrequency: 25
   postProcessVolume: {fileID: 2071933796}
   vignetteColor: {r: 0, g: 0, b: 0, a: 0}
-  vignetteIntensityBoost: 0.3
-  chromaticAberrationAmount: 0.5
+  vignetteIntensityBoost: 0.5
+  chromaticAberrationAmount: 0.6
 --- !u!114 &886987927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1317,7 +1317,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
-  dps: 3
+  dps: 10
 --- !u!1 &943442692
 GameObject:
   m_ObjectHideFlags: 0
@@ -1574,6 +1574,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Platform
       objectReference: {fileID: 0}
+    - target: {fileID: 1823557910633305345, guid: 1fac8c1eda0544f40b033f4e4c730e8f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2277666860817266142, guid: 1fac8c1eda0544f40b033f4e4c730e8f, type: 3}
       propertyPath: m_Color.b
       value: 0.146
@@ -1750,6 +1754,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   debugUI: {fileID: 651538494}
+  startEnabled: 0
 --- !u!1 &1187355049
 GameObject:
   m_ObjectHideFlags: 0
@@ -2793,7 +2798,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f2b08ba419c2164893897911f9b6b7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraMove
-  speed: 2
+  speed: 4
 --- !u!1 &2105021315
 GameObject:
   m_ObjectHideFlags: 0

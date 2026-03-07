@@ -80,6 +80,7 @@ public class Afterimage : MonoBehaviour
         }
     }
 
+   // TODO: add pooling
     private void SpawnImage()
     {
         GameObject afterImage = new GameObject("Afterimage");

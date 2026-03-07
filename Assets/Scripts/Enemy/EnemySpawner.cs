@@ -47,9 +47,9 @@ public class EnemySpawner : MonoBehaviour
         enemy.transform.SetY(LB.CameraTopY + spawnOffsetFromCameraTop);
         enemy.player = player;
         
-        if (enemy.TryGetComponent<ProjectileShooter>(out var projectileShooter))
+        if (enemy.TryGetComponent<IAttacker>(out var attacker))
         {
-            projectileShooter.target = player;
+            attacker.Target = player;
         }
 
         if (enemy.TryGetComponent<HealthComponent>(out var healthComponent))
