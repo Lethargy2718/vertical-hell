@@ -905,8 +905,8 @@ MonoBehaviour:
   levelGenerator: {fileID: 747635540}
   player: {fileID: 839998496}
   fallingSpikePrefab: {fileID: 3359322381305885662, guid: e19004a9182c48f4281d5fc9bea645de, type: 3}
-  fallingSpikeSpacing: 22.5
-  fallingSpikeSpeed: 30
+  fallingSpikeSpacing: 20
+  fallingSpikeSpeed: 15
   skippedPreGeneratedSpikes: 2
   warningPrefab: {fileID: 3401736334866572788, guid: d268b8d05dd7263458c0e37e7c8233e7, type: 3}
 --- !u!1 &747635539
@@ -3890,7 +3890,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f2b08ba419c2164893897911f9b6b7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraMove
-  speed: 8
+  speed: 4
 --- !u!1 &2105021315
 GameObject:
   m_ObjectHideFlags: 0
@@ -4051,9 +4051,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 380607055}
     m_Modifications:
+    - target: {fileID: 1730961329049799657, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
+      propertyPath: _health
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 1730961329049799657, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
+      propertyPath: _maxHealth
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 1730961329049799657, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
+      propertyPath: invincibilityDuration
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2351480259535395304, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2351480259535395304, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4182299899390170049, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
       propertyPath: m_LocalPosition.x

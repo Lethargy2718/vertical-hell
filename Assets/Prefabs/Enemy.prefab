@@ -187,7 +187,7 @@ MonoBehaviour:
   cameraOffsetY: 1
   playerOffsetX: 2
   acceleration: 200
-  maxSpeed: 12
+  maxSpeed: 11
   caughtUpSpeed: 0
   fastAcceleration: 500
   fastMaxSpeed: 30
@@ -195,7 +195,7 @@ MonoBehaviour:
   catchUpResolvedThreshold: 0.5
   catchUpDuration: 3
   glowLight: {fileID: 5146979379318059535}
-  maxGlowIntensity: 30
+  maxGlowIntensity: 40
   retaliationAttackSpeedMultiplier: 3
 --- !u!114 &3636041091923254227
 MonoBehaviour:
@@ -289,7 +289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShotgunShooter
   projectilePrefab: {fileID: 6590986962884944413, guid: b9388da98c08ae04dbac80ee96c6fbdf, type: 3}
-  projectileSpeed: 12
+  projectileSpeed: 8
   chargeUpDuration: 0.5
   chargeDownDuration: 0.1
   cooldownDuration: 1
