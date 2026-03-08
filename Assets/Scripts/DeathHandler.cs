@@ -205,6 +205,8 @@ public class DeathHandler : MonoBehaviour
 
     private void ShowGameOverUI()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         killText.text = $"You killed {GameManager.Instance.killed} enem{(GameManager.Instance.killed == 1 ? "y" : "ies")}";
         invitationText.text = GameManager.Instance.killed <= 0 ? "Will you try once more?" : "Would you like to kill more?";
         gameOverUI.SetActive(true);
