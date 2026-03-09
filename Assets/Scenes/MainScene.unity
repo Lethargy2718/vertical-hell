@@ -613,7 +613,7 @@ MonoBehaviour:
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 4096
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
@@ -905,7 +905,7 @@ MonoBehaviour:
   levelGenerator: {fileID: 747635540}
   player: {fileID: 839998496}
   fallingSpikePrefab: {fileID: 3359322381305885662, guid: e19004a9182c48f4281d5fc9bea645de, type: 3}
-  fallingSpikeSpacing: 20
+  fallingSpikeSpacing: 15
   fallingSpikeSpeed: 15
   skippedPreGeneratedSpikes: 2
   warningPrefab: {fileID: 3401736334866572788, guid: d268b8d05dd7263458c0e37e7c8233e7, type: 3}
@@ -940,7 +940,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   player: {fileID: 839998496}
   wallPrefab: {fileID: 8609112689419610459, guid: a8df09b70e1b89349b1790ca5662b4b4, type: 3}
-  wallColor: {r: 0.03137255, g: 0.011764704, b: 0.013392795, a: 1}
+  wallColor: {r: 0, g: 0, b: 0, a: 1}
   wallExtraPart: 75
   wallWidth: 50
   wallHeight: 500
@@ -3656,7 +3656,7 @@ GameObject:
   - component: {fileID: 2071933797}
   - component: {fileID: 2071933796}
   - component: {fileID: 2071933798}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Global Volume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3890,7 +3890,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f2b08ba419c2164893897911f9b6b7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraMove
-  speed: 4
+  speed: 8
 --- !u!1 &2105021315
 GameObject:
   m_ObjectHideFlags: 0
@@ -4115,6 +4115,10 @@ PrefabInstance:
       propertyPath: stateText
       value: 
       objectReference: {fileID: 1287150139}
+    - target: {fileID: 5460990555496990410, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
+      propertyPath: ctx.dashDuration
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 6025537084884123241, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
       propertyPath: m_Name
       value: Player
