@@ -33,7 +33,7 @@ public class PostProcessController : MonoBehaviour
         {
             vignetteOffset = _vignette != null ? _vignette.intensity.value : 0f,
             chromaticOffset = _aberration != null ? _aberration.intensity.value : 0f,
-            vignetteColor = Color.black
+            vignetteColor = _vignette != null ? _vignette.color.value : Color.black,
         });
     }
 
