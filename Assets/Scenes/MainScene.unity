@@ -4119,6 +4119,10 @@ PrefabInstance:
       propertyPath: ctx.dashDuration
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 5460990555496990410, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
+      propertyPath: ctx.groundSlamSpeed
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 6025537084884123241, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
       propertyPath: m_Name
       value: Player

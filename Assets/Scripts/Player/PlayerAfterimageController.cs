@@ -27,6 +27,8 @@ public class PlayerAfterimageController : MonoBehaviour
         _playerController.ctx.DashEnded += RemoveAfterimageUser;
         _playerController.ctx.FlyStarted += AddAfterimageUser;
         _playerController.ctx.FlyEnded += RemoveAfterimageUser;
+        _playerController.ctx.GroundSlamStarted += AddAfterimageUser;
+        _playerController.ctx.GroundSlamEnded += RemoveAfterimageUser;
     }
 
     private void OnDisable()
@@ -35,6 +37,8 @@ public class PlayerAfterimageController : MonoBehaviour
         _playerController.ctx.DashEnded -= RemoveAfterimageUser;
         _playerController.ctx.FlyStarted -= AddAfterimageUser;
         _playerController.ctx.FlyEnded -= RemoveAfterimageUser;
+        _playerController.ctx.GroundSlamStarted -= AddAfterimageUser;
+        _playerController.ctx.GroundSlamEnded -= RemoveAfterimageUser;
     }
 
     private void AddAfterimageUser()

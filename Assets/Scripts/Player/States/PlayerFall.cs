@@ -20,9 +20,19 @@ public class PlayerFall : State
         {
             return ((PlayerAirborne)Parent).PlayerJump;
         }
-        if (ctx.jumpPressed && ctx.CanFly)
+
+        if (ctx.jumpPressed)
         {
-            return ((PlayerRoot)Parent.Parent).PlayerFly;
+            if (ctx.inputVec.y < 0)
+            {
+                return ((PlayerRoot)Parent.Parent).PlayerGroundSlam;
+            }
+            
+            if (ctx.CanFly)
+            {
+                return ((PlayerRoot)Parent.Parent).PlayerFly;
+
+            }
         }
 
         return null;

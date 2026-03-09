@@ -7,6 +7,7 @@ public class PlayerRoot : State
     public readonly PlayerAirborne PlayerAirborne;
     public readonly PlayerFly PlayerFly;
     public readonly PlayerDash PlayerDash;
+    public readonly PlayerGroundSlam PlayerGroundSlam;
 
     public PlayerRoot(StateMachine m, PlayerContext ctx) : base(m, null)
     {
@@ -15,6 +16,7 @@ public class PlayerRoot : State
         PlayerAirborne = new PlayerAirborne(m, this, ctx);
         PlayerFly = new PlayerFly(m, this, ctx);
         PlayerDash = new PlayerDash(m, this, ctx);
+        PlayerGroundSlam = new PlayerGroundSlam(m, this, ctx);
     }
 
     protected override State GetInitialState() => PlayerGrounded;
