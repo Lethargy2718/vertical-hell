@@ -14,8 +14,12 @@ public class PlayerDash : State
 
     protected override State GetTransition()
     {
-        if (endDash)
+        if (endDash) // duration ended
         {
+            if (ctx.jumpHeld && ctx.CanFly)
+            {
+                return ((PlayerRoot)Parent).PlayerFly;
+            }
             if (ctx.grounded)
             {
                 return ((PlayerRoot)Parent).PlayerGrounded;
