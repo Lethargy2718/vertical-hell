@@ -37,6 +37,10 @@ public class UIManager : MonoBehaviour
         get => healthText.fontMaterial.GetColor(_FACE_COLOR);
         set => healthText.fontMaterial.SetColor(_FACE_COLOR, value);
     }
+    private void Awake()
+    {
+        healthText.fontMaterial = new Material(healthText.fontMaterial);
+    }
 
     private void OnEnable() => playerHealth.HealthChanged += UpdateHealthUI;
     private void OnDisable() => playerHealth.HealthChanged -= UpdateHealthUI;
