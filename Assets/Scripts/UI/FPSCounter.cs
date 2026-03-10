@@ -16,7 +16,7 @@ public class FPSCounter : MonoBehaviour
     {
         while (true)
         {
-            text.text = $"{(int)(1f / Time.deltaTime)} FPS";
+            text.text = $"{(int)(1f / Time.unscaledDeltaTime)} FPS";
             yield return new WaitForSecondsRealtime(fpsUpdateInterval);
         }
     }
