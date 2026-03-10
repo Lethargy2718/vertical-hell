@@ -215,7 +215,7 @@ public class FallingSpikesSpawner : MonoBehaviour
 
     private void OnGameStateChanged(GameManager.GameState state)
     {
-        if (state == GameManager.GameState.Dead || state == GameManager.GameState.Paused)
+        if (state == GameManager.GameState.Dead)
         {
             StopGeneratingFallingSpikes();
             enabled = false;
