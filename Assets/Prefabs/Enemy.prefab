@@ -419,8 +419,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a233747774904841ac4f1f37e476cce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DisintegrationEffect
-  duration: 3
-  spreadSpeed: 0.7
+  duration: 2
+  spreadSpeed: 1.4
   gravity: -1.2
   pixelSampleStep: 1
   material: {fileID: 2100000, guid: 041d5194bb48cd5449ffbe5276e3fdf6, type: 2}

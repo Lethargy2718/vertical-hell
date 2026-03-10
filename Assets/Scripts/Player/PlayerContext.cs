@@ -1,4 +1,5 @@
 using System;
+using Cinemachine;
 using UnityEngine;
 
 [Serializable]
@@ -9,6 +10,7 @@ public class PlayerContext
     [HideInInspector] public CapsuleCollider2D col;
     [HideInInspector] public SpriteRenderer sr;
     [HideInInspector] public bool globalQueryStartInColliders;
+    public CinemachineVirtualCamera virtualCamera;
 
     // Events
     public event Action<bool, float> GroundedChanged;
@@ -87,6 +89,9 @@ public class PlayerContext
     public float maxFlyDuration = float.MaxValue;
     public float flySpeed = 10f;
     public float flyDeceleration = 1f;
+    public float cameraOffset = 1f;
+    public float cameraOffsetInDuration = 0.5f;
+    public float cameraOffsetOutDuration = 0.5f;
 
     // Ground Slam Parameters
     [Header("Ground Slam")]
