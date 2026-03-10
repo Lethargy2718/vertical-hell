@@ -100,7 +100,7 @@ public class FloatingEnemy : MonoBehaviour
         float targetX;
         float targetY = LB.CameraTopY - cameraOffsetY;
 
-        if (_isRetaliating || healthComponent.HealthPercentage <= 0.5f) // TODO: convert to threshold field. it will be a whole mode later anyways.
+        if (_isRetaliating)
         {
             targetX = lastSideWasRight ? LB.LeftWallX : LB.RightWallX;
         }

@@ -3,6 +3,7 @@ using UnityEngine;
 public class FallingSpike : MonoBehaviour
 {
     [SerializeField] private float _dmg;
+    private bool hasBeenOnScreen = false;
     public float Dmg
     {
         get => _dmg;
@@ -13,6 +14,7 @@ public class FallingSpike : MonoBehaviour
     [SerializeField] private LayerMask targetLayer;
 
     private SpriteRenderer _sr;
+    private LevelBounds LB => LevelBounds.Instance;
 
     private void Awake()
     {
@@ -21,10 +23,15 @@ public class FallingSpike : MonoBehaviour
 
     private void Update()
     {
-        if (_sr.Top() <= 0)
+        // TODO: make a general deleteOnceOutOfCamera component
+        bool onScreen = _sr.Top() > 0 && _sr.Bottom() < LB.CameraTopY
+                     && _sr.Right() > LB.CameraLeftX && _sr.Left() < LB.CameraRightX;
+
+        if (onScreen) hasBeenOnScreen = true;
+
+        if (hasBeenOnScreen && !onScreen)
         {
             Destroy(gameObject);
-            return;
         }
     }
 

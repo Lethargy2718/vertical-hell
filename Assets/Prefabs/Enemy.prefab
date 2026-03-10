@@ -187,15 +187,15 @@ MonoBehaviour:
   cameraOffsetY: 1
   playerOffsetX: 2
   acceleration: 200
-  maxSpeed: 11
+  maxSpeed: 10
   caughtUpSpeed: 0
   fastAcceleration: 500
   fastMaxSpeed: 30
-  catchUpThreshold: 3.2
-  catchUpResolvedThreshold: 0.5
+  catchUpThreshold: 6
+  catchUpResolvedThreshold: 0.25
   catchUpDuration: 3
   glowLight: {fileID: 5146979379318059535}
-  maxGlowIntensity: 40
+  maxGlowIntensity: 70
   retaliationAttackSpeedMultiplier: 3
 --- !u!114 &3636041091923254227
 MonoBehaviour:
@@ -289,12 +289,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShotgunShooter
   projectilePrefab: {fileID: 6590986962884944413, guid: b9388da98c08ae04dbac80ee96c6fbdf, type: 3}
-  projectileSpeed: 15
+  projectileSpeed: 12.5
   chargeUpDuration: 1
   chargeDownDuration: 0.25
-  cooldownDuration: 0.25
-  bulletCount: 12
-  spreadAngle: 225
+  cooldownDuration: 0.35
+  bulletCount: 13
+  spreadAngle: 200
   predictionTime: 0
   autoPrediction: 1
 --- !u!1 &7262461083491538056
@@ -454,9 +454,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f61ba496a8f15de4c9cf0d50d234bda4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageParticles
-  particleColor: {r: 0, g: 0, b: 0, a: 1}
-  particleCount: 50
-  spreadSpeed: 7
+  particleColor: {r: 0.442, g: 0.06159017, b: 0.06159017, a: 1}
+  particleCount: 25
+  spreadSpeed: 15
   lifetime: 1.5
-  particleSize: 1.5
+  particleSize: 1.25
   gravity: -20

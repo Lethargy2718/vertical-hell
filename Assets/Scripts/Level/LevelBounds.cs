@@ -10,7 +10,7 @@ public class LevelBounds : MonoBehaviour
     private const float baseHeight = 360f;
     private const float ppu = 32f;
 
-    public const float fullHorizontalTiles = 20;
+    public const float fullHorizontalTiles = baseWidth / ppu;
     public const float horizontalTiles = 18;
 
     // Camera

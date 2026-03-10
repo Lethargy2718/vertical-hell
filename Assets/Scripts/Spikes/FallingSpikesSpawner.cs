@@ -70,9 +70,9 @@ public class FallingSpikesSpawner : MonoBehaviour
     {
         FallingSpike fallingSpike = Instantiate(spikePrefab, fallingSpikeContainer.transform);
 
-        if (fallingSpike.TryGetComponent<MoveDown>(out var moveDown))
+        if (fallingSpike.TryGetComponent<Mover>(out var mover))
         {
-            moveDown.Speed = fallingSpikeSpeed;
+            mover.Speed = fallingSpikeSpeed;
         }
 
         Vector3 spikePos = new Vector3(x, y, 0f);
@@ -187,26 +187,11 @@ public class FallingSpikesSpawner : MonoBehaviour
 
     #endregion
 
-    private void DestroyFallingSpikesOutOfCamera()
-    {
-        foreach (Transform child in fallingSpikeContainer.transform)
-        {
-            float childTop = child.transform.position.y + child.transform.localScale.y / 2;
-            float childBottom = child.transform.position.y - child.transform.localScale.y / 2;
-
-            if (childTop < LB.CameraBottomY || childBottom > LB.CameraTopY)
-            {
-                Destroy(child.gameObject);
-            }
-        }
-    }
-
     private void StopGeneratingFallingSpikes()
     {
         if (!_spawningFallingSpikes) return;
         StopCoroutine(fallingSpikeSpawnRoutine);
         if (_warning != null) Destroy(_warning.gameObject);
-        DestroyFallingSpikesOutOfCamera();
         _spawningFallingSpikes = false;
         fallingSpikeSpawnRoutine = null;
     }

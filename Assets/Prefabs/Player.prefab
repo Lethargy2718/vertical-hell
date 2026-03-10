@@ -289,9 +289,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dedffe9a8c47d247969460aa3617f86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  _health: 100
-  _maxHealth: 100
-  invincibilityDuration: 1
+  _health: 200
+  _maxHealth: 200
+  invincibilityDuration: 2.5
 --- !u!82 &2351480259535395304
 AudioSource:
   m_ObjectHideFlags: 0
@@ -304,7 +304,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -437,12 +437,13 @@ MonoBehaviour:
     maxFallSpeed: 12.5
     groundingForce: -1.5
     dashSpeed: 20
-    dashDuration: 0.15
-    dashCooldown: 0.3
+    dashDuration: 0.2
+    dashCooldown: 0.25
     dashBuffer: 0.1
     maxFlyDuration: 3.402823e+38
     flySpeed: 12.5
     flyDeceleration: 1000000
+    groundSlamSpeed: 30
   collisionCheckDistance: 0.05
   excludeFromCollisions:
     serializedVersion: 2

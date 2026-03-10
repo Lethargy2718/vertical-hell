@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 719608476828809705}
   - component: {fileID: 7505785067443485748}
-  - component: {fileID: 3145927292205609011}
   - component: {fileID: 3359322381305885662}
   - component: {fileID: -8979000478038380105}
+  - component: {fileID: 2678789419365697977}
   m_Layer: 11
   m_Name: FallingSpike
   m_TagString: Untagged
@@ -94,19 +94,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &3145927292205609011
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5286925315753891873}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c27f7d75011d14a4281f9f0c18b60af4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  _speed: 1
 --- !u!114 &3359322381305885662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,3 +160,18 @@ PolygonCollider2D:
       - {x: -0.5, y: -0.28866667}
       - {x: 0.5, y: -0.28866667}
   m_UseDelaunayMesh: 1
+--- !u!114 &2678789419365697977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5286925315753891873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f2b08ba419c2164893897911f9b6b7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Mover
+  _direction: 1
+  _moveMode: 1
+  _speed: 5

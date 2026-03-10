@@ -905,8 +905,8 @@ MonoBehaviour:
   levelGenerator: {fileID: 747635540}
   player: {fileID: 839998496}
   fallingSpikePrefab: {fileID: 3359322381305885662, guid: e19004a9182c48f4281d5fc9bea645de, type: 3}
-  fallingSpikeSpacing: 15
-  fallingSpikeSpeed: 15
+  fallingSpikeSpacing: 20
+  fallingSpikeSpeed: 18
   skippedPreGeneratedSpikes: 2
   warningPrefab: {fileID: 3401736334866572788, guid: d268b8d05dd7263458c0e37e7c8233e7, type: 3}
 --- !u!1 &747635539
@@ -943,19 +943,19 @@ MonoBehaviour:
   wallColor: {r: 0, g: 0, b: 0, a: 1}
   wallExtraPart: 75
   wallWidth: 50
-  wallHeight: 500
+  wallHeight: 1000
   platformPrefab: {fileID: 3970942876045467863, guid: 1fac8c1eda0544f40b033f4e4c730e8f, type: 3}
-  minPlatformWidth: 1
-  maxPlatformWidth: 3
-  platformHeight: 0.1
+  minPlatformWidth: 4
+  maxPlatformWidth: 6
+  platformHeight: 0.08
   platformColor: {r: 1, g: 0.0892857, b: 0, a: 1}
-  platformCount: 50
+  platformCount: 100
   firstPlatformY: 10
-  minDistanceBetweenPlatforms: 4
-  maxDistanceBetweenPlatforms: 8
+  minDistanceBetweenPlatforms: 5
+  maxDistanceBetweenPlatforms: 10
   platformsType: 1
   maxPlacementAttempts: 20
-  maxAllowedOverlap: 0
+  maxAllowedOverlap: 1e+12
 --- !u!4 &747635541
 Transform:
   m_ObjectHideFlags: 0
@@ -3890,7 +3890,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f2b08ba419c2164893897911f9b6b7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraMove
-  speed: 8
+  _direction: 0
+  _moveMode: 0
+  _speed: 8
 --- !u!1 &2105021315
 GameObject:
   m_ObjectHideFlags: 0
@@ -4051,26 +4053,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 380607055}
     m_Modifications:
-    - target: {fileID: 1730961329049799657, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
-      propertyPath: _health
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 1730961329049799657, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
-      propertyPath: _maxHealth
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 1730961329049799657, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
-      propertyPath: invincibilityDuration
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2351480259535395304, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2351480259535395304, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4182299899390170049, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4116,12 +4098,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1287150139}
     - target: {fileID: 5460990555496990410, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
-      propertyPath: ctx.dashDuration
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5460990555496990410, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
-      propertyPath: ctx.groundSlamSpeed
-      value: 30
+      propertyPath: ctx.dashCooldown
+      value: 0.16666667
       objectReference: {fileID: 0}
     - target: {fileID: 6025537084884123241, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
       propertyPath: m_Name
