@@ -5,29 +5,32 @@ public class LevelBounds : MonoBehaviour
 {
     public static LevelBounds Instance { get; private set; }
 
-    // Base settings
+    // TODO: decide on a single source of truth for both camera script and this
     private const float baseWidth = 640f;
     private const float baseHeight = 360f;
     private const float ppu = 32f;
 
-    public const float fullHorizontalTiles = baseWidth / ppu;
-    public const float horizontalTiles = 18;
+    private const float fullHorizontalTiles = baseWidth / ppu;      
+    private const float horizontalTiles = 18f;                     
 
-    // Camera
     [SerializeField] private CinemachineVirtualCamera vcam;
     private Camera cam;
-    public float OrthoSize => baseHeight / ppu / 2;
-    public float CameraTopY => cam.ScreenToWorldPoint(new Vector3(0, Screen.height, 0)).y;
-    public float CameraBottomY => cam.ScreenToWorldPoint(Vector3.zero).y;
-    public float CameraLeftX => -(baseWidth / 2) / ppu;
-    public float CameraRightX => -CameraLeftX;
 
-    // Walls
-    public float WallOffset => (fullHorizontalTiles - horizontalTiles) / 2;
-    public float LeftWallX => CameraLeftX + WallOffset;
-    public float RightWallX => CameraRightX - WallOffset;
+    public float CameraTopY => cam.transform.position.y + cam.orthographicSize;
+    public float CameraBottomY => cam.transform.position.y - cam.orthographicSize;
+    public float CameraLeftX => cam.transform.position.x - cam.orthographicSize * cam.aspect;
+    public float CameraRightX => cam.transform.position.x + cam.orthographicSize * cam.aspect;
 
+    private float CameraDefaultLeftX => -fullHorizontalTiles / 2f;
+    private float CameraDefaultRightX => fullHorizontalTiles / 2f; 
+    private float WallOffset => (fullHorizontalTiles - horizontalTiles) / 2f;
 
+    public float LeftWallX => CameraDefaultLeftX + WallOffset;
+    public float RightWallX => CameraDefaultRightX - WallOffset;
+
+    public float OrthoSize => baseHeight / ppu / 2f;
+
+    public float MidX => (LeftWallX + RightWallX) / 2f;
 
     private void Awake()
     {
@@ -42,19 +45,32 @@ public class LevelBounds : MonoBehaviour
 
     private void Start()
     {
-        vcam.m_Lens.OrthographicSize = OrthoSize;
+        if (vcam != null)
+            vcam.m_Lens.OrthographicSize = OrthoSize;
     }
 
+    /// <summary>
+    /// Returns the world X coordinate for the center of a left wall of given width,
+    /// so that its right edge aligns with LeftWallX.
+    /// </summary>
     public float GetLeftWallCenterX(float wallWidth)
     {
-        return CameraLeftX - wallWidth / 2 + WallOffset;
+        return LeftWallX - wallWidth / 2f;
     }
 
+    /// <summary>
+    /// Returns the world X coordinate for the center of a right wall of given width,
+    /// so that its left edge aligns with RightWallX.
+    /// </summary>
     public float GetRightWallCenterX(float wallWidth)
     {
-        return -GetLeftWallCenterX(wallWidth);
+        return RightWallX + wallWidth / 2f;
     }
 
+    /// <summary>
+    /// Divides the playable width (RightWallX - LeftWallX) into partitionCount equal parts
+    /// and returns the X coordinate of the center of the partition at partitionIndex (0-indexed).
+    /// </summary>
     public float GetPartitionIndexX(int partitionCount, int partitionIndex)
     {
         float usableWidth = RightWallX - LeftWallX;
@@ -62,24 +78,27 @@ public class LevelBounds : MonoBehaviour
         return LeftWallX + partitionWidth * (partitionIndex + 0.5f);
     }
 
+    /// <summary>
+    /// Returns an array of all partition center X coordinates for the given partition count.
+    /// </summary>
     public float[] GetPartitionIndicesX(int partitionCount)
     {
         float[] indices = new float[partitionCount];
-
         for (int i = 0; i < partitionCount; i++)
-        {
             indices[i] = GetPartitionIndexX(partitionCount, i);
-        }
-
         return indices;
     }
 
-    public float MidX => (LeftWallX + RightWallX) / 2f; // Always 0 anyways but it's better off dynamic
-
+    /// <summary>
+    /// Returns a random X coordinate within the playable area, optionally accounting for object width and offset.
+    /// </summary>
     public float GetRandomX(float objectWidth = 0f, float offset = 0f)
     {
-        float minX = LeftWallX + objectWidth + offset;
-        float maxX = RightWallX - objectWidth - offset;
+        float minX = LeftWallX + objectWidth / 2f + offset;
+        float maxX = RightWallX - objectWidth / 2f - offset;
+
+        if (minX > maxX)
+            return MidX;
 
         return Random.Range(minX, maxX);
     }

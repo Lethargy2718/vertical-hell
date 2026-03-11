@@ -167,4 +167,4 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
-  dps: 5
+  dps: 10

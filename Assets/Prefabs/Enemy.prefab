@@ -289,11 +289,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShotgunShooter
   projectilePrefab: {fileID: 6590986962884944413, guid: b9388da98c08ae04dbac80ee96c6fbdf, type: 3}
-  projectileSpeed: 12.5
+  projectileSpeed: 15
   chargeUpDuration: 1
-  chargeDownDuration: 0.25
+  chargeDownDuration: 0.35
   cooldownDuration: 0.35
-  bulletCount: 13
+  bulletCount: 11
   spreadAngle: 200
   predictionTime: 0
   autoPrediction: 1
