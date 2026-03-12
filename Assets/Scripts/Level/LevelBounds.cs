@@ -31,6 +31,7 @@ public class LevelBounds : MonoBehaviour
     public float OrthoSize => baseHeight / ppu / 2f;
 
     public float MidX => (LeftWallX + RightWallX) / 2f;
+    public float MidY => (CameraBottomY + CameraTopY) / 2;
 
     private void Awake()
     {
@@ -101,5 +102,19 @@ public class LevelBounds : MonoBehaviour
             return MidX;
 
         return Random.Range(minX, maxX);
+    }
+
+    /// <summary>
+    /// Returns a random Y coordinate within the playable area, optionally accounting for object width and offset.
+    /// </summary>
+    public float GetRandomY(float objectHeight = 0f, float offset = 0f)
+    {
+        float minY = CameraBottomY + objectHeight / 2f + offset;
+        float maxY = CameraTopY - objectHeight / 2f - offset;
+
+        if (minY > maxY)
+            return MidY;
+
+        return Random.Range(minY, maxY);
     }
 }
