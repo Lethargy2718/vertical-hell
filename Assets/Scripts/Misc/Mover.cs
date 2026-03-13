@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[DefaultExecutionOrder(1000)]
 public class Mover : MonoBehaviour
 {
     public enum Direction { Up, Down, Left, Right }
@@ -16,6 +17,12 @@ public class Mover : MonoBehaviour
     }
 
     private Camera _cam;
+
+    private void Start()
+    {
+        transform.SetParent(Camera.main.transform);
+    }
+
 
     private void OnEnable()
     {
@@ -39,17 +46,9 @@ public class Mover : MonoBehaviour
             _ => Vector3.zero
         };
 
-        if (_moveMode == MoveMode.World)
-        {
-            transform.position += _speed * Time.deltaTime * dir;
-        }
-        else
-        {
-            Vector3 screenPos = _cam.WorldToScreenPoint(transform.position);
-            screenPos += _speed * 100f * Time.deltaTime * dir;
-            transform.position = _cam.ScreenToWorldPoint(screenPos);
-        }
     }
+
+
 
     private void OnGameStateChanged(GameManager.GameState gameState)
     {

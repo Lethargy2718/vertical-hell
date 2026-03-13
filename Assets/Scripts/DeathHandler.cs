@@ -26,6 +26,7 @@ public class DeathHandler : MonoBehaviour
     private HealthComponent healthComponent;
 
     [Header("UI")]
+    [SerializeField] private UIManager uiManager;
     [SerializeField] private GameObject gameOverUI;
     [SerializeField] private GameObject healthText;
     [SerializeField] private TextMeshProUGUI killText;
@@ -80,7 +81,7 @@ public class DeathHandler : MonoBehaviour
         StartCoroutine(LerpLightIntensity(ppDuration, 0.3f)); // TODO: replace placeholders with fields
         ppm.vignetteColor = Color.black;
         StartCoroutine(RampUpPostProcess(ppDuration, 100f, 100f));
-        healthText.SetActive(false);
+        uiManager.DimUI(ppDuration);
         ShowGameOverUI();
     }
 

@@ -129,7 +129,6 @@ GameObject:
   m_Component:
   - component: {fileID: 56089157}
   - component: {fileID: 56089160}
-  - component: {fileID: 56089159}
   - component: {fileID: 56089158}
   m_Layer: 0
   m_Name: Background Camera
@@ -197,14 +196,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &56089159
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 56089156}
-  m_Enabled: 1
 --- !u!20 &56089160
 Camera:
   m_ObjectHideFlags: 0
@@ -806,9 +797,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.05031556
+    y: 0.00021913648
     width: 1
-    height: 0.8993689
+    height: 0.9995617
   near clip plane: 0.1
   far clip plane: 5000
   field of view: 40
@@ -885,7 +876,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2bdcb97510ad494c9372947cbe07b49, type: 3}
   m_Name: 
@@ -1070,7 +1061,7 @@ MonoBehaviour:
   player: {fileID: 839998496}
   fallingSpikePrefab: {fileID: 3359322381305885662, guid: e19004a9182c48f4281d5fc9bea645de, type: 3}
   fallingSpikeSpacing: 20
-  fallingSpikeSpeed: 18
+  fallingSpikeSpeed: 15
   skippedPreGeneratedSpikes: 2
   warningPrefab: {fileID: 3401736334866572788, guid: d268b8d05dd7263458c0e37e7c8233e7, type: 3}
 --- !u!1 &747635539
@@ -1860,7 +1851,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: 0
   m_CullingMask:
@@ -3052,7 +3043,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: -781491417
@@ -3634,6 +3625,7 @@ MonoBehaviour:
   chromaticAmount: 1
   ppDuration: 2
   player: {fileID: 839998496}
+  uiManager: {fileID: 758735544}
   gameOverUI: {fileID: 496071801}
   healthText: {fileID: 2072760532}
   killText: {fileID: 1625436199}
@@ -4267,6 +4259,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1287150139}
     - target: {fileID: 5460990555496990410, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
+      propertyPath: ctx.dashSpeed
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460990555496990410, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
       propertyPath: ctx.cameraOffset
       value: 1
       objectReference: {fileID: 0}
@@ -4275,9 +4271,17 @@ PrefabInstance:
       value: 0.16666667
       objectReference: {fileID: 0}
     - target: {fileID: 5460990555496990410, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
+      propertyPath: ctx.dashDuration
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460990555496990410, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
       propertyPath: ctx.virtualCamera
       value: 
       objectReference: {fileID: 959431872}
+    - target: {fileID: 5460990555496990410, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
+      propertyPath: ctx.groundSlamSpeed
+      value: 32.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6025537084884123241, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
       propertyPath: m_Name
       value: Player

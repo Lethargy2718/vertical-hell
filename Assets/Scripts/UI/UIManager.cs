@@ -55,12 +55,6 @@ public class UIManager : MonoBehaviour
     private void UpdateHealthUI(float currentHealth)
     {
         _targetHealth = currentHealth;
-
-        if (currentHealth <= 0)
-        {
-            StartCoroutine(DimCoroutine());
-        }
-
         _rollRoutine ??= StartCoroutine(RollCoroutine());
     }
 
@@ -95,7 +89,12 @@ public class UIManager : MonoBehaviour
         _rollRoutine = null;
     }
 
-    private IEnumerator DimCoroutine()
+    public void DimUI(float dimDuration)
+    {
+        StartCoroutine(DimCoroutine(dimDuration));
+    }
+
+    private IEnumerator DimCoroutine(float dimDuration)
     {
         var (startColor, startIntensity) = FaceColor.Decompose();
 
