@@ -7,8 +7,11 @@ public static class HDRColorExtensions
     public static (Color baseColor, float intensity) Decompose(this Color color)
     {
         float maxColorComponent = color.maxColorComponent;
-        float scaleFactor = MAX_BASE_HDR_VALUE / maxColorComponent;
 
+        if (maxColorComponent == 0f)
+            return (Color.black, 0f);
+
+        float scaleFactor = MAX_BASE_HDR_VALUE / maxColorComponent;
         float intensity = Mathf.Log(1f / scaleFactor, 2f);
         Color baseColor = new Color(
             color.r * scaleFactor,
@@ -16,7 +19,6 @@ public static class HDRColorExtensions
             color.b * scaleFactor,
             color.a
         );
-
         return (baseColor, intensity);
     }
 
