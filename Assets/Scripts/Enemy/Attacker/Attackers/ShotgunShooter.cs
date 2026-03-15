@@ -51,7 +51,7 @@ public class ShotgunShooter : Attacker
         Vector2 dir = new Vector2(Mathf.Cos(rad), Mathf.Sin(rad));
         Vector2 targetPos = (Vector2)transform.position + dir;
 
-        Projectile p = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        Projectile p = SpawnProjectile();
         p.Initialize(targetPos, projectileSpeed);
     }
 

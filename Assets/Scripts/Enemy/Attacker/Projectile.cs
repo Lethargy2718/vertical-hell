@@ -1,10 +1,9 @@
 using UnityEngine;
-using UnityEngine.AdaptivePerformance;
+using System.Collections;
 
-public class Projectile : MonoBehaviour
+public class Projectile : Flyweight
 {
-    [SerializeField] private float damage = 10f;
-    [SerializeField] private float lifetime = 5f;
+    private new ProjectileSettings settings => (ProjectileSettings)base.settings;
 
     private Vector2 direction;
     private float speed;
@@ -13,11 +12,9 @@ public class Projectile : MonoBehaviour
     {
         this.speed = speed;
         direction = (targetPosition - (Vector2)transform.position).normalized;
-
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, 0f, angle + 90f);
-
-        Destroy(gameObject, lifetime);
+        StartCoroutine(DespawnAfterDelay(settings.lifetime));
     }
 
     private void Update()
@@ -29,9 +26,15 @@ public class Projectile : MonoBehaviour
     {
         if (other.TryGetComponent<HealthComponent>(out var healthComponent))
         {
-            Vector2 direction = (other.transform.position - transform.position).normalized;
-            healthComponent.TakeDamage(damage, direction);
+            Vector2 dir = (other.transform.position - transform.position).normalized;
+            healthComponent.TakeDamage(settings.damage, dir);
         }
-        Destroy(gameObject);
+        FlyweightFactory.ReturnToPool(this);
+    }
+
+    private IEnumerator DespawnAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        FlyweightFactory.ReturnToPool(this);
     }
 }

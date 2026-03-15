@@ -797,9 +797,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.00021913648
+    y: 0
     width: 1
-    height: 0.9995617
+    height: 1
   near clip plane: 0.1
   far clip plane: 5000
   field of view: 40
@@ -876,7 +876,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2bdcb97510ad494c9372947cbe07b49, type: 3}
   m_Name: 
@@ -1029,7 +1029,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &728887664
 Transform:
   m_ObjectHideFlags: 0
@@ -1208,22 +1208,22 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      inSlope: -1
+      outSlope: -1
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: -2
-      outSlope: 0
-      tangentMode: 0
+      inSlope: -1
+      outSlope: -1
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.33333334
       outWeight: 0
-    m_PreInfinity: 2
+    m_PreInfinity: 0
     m_PostInfinity: 2
     m_RotationOrder: 4
 --- !u!4 &758735545
@@ -1798,7 +1798,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
-  dps: 20
+  dps: 200
 --- !u!1 &943442692
 GameObject:
   m_ObjectHideFlags: 0
@@ -2837,6 +2837,53 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &1436696099
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1436696100}
+  - component: {fileID: 1436696101}
+  m_Layer: 0
+  m_Name: FlyweightFactory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1436696100
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436696099}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1704568288}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1436696101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436696099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9df91fd3a96fd274d984c15e26bc2b42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlyweightFactory
+  collectionCheck: 1
+  defaultCapacity: 30
+  maxPoolSize: 100
 --- !u!1 &1448096026
 GameObject:
   m_ObjectHideFlags: 0
@@ -3478,6 +3525,7 @@ Transform:
   - {fileID: 1009461183}
   - {fileID: 1832213375}
   - {fileID: 424935789}
+  - {fileID: 1436696100}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1807548963
@@ -3623,7 +3671,7 @@ MonoBehaviour:
   vignetteColor: {r: 0.19, g: 0, b: 0, a: 1}
   vignetteIntensity: 1
   chromaticAmount: 1
-  ppDuration: 2
+  ppDuration: 1
   player: {fileID: 839998496}
   uiManager: {fileID: 758735544}
   gameOverUI: {fileID: 496071801}
@@ -4042,7 +4090,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2095192630}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f2b08ba419c2164893897911f9b6b7f, type: 3}
   m_Name: 
@@ -4210,6 +4258,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 380607055}
     m_Modifications:
+    - target: {fileID: 1730961329049799657, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
+      propertyPath: _health
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 1730961329049799657, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
+      propertyPath: _maxHealth
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 4101939361758923610, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
       propertyPath: m_Interpolate
       value: 0
@@ -4281,6 +4337,10 @@ PrefabInstance:
     - target: {fileID: 5460990555496990410, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
       propertyPath: ctx.groundSlamSpeed
       value: 32.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460990555496990410, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
+      propertyPath: ctx.maxHorizontalSpeed
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6025537084884123241, guid: 690620cf015eb1f4fbfdcef7a79b3c38, type: 3}
       propertyPath: m_Name

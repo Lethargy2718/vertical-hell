@@ -9,7 +9,7 @@ public abstract class Attacker : MonoBehaviour, IAttacker
     public event Action<float> CooldownStarted;
 
     [Header("Projectile")]
-    [SerializeField] protected Projectile projectilePrefab;
+    [SerializeField] protected ProjectileSettings projectileSettings;
     [SerializeField] protected float projectileSpeed;
 
     [Header("Timing")]
@@ -73,5 +73,12 @@ public abstract class Attacker : MonoBehaviour, IAttacker
             StopCoroutine(attackRoutine);
             attackRoutine = StartCoroutine(AttackCoroutine());
         }
+    }
+
+    protected virtual Projectile SpawnProjectile()
+    {
+        Projectile p = (Projectile)FlyweightFactory.Spawn(projectileSettings);
+        p.transform.position = transform.position;
+        return p;
     }
 }

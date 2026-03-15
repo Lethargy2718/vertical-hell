@@ -249,7 +249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03f6149db1cff174e99547aecef45f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileShooter
-  projectilePrefab: {fileID: 6590986962884944413, guid: b9388da98c08ae04dbac80ee96c6fbdf, type: 3}
+  projectileSettings: {fileID: 11400000, guid: deadb4a95ba305c4393672810d67b89d, type: 2}
   projectileSpeed: 20
   chargeUpDuration: 0.5
   chargeDownDuration: 0.25
@@ -268,7 +268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9ed99aaeb0f1b64ebab9d10820033b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CircularShooter
-  projectilePrefab: {fileID: 6590986962884944413, guid: b9388da98c08ae04dbac80ee96c6fbdf, type: 3}
+  projectileSettings: {fileID: 11400000, guid: deadb4a95ba305c4393672810d67b89d, type: 2}
   projectileSpeed: 15
   chargeUpDuration: 1
   chargeDownDuration: 0.2
@@ -288,7 +288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6ffcf55a12f45846a1d5a09bdeef91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShotgunShooter
-  projectilePrefab: {fileID: 6590986962884944413, guid: b9388da98c08ae04dbac80ee96c6fbdf, type: 3}
+  projectileSettings: {fileID: 11400000, guid: deadb4a95ba305c4393672810d67b89d, type: 2}
   projectileSpeed: 15
   chargeUpDuration: 1
   chargeDownDuration: 0.35

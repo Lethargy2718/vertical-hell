@@ -34,7 +34,7 @@ public class CircularShooter : Attacker
 
             Vector2 targetPos = (Vector2)transform.position + dir;
 
-            Projectile p = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+            Projectile p = SpawnProjectile();
             p.Initialize(targetPos, projectileSpeed);
         }
     }

@@ -15,7 +15,7 @@ public class ProjectileShooter : Attacker
 
     protected override void Fire()
     {
-        Projectile projectile = Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
+        Projectile projectile = SpawnProjectile();
         projectile.Initialize(GetAimTarget(), projectileSpeed);
     }
 
