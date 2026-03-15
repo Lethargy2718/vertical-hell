@@ -64,13 +64,6 @@ public class PlayerContext
     public float groundDeceleration = 22f;
     public float airDeceleration = 1f;
 
-    // Jump Parameters
-    [Header("Jump")]
-    public float jumpHeight = 2f;
-    public float coyoteTime = 0.15f;
-    public float jumpBuffer = 0.15f;
-    public float jumpEndEarlyGravityModifier = 4f;
-
     // Gravity Parameters
     [Header("Gravity")]
     public float fallAcceleration = 35f;
@@ -98,8 +91,6 @@ public class PlayerContext
     public float groundSlamSpeed = 60f;
 
     // Helpers
-    public bool CanUseBufferedJump => hasBufferedJump && time < timeJumpWasPressed + jumpBuffer;
-    public bool CanUseCoyote => coyoteUsable && !grounded && time < lastGroundedTime + coyoteTime;
     public bool CanUseBufferedDash => hasBufferedDash
         && time < timeDashWasPressed + dashBuffer
         && time > timeDashEnded + dashCooldown;

@@ -18,7 +18,7 @@ public class PlayerFly : State
     {
         if (!ctx.jumpHeld || !ctx.CanFly)
         {
-            return ((PlayerRoot)Parent).PlayerAirborne.PlayerFall;
+            return ((PlayerAirborne)Parent).PlayerFall;
         }
 
         return null;
@@ -31,7 +31,6 @@ public class PlayerFly : State
 
     protected override void OnFixedUpdate(float fixedDeltaTime)
     {
-        ctx.frameVelocity.x = MovementUtils.ApplyHorizontal(ctx.frameVelocity.x, ctx.inputVec.x, ctx.maxHorizontalSpeed, ctx.acceleration, ctx.flyDeceleration, fixedDeltaTime);
         ctx.frameVelocity.y = ctx.flySpeed;
     }
 

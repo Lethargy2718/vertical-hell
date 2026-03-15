@@ -24,12 +24,7 @@ public class PlayerGrounded : State
 
     protected override State GetTransition()
     {
-        if (ctx.CanUseBufferedJump)
-        {
-            return ((PlayerRoot)Parent).PlayerAirborne.PlayerJump;
-        }
         return ctx.grounded ? null : ((PlayerRoot)Parent).PlayerAirborne;
-
     }
 
     protected override void OnEnter()

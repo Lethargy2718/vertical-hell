@@ -5,18 +5,14 @@ public class PlayerRoot : State
     readonly PlayerContext ctx;
     public readonly PlayerGrounded PlayerGrounded;
     public readonly PlayerAirborne PlayerAirborne;
-    public readonly PlayerFly PlayerFly;
     public readonly PlayerDash PlayerDash;
-    public readonly PlayerGroundSlam PlayerGroundSlam;
 
     public PlayerRoot(StateMachine m, PlayerContext ctx) : base(m, null)
     {
         this.ctx = ctx;
         PlayerGrounded = new PlayerGrounded(m, this, ctx);
         PlayerAirborne = new PlayerAirborne(m, this, ctx);
-        PlayerFly = new PlayerFly(m, this, ctx);
         PlayerDash = new PlayerDash(m, this, ctx);
-        PlayerGroundSlam = new PlayerGroundSlam(m, this, ctx);
     }
 
     protected override State GetInitialState() => PlayerGrounded;
@@ -26,6 +22,12 @@ public class PlayerRoot : State
         if (ctx.CanUseBufferedDash && Leaf() != PlayerDash)
         {
             return PlayerDash;
+        
+        }
+
+        if (ctx.jumpPressed && ctx.CanFly && !(ctx.inputVec.y < 0 && !ctx.grounded) && Leaf() != PlayerAirborne.PlayerFly)
+        {
+            return PlayerAirborne.PlayerFly;
         }
 
         return null;

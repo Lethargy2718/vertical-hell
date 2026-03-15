@@ -13,26 +13,18 @@ public class PlayerGroundSlam : State
     {
         if (ctx.grounded)
         {
-            return ((PlayerRoot)Parent).PlayerGrounded;
+            return ((PlayerRoot)Parent.Parent).PlayerGrounded;
         }
-        if (ctx.jumpPressed && ctx.CanFly)
-        {
-            return ((PlayerRoot)Parent).PlayerFly;
-        }
-
         return null;
     }
 
     protected override void OnFixedUpdate(float fixedDeltaTime)
     {
-        //ctx.frameVelocity.x = MovementUtils.ApplyHorizontal(ctx.frameVelocity.x, ctx.inputVec.x, ctx.maxHorizontalSpeed, ctx.acceleration, ctx.flyDeceleration, fixedDeltaTime);
-        ctx.frameVelocity.x = 0f;
         ctx.frameVelocity.y = -ctx.groundSlamSpeed;
     }
 
     protected override void OnEnter()
     {
-        ctx.frameVelocity.x = 0f;
         ctx.frameVelocity.y = -ctx.groundSlamSpeed;
         ctx.InvokeGroundSlamStarted();
     }

@@ -18,7 +18,7 @@ public class PlayerDash : State
         {
             if (ctx.jumpHeld && ctx.CanFly)
             {
-                return ((PlayerRoot)Parent).PlayerFly;
+                return ((PlayerRoot)Parent).PlayerAirborne.PlayerFly;
             }
             if (ctx.grounded)
             {
@@ -26,18 +26,6 @@ public class PlayerDash : State
             }
 
             return ((PlayerRoot)Parent).PlayerAirborne;
-        }
-
-        if (ctx.jumpPressed)
-        {
-            if (ctx.grounded)
-            {
-                return ((PlayerRoot)Parent).PlayerAirborne.PlayerJump;
-            }
-            if (ctx.CanFly)
-            {
-                return ((PlayerRoot)Parent).PlayerFly;
-            }
         }
 
         return null;

@@ -16,25 +16,33 @@ public class PlayerFall : State
             return ((PlayerRoot)Parent.Parent).PlayerGrounded;
         }
 
-        if (ctx.CanUseBufferedJump && ctx.CanUseCoyote)
-        {
-            return ((PlayerAirborne)Parent).PlayerJump;
-        }
-
         if (ctx.jumpPressed)
         {
             if (ctx.inputVec.y < 0)
             {
-                return ((PlayerRoot)Parent.Parent).PlayerGroundSlam;
-            }
-            
-            if (ctx.CanFly)
-            {
-                return ((PlayerRoot)Parent.Parent).PlayerFly;
-
+                return ((PlayerAirborne)Parent).PlayerGroundSlam;
             }
         }
 
         return null;
+    }
+
+    protected override void OnFixedUpdate(float fixedDeltaTime)
+    {
+        HandleGravity(fixedDeltaTime);
+    }
+
+    private void HandleGravity(float dt)
+    {
+        float gravityThisFrame = ctx.fallAcceleration * dt;
+
+        // TODO: do if ended fly quickly
+        //if (ctx.endedJumpEarly && ctx.frameVelocity.y > 0)
+        //{
+        //    gravityThisFrame *= ctx.jumpEndEarlyGravityModifier;
+        //}
+
+        ctx.frameVelocity.y += -gravityThisFrame;
+        ctx.frameVelocity.y = Mathf.Max(ctx.frameVelocity.y, -ctx.maxFallSpeed);
     }
 }
