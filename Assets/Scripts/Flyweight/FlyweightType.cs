@@ -1,0 +1,1 @@
+public enum FlyweightType { Projectile }
