@@ -16,7 +16,6 @@ public class FlyweightFactory : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -44,5 +43,14 @@ public class FlyweightFactory : MonoBehaviour
         );
         pools.Add(settings.type, pool);
         return pool;
+    }
+
+    void OnDestroy()
+    {
+        if (instance == this)
+        {
+            instance = null;
+            pools.Clear();
+        }
     }
 }
