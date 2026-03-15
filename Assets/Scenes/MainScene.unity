@@ -1024,12 +1024,12 @@ GameObject:
   - component: {fileID: 728887664}
   - component: {fileID: 728887665}
   m_Layer: 0
-  m_Name: FallingSpikesSpawner
+  m_Name: SpikeSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &728887664
 Transform:
   m_ObjectHideFlags: 0
@@ -1056,13 +1056,14 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d85e36680bc20c4981f8a860ea2a844, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
+  m_EditorClassIdentifier: Assembly-CSharp::FallingSpikesSpawner
   levelGenerator: {fileID: 747635540}
   player: {fileID: 839998496}
   fallingSpikePrefab: {fileID: 3359322381305885662, guid: e19004a9182c48f4281d5fc9bea645de, type: 3}
   fallingSpikeSpacing: 20
-  fallingSpikeSpeed: 15
-  skippedPreGeneratedSpikes: 2
+  fallingSpikeSpeed: 20
+  skippedPreGeneratedSpikes: 3
+  initialSpawnDelay: 2
   warningPrefab: {fileID: 3401736334866572788, guid: d268b8d05dd7263458c0e37e7c8233e7, type: 3}
 --- !u!1 &747635539
 GameObject:
@@ -1798,7 +1799,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
-  dps: 200
+  dps: 40
 --- !u!1 &943442692
 GameObject:
   m_ObjectHideFlags: 0
@@ -4065,7 +4066,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2095192631
 Transform:
   m_ObjectHideFlags: 0
@@ -4090,14 +4091,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2095192630}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f2b08ba419c2164893897911f9b6b7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraMove
-  _direction: 0
-  _moveMode: 0
-  _speed: 8
+  direction: 0
+  speed: 8
 --- !u!1 &2105021315
 GameObject:
   m_ObjectHideFlags: 0

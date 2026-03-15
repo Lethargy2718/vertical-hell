@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 7505785067443485748}
   - component: {fileID: 3359322381305885662}
   - component: {fileID: -8979000478038380105}
-  - component: {fileID: 2678789419365697977}
+  - component: {fileID: 658860519244051782}
   m_Layer: 11
-  m_Name: FallingSpike
+  m_Name: Spike
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -160,7 +160,7 @@ PolygonCollider2D:
       - {x: -0.5, y: -0.28866667}
       - {x: 0.5, y: -0.28866667}
   m_UseDelaunayMesh: 1
---- !u!114 &2678789419365697977
+--- !u!114 &658860519244051782
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -172,6 +172,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f2b08ba419c2164893897911f9b6b7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Mover
-  _direction: 1
-  _moveMode: 0
-  _speed: 5
+  direction: 1
+  speed: 5

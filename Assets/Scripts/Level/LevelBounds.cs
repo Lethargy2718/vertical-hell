@@ -28,6 +28,12 @@ public class LevelBounds : MonoBehaviour
     public float LeftWallX => CameraDefaultLeftX + WallOffset;
     public float RightWallX => CameraDefaultRightX - WallOffset;
 
+    public float ScreenHeight => CameraTopY - CameraBottomY;
+    public float PlayWidth => RightWallX - LeftWallX;
+
+    public float GetWorldX(float screenX) => LeftWallX + screenX;
+    public float GetWorldY(float screenY) => CameraBottomY + screenY;
+
     public float OrthoSize => baseHeight / ppu / 2f;
 
     public float MidX => (LeftWallX + RightWallX) / 2f;
@@ -115,6 +121,14 @@ public class LevelBounds : MonoBehaviour
         if (minY > maxY)
             return MidY;
 
+        return Random.Range(minY, maxY);
+    }
+
+    public float GetRandomScreenY(float size = 0f, float offset = 0f)
+    {
+        float minY = size / 2f + offset;
+        float maxY = ScreenHeight - size / 2f - offset;
+        if (minY > maxY) return ScreenHeight / 2f;
         return Random.Range(minY, maxY);
     }
 }

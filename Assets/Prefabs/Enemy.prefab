@@ -269,11 +269,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CircularShooter
   projectileSettings: {fileID: 11400000, guid: deadb4a95ba305c4393672810d67b89d, type: 2}
-  projectileSpeed: 15
+  projectileSpeed: 17
   chargeUpDuration: 1
   chargeDownDuration: 0.2
-  cooldownDuration: 1.5
-  bulletCount: 15
+  cooldownDuration: 1.25
+  bulletCount: 16
   alignToPlayer: 1
   rotationOffset: 0
 --- !u!114 &2226452818887087149
@@ -289,12 +289,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShotgunShooter
   projectileSettings: {fileID: 11400000, guid: deadb4a95ba305c4393672810d67b89d, type: 2}
-  projectileSpeed: 15
+  projectileSpeed: 13
   chargeUpDuration: 1
-  chargeDownDuration: 0.35
-  cooldownDuration: 0.35
+  chargeDownDuration: 0.25
+  cooldownDuration: 0.25
   bulletCount: 11
-  spreadAngle: 200
+  spreadAngle: 250
   predictionTime: 0
   autoPrediction: 1
 --- !u!1 &7262461083491538056

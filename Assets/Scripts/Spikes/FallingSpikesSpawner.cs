@@ -12,6 +12,7 @@ public class FallingSpikesSpawner : MonoBehaviour
     [SerializeField] private float fallingSpikeSpacing = 1.0f;
     [SerializeField] private float fallingSpikeSpeed = 1.0f;
     [SerializeField] private int skippedPreGeneratedSpikes = 3;
+    [SerializeField] private float initialSpawnDelay = 2f;
     [SerializeField] private GameObject warningPrefab;
     private Warning _warning;
     private float FallingSpikeSpawnInterval => (fallingSpikePrefab.transform.localScale.y + fallingSpikeSpacing) / fallingSpikeSpeed;
@@ -35,11 +36,17 @@ public class FallingSpikesSpawner : MonoBehaviour
     private void Start()
     {
         fallingSpikeContainer = new GameObject("Spikes");
+        StartCoroutine(StartAfterDelay());
+    }
+
+    private IEnumerator StartAfterDelay()
+    {
+        yield return new WaitForSeconds(initialSpawnDelay);
         //StartGeneratingRandomFallingSpikes();
         StartGeneratingFollowFallingSpikes();
         //StartGeneratingMiddleFallingSpikes();
-
     }
+
     private void Update()
     {
         // debug
@@ -218,6 +225,7 @@ public class FallingSpikesSpawner : MonoBehaviour
         if (state == GameManager.GameState.Dead)
         {
             StopGeneratingFallingSpikes();
+            StopAllCoroutines();
             enabled = false;
         }
     }

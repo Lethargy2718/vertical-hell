@@ -4,30 +4,28 @@ using UnityEngine;
 public class Mover : MonoBehaviour
 {
     public enum Direction { Up, Down, Left, Right }
-    public enum MoveMode { World, ScreenOffset }
 
-    [SerializeField] private Direction _direction = Direction.Up;
-    [SerializeField] private MoveMode _moveMode = MoveMode.World;
-    [SerializeField] private float _speed = 1f;
+    [SerializeField] private Direction direction = Direction.Up;
+    [SerializeField] private float speed = 1f;
 
     public float Speed
     {
-        get => _speed;
-        set => _speed = Mathf.Max(0, value);
+        get => speed;
+        set => speed = Mathf.Max(0, value);
     }
 
-    private Camera _cam;
-
-    private void Start()
+    private Vector2 MoveDirection => direction switch
     {
-        transform.SetParent(Camera.main.transform);
-    }
-
+        Direction.Up => Vector2.up,
+        Direction.Down => Vector2.down,
+        Direction.Left => Vector2.left,
+        Direction.Right => Vector2.right,
+        _ => Vector2.zero
+    };
 
     private void OnEnable()
     {
         GameManager.GameStateChanged += OnGameStateChanged;
-        _cam = Camera.main;
     }
 
     private void OnDisable()
@@ -37,18 +35,8 @@ public class Mover : MonoBehaviour
 
     private void Update()
     {
-        Vector3 dir = _direction switch
-        {
-            Direction.Up => Vector3.up,
-            Direction.Down => Vector3.down,
-            Direction.Left => Vector3.left,
-            Direction.Right => Vector3.right,
-            _ => Vector3.zero
-        };
-
+        transform.position += speed * Time.deltaTime * (Vector3)MoveDirection;
     }
-
-
 
     private void OnGameStateChanged(GameManager.GameState gameState)
     {
